@@ -1,10 +1,10 @@
 compilador: compilador.c sintatico.tab.c lexico.yy.c ast.c util.c
 
-sintatico.tab.c sintatico.tab.hh: sintatico.yy
-	bison -Werror -tvd -r all sintatico.yy
+sintatico.tab.c sintatico.tab.h: sintatico.y
+	bison -Werror -tvd -r all sintatico.y
 
-lexico.yy.c: lexico.l sintatico.tab.hh
+lexico.yy.c: lexico.l sintatico.tab.h
 	flex -o lexico.yy.c lexico.l
 
 clean:
-	@$(RM) compilador sintatico.tab.c sintatico.tab.hh sintatico.output lexico.yy.c
+	@$(RM) compilador sintatico.tab.c sintatico.tab.h sintatico.output lexico.yy.c
