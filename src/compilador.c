@@ -30,9 +30,9 @@ int main(int argc, char** argv) {
 
     yyin = fp;
     if (yyparse() == 0) {
-        fprintf(stderr, "\nSucesso!");
+        fprintf(stderr, "\nSucesso!\n");
     } else {
-        fprintf(stderr, "\nAnálise com erros!");
+        fprintf(stderr, "\nAnálise com erros!\n");
     }
 
     // raiz_ast está apontando para o nó raiz da AST (programa) caso o parsing foi bem sucedido.

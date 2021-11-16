@@ -45,9 +45,10 @@ extern A_Programa raiz_ast;
    int num;
    A_Programa programa;
    A_Bloco bloco;
-   A_LstDecSub secDecVar;
-   A_LstDecVar secDecSub;
+   A_LstDecSub lstDecSub;
+   A_LstDecVar lstDecVar;
    A_CmdComp cmdComp;
+   A_LstIdent lstIdent;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -57,15 +58,39 @@ extern A_Programa raiz_ast;
 */
 
 %token T_PROGRAM
+%token T_VAR
+%token T_PROCEDURE
+%token T_FUNCTION
 %token T_BEGIN
 %token T_END
-%token T_VAR
+%token T_IF
+%token T_THEN
+%token T_ELSE
+%token T_WHILE
+%token T_DO
+%token T_READ
+%token T_WRITE
+%token T_AND
+%token T_OR
+%token T_NOT
+%token T_DIV
 %token T_ABRE_PARENTESES
 %token T_FECHA_PARENTESES
+%token T_VIRGULA T_PONTO_E_VIRGULA T_PONTO
+%token T_MAIS
+%token T_MENOS
+%token T_MULTIPLICACAO
+%token T_IGUAL
+%token T_DIFERENTE
+%token T_MAIOR
+%token T_MENOR
+%token T_MAIOR_OU_IGUAL
+%token T_MENOR_OU_IGUAL
 %token T_ATRIBUICAO
-%token T_VIRGULA T_PONTO_E_VIRGULA T_DOIS_PONTOS T_PONTO
+%token T_DOIS_PONTOS
 
-%token <str> T_IDENT 
+
+%token <str> T_IDENT
 /* str é o nome do campo semântico que será utilizado pelo token T_IDENT (identificador).
    Este campo foi definido na union acima e seu objetivo é armazenar uma
    string (char *), que no nosso caso será o valor semântido do identificador
@@ -88,8 +113,9 @@ extern A_Programa raiz_ast;
 */
 
 %type <programa> programa
-%type <secDecVar> secao_declara_vars
-%type <secDecSub> secao_declara_subs
+%type <lstDecVar> secao_declara_vars lista_declara_vars declara_vars
+%type <lstDecSub> secao_declara_subs
+%type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
 %type <bloco> bloco
 %type <str> tipo
@@ -107,25 +133,36 @@ programa: T_PROGRAM T_IDENT T_PONTO_E_VIRGULA bloco T_PONTO { raiz_ast = A_progr
 bloco: secao_declara_vars secao_declara_subs comando_composto { $$ = A_bloco($1, $2, $3); }
 ;
 
-secao_declara_vars: T_VAR declara_vars /* implementar ação */ { $$ = NULL; }
+secao_declara_vars: T_VAR lista_declara_vars { $$ = $2; }
                   | /* vazio */ { $$ = NULL; }
 ;
 
-secao_declara_subs: /* colocar regras e implementar ação */ { $$ = NULL; }
+lista_declara_vars: declara_vars lista_declara_vars { $$ = concatLstDecVar($1, $2); }
+                  | declara_vars                    { $$ = $1; }
 ;
 
-declara_vars: declara_vars declara_var
-            | declara_var
+declara_vars: lista_ident T_DOIS_PONTOS tipo T_PONTO_E_VIRGULA { 
+                                                                  String tipo = $3;
+                                                                  A_LstDecVar lstDecVar = NULL;
+                                                                  A_LstIdent lstIdent = $1;
+                                                                  
+                                                                  while (lstIdent != NULL) {
+                                                                     lstDecVar = A_lstDecVar(A_decVar(lstIdent->id, tipo), lstDecVar);
+                                                                     lstIdent = lstIdent->prox;
+                                                                  }
+                                                                  
+                                                                  $$ = lstDecVar;
+                                                               }
 ;
 
-declara_var: lista_ident T_DOIS_PONTOS tipo T_PONTO_E_VIRGULA
-;
-
-lista_ident: lista_ident T_VIRGULA T_IDENT
-           | T_IDENT
+lista_ident: lista_ident T_VIRGULA T_IDENT { $$ = A_lstIdent($3, $1); }
+           | T_IDENT                       { $$ = A_lstIdent($1, NULL); }
 ;
 
 tipo: T_IDENT { $$ = $1; } /* caso não fosse especificada, esta já seria a ação default */
+;
+
+secao_declara_subs: /* colocar regras e implementar ação */ { $$ = NULL; }
 ;
 
 comando_composto: T_BEGIN comandos T_END /* implementar ação */ { $$ = NULL; }
