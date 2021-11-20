@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "ast.h"
+#include <stdio.h>
 
 A_Programa A_programa(String id, A_Bloco bloco) {
     A_Programa programa = malloc(sizeof(*programa));
@@ -45,4 +46,36 @@ A_LstDecVar concatLstDecVar(A_LstDecVar lst1, A_LstDecVar lst2) {
         lst1->prox = lst2;
     }
     return lstConcat;
+}
+
+
+void printSecDecVar(A_LstDecVar sec){
+    while(sec != NULL){
+        printf("\n| Variavel: %s - Tipo: %s |", 
+                sec->decVar->id, sec->decVar->tipo
+        );
+        sec = sec->prox;
+    }
+    printf("\n");
+}
+
+void imprimeArvore(A_Programa program){
+    printf("Raiz: %s", program->id);
+    String temDeclVar;
+    if(program->bloco->secDecVar != NULL){
+        temDeclVar = "x";
+    }else{
+        temDeclVar = "";
+    }
+    String temDeclSubRot;
+    if(program->bloco->secDecSub != NULL){
+        temDeclSubRot = "x";
+    }else{
+        temDeclSubRot = "";
+    }
+    printf("\nDev Var: [%s] - Dec SubRot: [%s] - Comando: [x]\n", temDeclVar, temDeclSubRot);
+    if(temDeclVar == "x"){
+        printf("==============Declaração de Variaveis==============");
+        printSecDecVar(program->bloco->secDecVar);
+    }
 }

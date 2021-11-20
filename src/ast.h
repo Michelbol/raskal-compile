@@ -78,4 +78,6 @@ struct A_CmdComp_ {
     // implementar...
 };
 
+void imprimeArvore(A_Programa program);
+
 #endif /* AST_H */

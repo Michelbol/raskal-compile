@@ -34,7 +34,9 @@ int main(int argc, char** argv) {
     } else {
         fprintf(stderr, "\nAnálise com erros!\n");
     }
-
+    
+    imprimeArvore(raiz_ast);
+    
     // raiz_ast está apontando para o nó raiz da AST (programa) caso o parsing foi bem sucedido.
 
     return EXIT_SUCCESS;

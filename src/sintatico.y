@@ -132,7 +132,7 @@ programa: T_PROGRAM T_IDENT T_PONTO_E_VIRGULA bloco T_PONTO { raiz_ast = A_progr
 ;
 
 bloco: secao_declara_vars secao_declara_subs comando_composto { $$ = A_bloco($1, $2, $3); }
-   | secao_declara_vars comando_composto { $$ = NULL; }
+   | secao_declara_vars comando_composto { $$ = A_bloco($1, NULL, $2); }
 ;
 
 secao_declara_vars: T_VAR lista_declara_vars { $$ = $2; }
