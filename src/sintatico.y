@@ -49,6 +49,7 @@ extern A_Programa raiz_ast;
    A_LstDecVar lstDecVar;
    A_CmdComp cmdComp;
    A_LstIdent lstIdent;
+   A_DecProc decProc;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -114,7 +115,7 @@ extern A_Programa raiz_ast;
 
 %type <programa> programa
 %type <lstDecVar> secao_declara_vars lista_declara_vars declara_vars
-%type <lstDecSub> secao_declara_subs
+%type <lstDecSub> secao_declara_subs declara_proc
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
 %type <bloco> bloco
@@ -162,8 +163,12 @@ lista_ident: lista_ident T_VIRGULA T_IDENT { $$ = A_lstIdent($3, $1); }
 tipo: T_IDENT { $$ = $1; } /* caso não fosse especificada, esta já seria a ação default */
 ;
 
-secao_declara_subs: /* colocar regras e implementar ação */ { $$ = NULL; }
+secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = NULL; }
+                  | declara_proc T_PONTO_E_VIRGULA
 ;
+
+declara_proc: T_PROCEDURE T_IDENT { $$ = NULL; }
+
 
 comando_composto: T_BEGIN comandos T_END /* implementar ação */ { $$ = NULL; }
 ;

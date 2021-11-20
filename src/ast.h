@@ -11,7 +11,8 @@ typedef struct A_CmdComp_ *A_CmdComp;
 
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
-typedef struct A_LstDecVar_ *A_LstDecVar;
+typedef struct A_DecProc_ *A_DecProc;
+
 
 A_Programa A_programa(String id, A_Bloco bloco);
 A_Bloco A_bloco(A_LstDecVar secDecVar, A_LstDecSub secDecSub, A_CmdComp cmdComp);
@@ -48,6 +49,11 @@ struct A_LstDecVar_ {
 };
 
 struct A_LstDecSub_ {
+    A_DecProc decProc;
+    A_LstDecSub prox;
+};
+
+struct A_DecProc_{
     // implementar...
 };
 
