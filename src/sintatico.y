@@ -115,7 +115,7 @@ extern A_Programa raiz_ast;
 
 %type <programa> programa
 %type <lstDecVar> secao_declara_vars lista_declara_vars declara_vars
-%type <lstDecSub> secao_declara_subs declara_proc
+%type <lstDecSub> secao_declara_subs declara_proc params_formais
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
 %type <bloco> bloco
@@ -167,8 +167,11 @@ secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = NUL
                   | declara_proc T_PONTO_E_VIRGULA
 ;
 
-declara_proc: T_PROCEDURE T_IDENT { $$ = NULL; }
+declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA { $$ = NULL; }
+;
 
+params_formais: T_ABRE_PARENTESES T_FECHA_PARENTESES { $$ = NULL; }
+;
 
 comando_composto: T_BEGIN comandos T_END /* implementar ação */ { $$ = NULL; }
 ;

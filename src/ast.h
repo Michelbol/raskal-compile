@@ -12,6 +12,7 @@ typedef struct A_CmdComp_ *A_CmdComp;
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
 typedef struct A_DecProc_ *A_DecProc;
+typedef struct A_ParamFormal_ *A_ParamFormal;
 
 
 A_Programa A_programa(String id, A_Bloco bloco);
@@ -54,7 +55,11 @@ struct A_LstDecSub_ {
 };
 
 struct A_DecProc_{
-    // implementar...
+    A_ParamFormal paramFormal;
+};
+
+struct A_ParamFormal_ {
+    // implementar
 };
 
 struct A_CmdComp_ {
