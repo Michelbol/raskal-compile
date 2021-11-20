@@ -115,7 +115,7 @@ extern A_Programa raiz_ast;
 
 %type <programa> programa
 %type <lstDecVar> secao_declara_vars lista_declara_vars declara_vars
-%type <lstDecSub> secao_declara_subs declara_proc params_formais
+%type <lstDecSub> secao_declara_subs declara_proc params_formais list_declara_param declara_param
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
 %type <bloco> bloco
@@ -164,14 +164,25 @@ tipo: T_IDENT { $$ = $1; } /* caso não fosse especificada, esta já seria a aç
 ;
 
 secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = NULL; }
-                  | declara_proc T_PONTO_E_VIRGULA
+                  | declara_proc T_PONTO_E_VIRGULA { $$ = NULL; }
+                  /*| { $$ = NULL; }*/
 ;
 
 declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA { $$ = NULL; }
 ;
 
-params_formais: T_ABRE_PARENTESES T_FECHA_PARENTESES { $$ = NULL; }
+params_formais: T_ABRE_PARENTESES list_declara_param T_FECHA_PARENTESES { $$ = NULL; }
+               | T_ABRE_PARENTESES T_FECHA_PARENTESES { $$ = NULL; }
 ;
+
+list_declara_param: declara_param list_declara_param { $$ = NULL; }
+                  | declara_param { $$ = NULL; }
+;
+
+declara_param: T_VAR lista_ident T_DOIS_PONTOS tipo { $$ = NULL; }
+            |  lista_ident T_DOIS_PONTOS tipo { $$ = NULL; }
+;
+
 
 comando_composto: T_BEGIN comandos T_END /* implementar ação */ { $$ = NULL; }
 ;

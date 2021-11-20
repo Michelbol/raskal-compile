@@ -7,7 +7,9 @@ typedef struct A_Programa_ *A_Programa;
 typedef struct A_Bloco_ *A_Bloco;
 typedef struct A_LstDecSub_ *A_LstDecSub;
 typedef struct A_LstDecVar_ *A_LstDecVar;
+typedef struct A_LstDecParam_ *A_LstDecParam;
 typedef struct A_CmdComp_ *A_CmdComp;
+typedef struct A_DecParam_ *A_DecParam;
 
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
@@ -59,7 +61,17 @@ struct A_DecProc_{
 };
 
 struct A_ParamFormal_ {
-    // implementar
+    A_LstDecParam listDecParam;
+};
+
+struct A_LstDecParam_ {
+    A_DecParam decParam;
+    A_LstDecParam prox;
+};
+
+struct A_DecParam_ {
+    A_LstIdent lst_ident;
+    String tipo;
 };
 
 struct A_CmdComp_ {
