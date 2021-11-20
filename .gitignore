@@ -4,3 +4,11 @@ sintatico.tab.*
 sintatico.tab.*
 lexico.yy.c
 compilador
+src/mepa/executaMepa.o
+src/mepa/interface_usuario.o
+src/mepa/leMepa.output
+src/mepa/leMepa.tab.c
+src/mepa/leMepa.tab.h
+src/mepa/lex.yy.c
+src/mepa/mepa
+src/mepa/MV_mepa.o
