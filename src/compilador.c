@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include "ast.h"
 #include "sintatico.tab.h"
+#include "tab.h"
 
 A_Programa raiz_ast;
+Table tabela_simbolos;
+
 
 /* Compilar:
    $ make

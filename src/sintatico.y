@@ -1,6 +1,7 @@
 %code requires {
 #include "util.h"
 #include "ast.h"
+#include "tab.h"
 }
 
 %{
@@ -10,6 +11,7 @@
 #include <string.h>
 #include "util.h"
 #include "ast.h"
+#include "tab.h"
 
 /* Esta é a função que opera o Analisador Léxico (AL) e já foi construída pelo Flex
    dentro dele. Como o Analisador Sintático (AS) é quem irá chamá-la no decorrer da análise, 
@@ -28,6 +30,7 @@ void yyerror(const char *s) {
 }
 
 extern A_Programa raiz_ast;
+extern Table tabela_simbolos;
 
 %}
 

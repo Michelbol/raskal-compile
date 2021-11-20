@@ -12,4 +12,4 @@ clean:
 	@$(RM) compilador sintatico.tab.c sintatico.tab.h sintatico.output lexico.yy.c files.temp
 
 test:
-	python validateSamples.py
+	python validateSamples.py 
