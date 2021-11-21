@@ -77,7 +77,8 @@ void imprimeArvore(A_Programa program){
     }
     printf("\nDev Var: [%s] - Dec SubRot: [%s] - Comando: [x]\n", temDeclVar, temDeclSubRot);
     if(temDeclVar == "x"){
-        printf("==============Declaração de Variaveis==============");
+        printf("==============Inicio Declaração de Variaveis==============");
         printSecDecVar(program->bloco->secDecVar);
+        printf("==============Fim Declaração de Variaveis=================\n");
     }
 }
