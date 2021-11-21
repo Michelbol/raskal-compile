@@ -24,10 +24,12 @@ A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent) {
     return no;
 }
 
-A_DecVar A_decVar(String id, String tipo) {
+A_DecVar A_decVar(String id, String tipo, Table tabela) {
     A_DecVar decVar = malloc(sizeof(*decVar));
     decVar->id = id;
     decVar->tipo = tipo;
+    addVar(tabela, decVar, 0);
+    return decVar;
 }
 
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar) {

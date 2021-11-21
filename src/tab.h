@@ -1,12 +1,16 @@
 #ifndef TAB_H
 #define TAB_H
 
+#include "util.h"
+
 typedef struct TableLine_ *TableLine;
 
 typedef struct Table_ *Table;
 
-Table addIdentificador(Table tabela, String identificador, String categoria, String tipo, String escopo);
-TableLine createLine(String identificador, String categoria, String tipo, String escopo);
+Table addIdentificador(Table tabela, String identificador, String categoria, String tipo, int escopo);
+TableLine createLine(String identificador, String categoria, String tipo, int escopo);
+void imprimeTabela(Table tabela);
+Table createTable();
 
 struct TableLine_ {
    String       identificador;
@@ -17,7 +21,7 @@ struct TableLine_ {
 };
 
 struct Table_ {
-    TableLine linha;
+    TableLine primeiro;
     TableLine ultimo;
 };
 

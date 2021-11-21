@@ -2,6 +2,7 @@
 #define AST_H
 
 #include "util.h"
+#include "tab.h"
 
 typedef struct A_Programa_ *A_Programa;
 typedef struct A_Bloco_ *A_Bloco;
@@ -20,7 +21,7 @@ typedef struct A_ParamFormal_ *A_ParamFormal;
 A_Programa A_programa(String id, A_Bloco bloco);
 A_Bloco A_bloco(A_LstDecVar secDecVar, A_LstDecSub secDecSub, A_CmdComp cmdComp);
 A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent);
-A_DecVar A_decVar(String id, String tipo);
+A_DecVar A_decVar(String id, String tipo, Table tabela);
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar);
 
 A_LstDecVar concatLstDecVar(A_LstDecVar lst1, A_LstDecVar lst2);
