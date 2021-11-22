@@ -6,6 +6,7 @@
 
 A_Programa raiz_ast;
 Table tabela_simbolos;
+int errors = 0;
 
 
 /* Compilar:
@@ -30,9 +31,8 @@ int main(int argc, char** argv) {
         printf("Erro: não foi possível ler o arquivo '%s'\n", argv[1]);
         return EXIT_FAILURE;
     }
-
     yyin = fp;
-    if (yyparse() == 0) {
+    if (yyparse() == 0 && errors == 0) {
         fprintf(stderr, "\nSucesso!\n");
     } else {
         fprintf(stderr, "\nAnálise com erros!\n");

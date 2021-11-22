@@ -158,7 +158,6 @@ declara_vars: lista_ident T_DOIS_PONTOS tipo T_PONTO_E_VIRGULA {
                                                                      lstDecVar = A_lstDecVar(A_decVar(lstIdent->id, tipo, tabela_simbolos), lstDecVar);
                                                                      lstIdent = lstIdent->prox;
                                                                   }
-
                                                                   $$ = lstDecVar;
                                                                }
 ;

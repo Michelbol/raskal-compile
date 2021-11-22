@@ -28,7 +28,6 @@ A_DecVar A_decVar(String id, String tipo, Table tabela) {
     A_DecVar decVar = malloc(sizeof(*decVar));
     decVar->id = id;
     decVar->tipo = tipo;
-    addVar(tabela, decVar, 0);
     return decVar;
 }
 

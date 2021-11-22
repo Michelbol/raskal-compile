@@ -32,16 +32,15 @@ Table addIdentificador(Table tabela, String identificador, String categoria, Str
         return tabela;
     }
     if(elementoJaExiste(tabela, identificador)){
-        printf("Erro ao inserir identificado, elemento já existe\n");
-        // return tabela;
+        return NULL;
     }
     tabela->ultimo->next = newLine;
     tabela->ultimo = newLine;
     return tabela;
 }
 
-Table addVar(Table tabela, A_DecVar var, int escopo){
-    addIdentificador(tabela, var->id, "var", var->tipo, escopo);
+Table addVar(Table tabela, String id, String tipo, int escopo){
+    return addIdentificador(tabela, id, "var", tipo, escopo);
 }
 
 bool elementoJaExiste(Table tabela, String identificador){
