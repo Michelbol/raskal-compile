@@ -4,9 +4,9 @@
 #include <stdio.h>
 
 
-int addVarMepa(Commands mepa, int countVar){
+int* addVarMepa(Commands mepa, int *countVar){
     addCmdMepa(mepa, createNewCmdMepa("AMEM 1"));
-    countVar++;
+    *countVar = *countVar+1;
     return countVar;
 }
 
