@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
     yyin = fp;
-    if (yyparse() == 0 && errors == 0) {
+    if (yyparse() == 0) {
         fprintf(stderr, "\nSucesso!\n");
     } else {
         fprintf(stderr, "\nAnálise com erros!\n");
@@ -51,6 +51,7 @@ int main(int argc, char** argv) {
     
      //imprimeArvore(raiz_ast);
     imprimeTabela(tabela_simbolos);
+    printf("Quantidade de erros: %i", errors);
     
     // raiz_ast está apontando para o nó raiz da AST (programa) caso o parsing foi bem sucedido.
 
