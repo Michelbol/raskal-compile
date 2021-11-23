@@ -4,12 +4,13 @@
 #include "ast.h"
 #include <string.h>
 
-TableLine createLine(String identificador, String categoria, String tipo, int escopo){
+TableLine createLine(String identificador, String categoria, String tipo, int escopo, int endereco){
     TableLine linha = malloc(sizeof(*linha));
     linha->identificador = identificador;
     linha->categoria = categoria;
     linha->tipo = tipo;
     linha->escopo = escopo;
+    linha->endereco = endereco;
     return linha;
 }
 
@@ -17,11 +18,12 @@ Table createTable(){
     Table tabela = malloc(sizeof(*tabela));
     tabela->primeiro = NULL;
     tabela->ultimo = NULL;
+    printf("\nTabela de simbolos criada com sucesso\n");
     return tabela;
 }
 
-Table addIdentificador(Table tabela, String identificador, String categoria, String tipo, int escopo){
-    TableLine newLine = createLine(identificador, categoria, tipo, escopo);
+Table addIdentificador(Table tabela, String identificador, String categoria, String tipo, int escopo, int endereco){
+    TableLine newLine = createLine(identificador, categoria, tipo, escopo, endereco);
     if(tabela == NULL){
         printf("ATENÇÃO: A tabela precisa ser criada");
         return tabela;
@@ -32,6 +34,7 @@ Table addIdentificador(Table tabela, String identificador, String categoria, Str
         return tabela;
     }
     if(elementoJaExiste(tabela, identificador)){
+        printf("\nElemento %s já existe\n", identificador);
         return NULL;
     }
     tabela->ultimo->next = newLine;
@@ -39,8 +42,12 @@ Table addIdentificador(Table tabela, String identificador, String categoria, Str
     return tabela;
 }
 
-Table addVar(Table tabela, String id, String tipo, int escopo){
-    return addIdentificador(tabela, id, "var", tipo, escopo);
+Table addProgram(Table tabela, String id){
+    return addIdentificador(tabela, id, "program", "", 0, 0);
+}
+
+Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
+    return addIdentificador(tabela, id, "var", tipo, escopo, endereco);
 }
 
 bool elementoJaExiste(Table tabela, String identificador){
@@ -64,11 +71,12 @@ void imprimeTabela(Table tabela){
     TableLine linha = tabela->primeiro;
     while(linha != NULL){
         printf(
-            "\n| Identificador: %s - Categoria: %s - Tipo: %s - Escopo %i ", 
+            "\n| Identificador: %s - Categoria: %s - Tipo: %s - Escopo: %i - endereco: %i", 
             linha->identificador,
             linha->categoria,
             linha->tipo,
-            linha->escopo
+            linha->escopo,
+            linha->endereco
         );
         linha = linha->next;
     }

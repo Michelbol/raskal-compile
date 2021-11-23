@@ -3,9 +3,12 @@
 #include "ast.h"
 #include "sintatico.tab.h"
 #include "tab.h"
+#include "analisador.h"
+#include "mepa.h"
 
 A_Programa raiz_ast;
 Table tabela_simbolos;
+Commands mepa;
 int errors = 0;
 
 
@@ -38,7 +41,15 @@ int main(int argc, char** argv) {
         fprintf(stderr, "\nAnálise com erros!\n");
     }
     
-    imprimeArvore(raiz_ast);
+    tabela_simbolos = createTable();
+    
+    mepa = startMepa();
+    analisaPrograma(raiz_ast, tabela_simbolos, mepa);
+    mepa = finishMepa(mepa);
+
+    printMepa(mepa);
+    
+     //imprimeArvore(raiz_ast);
     imprimeTabela(tabela_simbolos);
     
     // raiz_ast está apontando para o nó raiz da AST (programa) caso o parsing foi bem sucedido.

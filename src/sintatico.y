@@ -150,9 +150,6 @@ declara_vars: lista_ident T_DOIS_PONTOS tipo T_PONTO_E_VIRGULA {
                                                                   String tipo = $3;
                                                                   A_LstDecVar lstDecVar = NULL;
                                                                   A_LstIdent lstIdent = $1;
-                                                                  if(tabela_simbolos == NULL){
-                                                                     tabela_simbolos = createTable();
-                                                                  }
 
                                                                   while (lstIdent != NULL) {
                                                                      lstDecVar = A_lstDecVar(A_decVar(lstIdent->id, tipo, tabela_simbolos), lstDecVar);

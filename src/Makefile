@@ -1,6 +1,6 @@
 CFLAGS = -g
 
-compilador: compilador.c sintatico.tab.c lexico.yy.c ast.c tab.c util.c
+compilador: compilador.c sintatico.tab.c lexico.yy.c ast.c tab.c analisador.c mepa.c util.c
 
 sintatico.tab.c sintatico.tab.h: sintatico.y
 	bison -Werror -tvd -r all sintatico.y
