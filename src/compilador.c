@@ -44,14 +44,17 @@ int main(int argc, char** argv) {
     tabela_simbolos = createTable();
     
     mepa = startMepa();
-    analisaPrograma(raiz_ast, tabela_simbolos, mepa);
+    int errors = analisaPrograma(raiz_ast, tabela_simbolos, mepa);
+    if(errors > 0){
+        printf("Quantidade de erros: %i\n", errors);
+        return;
+    }
     mepa = finishMepa(mepa);
 
     printMepa(mepa);
     
      //imprimeArvore(raiz_ast);
     imprimeTabela(tabela_simbolos);
-    printf("Quantidade de erros: %i", errors);
     
     // raiz_ast está apontando para o nó raiz da AST (programa) caso o parsing foi bem sucedido.
 
