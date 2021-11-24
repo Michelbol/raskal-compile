@@ -51,6 +51,12 @@ extern Table tabela_simbolos;
    A_LstDecSub lstDecSub;
    A_LstDecVar lstDecVar;
    A_CmdComp cmdComp;
+   A_Cmd cmd;
+   A_Atrib atrib;
+   A_Express express;
+   A_Simp_Express simpExpress;
+   A_Termo termo;
+   A_Fator fator;
    A_LstIdent lstIdent;
    A_DecProc decProc;
 }
@@ -95,6 +101,7 @@ extern Table tabela_simbolos;
 
 
 %token <str> T_IDENT
+%token <num> T_NUMERO
 /* str é o nome do campo semântico que será utilizado pelo token T_IDENT (identificador).
    Este campo foi definido na union acima e seu objetivo é armazenar uma
    string (char *), que no nosso caso será o valor semântido do identificador
@@ -121,6 +128,12 @@ extern Table tabela_simbolos;
 %type <lstDecSub> secao_declara_subs declara_proc params_formais list_declara_param declara_param
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
+%type <cmd> comandos
+%type <atrib> atribuicao
+%type <express> expressao
+%type <simpExpress> expressao_simples
+%type <termo> termo
+%type <fator> fator
 %type <bloco> bloco
 %type <str> tipo
 
@@ -187,12 +200,26 @@ declara_param: T_VAR lista_ident T_DOIS_PONTOS tipo { $$ = NULL; }
 ;
 
 
-comando_composto: T_BEGIN comandos T_END /* implementar ação */ { $$ = NULL; }
+comando_composto: T_BEGIN comandos T_PONTO_E_VIRGULA T_END { $$ = A_cmdComp($2); }
 ;
 
-comandos: 
+comandos: atribuicao { $$ = A_cmd($1); }
 ;
 
+atribuicao: T_IDENT T_ATRIBUICAO expressao { $$ = A_atrib($1, $3); }
+;
+
+expressao: expressao_simples { $$ = A_express($1); }
+;
+
+expressao_simples: termo T_MAIS termo { $$ = A_simp_Express_Mais($1, $3); }
+;
+
+termo: fator { $$ = A_termo($1); }
+;
+
+fator: T_NUMERO { $$ = A_fator($1); }
+;
 %%
 
 /* Aqui poderia ser construída a função main com a lógica do compilador, que

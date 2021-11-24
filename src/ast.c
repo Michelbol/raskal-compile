@@ -31,10 +31,54 @@ A_DecVar A_decVar(String id, String tipo, Table tabela) {
     return decVar;
 }
 
+A_CmdComp A_cmdComp(A_Cmd cmd) {
+    A_CmdComp no = malloc(sizeof(*no));
+    no->cmd = cmd;
+    return no;
+}
+
+A_Cmd A_cmd(A_Atrib atrib) {
+    A_Cmd no = malloc(sizeof(*no));
+    no->atrib = atrib;
+    return no;
+}
+
+A_Atrib A_atrib(String id, A_Express express) {
+    A_Atrib no = malloc(sizeof(*no));
+    no->id = id;
+    no->express = express;
+    return no;
+}
+
+A_Express A_express(A_Simp_Express simp_express) {
+    A_Express no = malloc(sizeof(*no));
+    no->simp_express = simp_express;
+    return no;
+}
+
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar) {
     A_LstDecVar no = malloc(sizeof(*no));
     no->decVar = decVar;
     no->prox = lstDecVar;
+    return no;
+}
+
+A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo){
+    A_Simp_Express no = malloc(sizeof(*no));
+    no->primeiro_termo = primeiro_termo;
+    no->operacao = "+";
+    no->segundo_termo = segundo_termo;
+    return no;
+}
+A_Termo A_termo(A_Fator fator){
+    A_Termo no = malloc(sizeof(*no));
+    no->fator = fator;
+    return no;
+}
+
+A_Fator A_fator(int num){
+    A_Fator no = malloc(sizeof(*no));
+    no->num = num;
     return no;
 }
 
@@ -60,6 +104,15 @@ void printSecDecVar(A_LstDecVar sec){
     printf("\n");
 }
 
+void printcmdComp(A_Cmd cmd) {
+    printf("\nVai Atribuir pro id: %s\n", cmd->atrib->id);
+    printf("Expressão: %i %s %i\n",
+    cmd->atrib->express->simp_express->primeiro_termo->fator->num,
+    cmd->atrib->express->simp_express->operacao,
+    cmd->atrib->express->simp_express->segundo_termo->fator->num
+    );
+}
+
 void imprimeArvore(A_Programa program){
     printf("Raiz: %s", program->id);
     String temDeclVar;
@@ -74,10 +127,21 @@ void imprimeArvore(A_Programa program){
     }else{
         temDeclSubRot = "";
     }
-    printf("\nDev Var: [%s] - Dec SubRot: [%s] - Comando: [x]\n", temDeclVar, temDeclSubRot);
+    String temCmdComp;
+    if(program->bloco->cmdComp != NULL){
+        temCmdComp = "x";
+    }else{
+        temCmdComp = "";
+    }
+    printf("\nDev Var: [%s] - Dec SubRot: [%s] - Comando: [%s]\n", temDeclVar, temDeclSubRot, temCmdComp);
     if(temDeclVar == "x"){
         printf("==============Inicio Declaração de Variaveis==============");
         printSecDecVar(program->bloco->secDecVar);
         printf("==============Fim Declaração de Variaveis=================\n");
+    }
+    if(temCmdComp){
+        printf("==============Inicio Comando Composto==============");
+        printcmdComp(program->bloco->cmdComp->cmd);
+        printf("==============Fim Comando Composto=================\n");
     }
 }

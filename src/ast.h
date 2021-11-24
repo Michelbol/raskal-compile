@@ -10,6 +10,12 @@ typedef struct A_LstDecSub_ *A_LstDecSub;
 typedef struct A_LstDecVar_ *A_LstDecVar;
 typedef struct A_LstDecParam_ *A_LstDecParam;
 typedef struct A_CmdComp_ *A_CmdComp;
+typedef struct A_Cmd_ *A_Cmd;
+typedef struct A_Atrib_ *A_Atrib;
+typedef struct A_Express_ *A_Express;
+typedef struct A_Simp_Express_ *A_Simp_Express;
+typedef struct A_Termo_ *A_Termo;
+typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
 
 typedef struct A_LstIdent_ *A_LstIdent;
@@ -23,6 +29,10 @@ A_Bloco A_bloco(A_LstDecVar secDecVar, A_LstDecSub secDecSub, A_CmdComp cmdComp)
 A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent);
 A_DecVar A_decVar(String id, String tipo, Table tabela);
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar);
+A_CmdComp A_cmdComp(A_Cmd cmd);
+A_Cmd A_cmd(A_Atrib attr);
+A_Atrib A_atrib(String id, A_Express express);
+A_Express A_express(A_Simp_Express simp_express);
 
 A_LstDecVar concatLstDecVar(A_LstDecVar lst1, A_LstDecVar lst2);
 
@@ -76,7 +86,34 @@ struct A_DecParam_ {
 };
 
 struct A_CmdComp_ {
-    // implementar...
+    A_Cmd cmd;
+};
+
+struct A_Cmd_ {
+    A_Atrib atrib;
+};
+
+struct A_Atrib_ {
+    String id;
+    A_Express express;
+};
+
+struct A_Express_ {
+    A_Simp_Express simp_express;
+};
+
+struct A_Simp_Express_ {
+    A_Termo primeiro_termo;
+    String operacao;
+    A_Termo segundo_termo;
+};
+
+struct A_Termo_ {
+    A_Fator fator;
+};
+
+struct A_Fator_ {
+    int num;
 };
 
 void imprimeArvore(A_Programa program);
