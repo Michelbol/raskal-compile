@@ -2,12 +2,31 @@
 #include "util.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <string.h>
 
 int* addVarMepa(Commands mepa, int *countVar){
     addCmdMepa(mepa, createNewCmdMepa("AMEM 1"));
     *countVar = *countVar+1;
     return countVar;
+}
+
+void addNumMepa(Commands mepa, int numero){
+    addCmdMepa(mepa, createNewCmdMepa(concatStringInt("CRCT ", numero)));
+}
+
+void addSomaMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("SOMA"));
+}
+
+void addAtribMepa(Commands mepa, int endereco, int escopo){
+    String comando = concatStringInt("ARMZ ", escopo);
+    comando = strcat(comando, ",");
+    comando = concatStringInt(comando, endereco);
+    addCmdMepa(mepa, createNewCmdMepa(comando));
+}
+
+void desalocaMemoriaMepa(Commands mepa, int qtd){
+    addCmdMepa(mepa, createNewCmdMepa(concatStringInt("DMEM ", qtd)));
 }
 
 Command createNewCmdMepa(String instrucao){

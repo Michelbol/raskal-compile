@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
     printMepa(mepa);
     
     imprimeArvore(raiz_ast);
-    // imprimeTabela(tabela_simbolos);
+    imprimeTabela(tabela_simbolos);
     
     // raiz_ast está apontando para o nó raiz da AST (programa) caso o parsing foi bem sucedido.
 

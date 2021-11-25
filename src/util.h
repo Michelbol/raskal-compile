@@ -6,5 +6,6 @@
 typedef char *String;
 
 String string(String);
+String concatStringInt(char *word, int numero);
 
 #endif

@@ -12,3 +12,10 @@ char *string(char *s) {
     strcpy(p, s);
     return p;
 }
+
+String concatStringInt(char *word, int numero){
+    int size = strlen(word)+9; // max int is 9 size
+    char c_comando[size];
+    snprintf(c_comando, size, "%s%i", word, numero);
+    return string(c_comando);
+}

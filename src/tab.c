@@ -51,18 +51,28 @@ Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
 }
 
 bool elementoJaExiste(Table tabela, String identificador){
-    return buscarElemento(tabela, identificador) != NULL;
+    return buscarElemento(tabela, identificador, NULL) != NULL;
 }
 
-TableLine buscarElemento(Table tabela, String identificador){
+TableLine buscarElemento(Table tabela, String identificador, String categoria){
     TableLine elem = tabela->primeiro;
     while(elem != NULL){
-        if(strcmp(elem->identificador,identificador) == 0){
-            return elem;
+        if(strcmp(elem->identificador, identificador) == 0){
+            if(categoria == NULL){
+                return elem;
+            }else{
+                if(strcmp(categoria, elem->categoria) == 0){
+                    return elem;
+                }
+            }
         }
         elem = elem->next;
     }
     return NULL;
+}
+
+TableLine buscarVariavel(Table tabela, String identificador){
+    return buscarElemento(tabela, identificador, "var");
 }
 
 void imprimeTabela(Table tabela){

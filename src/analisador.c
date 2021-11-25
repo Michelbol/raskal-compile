@@ -7,14 +7,18 @@ static int countVar = 0;
 
 static int errors = 0;
 
-void analisaDecVars(A_LstDecVar listaVars, Table tabela, Commands mepa){
+static Table tabelaSimbolos;
+
+static Commands lstMepa;
+
+void analisaDecVars(A_LstDecVar listaVars){
     while(listaVars != NULL){
         Table tabela = addVar(
-            tabela,
+            tabelaSimbolos,
             listaVars->decVar->id, 
             listaVars->decVar->tipo, 
             0, 
-            *addVarMepa(mepa, &countVar)
+            *addVarMepa(lstMepa, &countVar)-1
         );
         if(tabela == NULL){
             errors = errors+1;
@@ -27,18 +31,64 @@ void analisaDecSub(A_LstDecSub listSub){
     // implementar
 }
 
-void analisaCmdComp(A_CmdComp cmdComp){
-    // implementar
+void analisaOperacao(String operacao){
+    if(strcmp(operacao, "+") == 0){
+        addSomaMepa(lstMepa);
+        return;
+    }
+    errors = errors+1;
+    printf("Operação %s desconhecida", operacao);
 }
 
-void analisaBloco(A_Bloco bloco, Table tabela, Commands mepa){
-    analisaDecVars(bloco->secDecVar, tabela, mepa);
+void analisaFator(A_Fator fator){
+    if(fator->num > 0){
+        addNumMepa(lstMepa, fator->num);
+    }
+}
+
+void analisaTermo(A_Termo termo){
+    analisaFator(termo->fator);
+}
+
+void analisaSimpExpress(A_Simp_Express simp_express){
+    analisaTermo(simp_express->primeiro_termo);
+    analisaTermo(simp_express->segundo_termo);
+    analisaOperacao(simp_express->operacao);
+}
+
+void analisaExpress(A_Express express){
+    analisaSimpExpress(express->simp_express);
+}
+
+void analisaAtrib(A_Atrib atrib){
+    TableLine variavel = buscarVariavel(tabelaSimbolos, atrib->id);
+    if(variavel == NULL){
+        printf("\nVariavel %s não existe\n", atrib->id);
+        errors = errors +1;
+    }
+    analisaExpress(atrib->express);
+    addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);
+}
+
+void analisaCmd(A_Cmd cmd){
+    analisaAtrib(cmd->atrib);
+}
+
+void analisaCmdComp(A_CmdComp cmdComp){
+    analisaCmd(cmdComp->cmd);
+}
+
+void analisaBloco(A_Bloco bloco){
+    analisaDecVars(bloco->secDecVar);
     analisaDecSub(bloco->secDecSub);
     analisaCmdComp(bloco->cmdComp);
 }
 
 int analisaPrograma(A_Programa prog, Table tabela, Commands mepa){
-    addProgram(tabela, prog->id);
-    analisaBloco(prog->bloco, tabela, mepa);
+    tabelaSimbolos = tabela;
+    lstMepa = mepa;
+    addProgram(tabelaSimbolos, prog->id);
+    analisaBloco(prog->bloco);
+    desalocaMemoriaMepa(lstMepa, countVar);
     return errors;
 }

@@ -13,6 +13,10 @@ Commands finishMepa(Commands mepa);
 void addCmdMepa(Commands mepa, Command cmd);
 void printMepa(Commands mepa);
 int* addVarMepa(Commands mepa, int *countVar);
+void addSomaMepa(Commands mepa);
+void addNumMepa(Commands mepa, int numero);
+void addAtribMepa(Commands mepa, int endereco, int escopo);
+void desalocaMemoriaMepa(Commands mepa, int qtd);
 
 struct Command_ {
    String       command;
