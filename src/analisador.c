@@ -54,19 +54,26 @@ void analisaTermo(A_Termo termo){
     analisaFator(termo->fator);
 }
 
-void analisaSimpExpress(A_Simp_Express simp_express){
-    analisaTermo(simp_express->primeiro_termo);
+void analisaSimpExpress(A_Simp_Express simp_express, bool recursivo){    
     if(simp_express->segundo_termo != NULL){
         analisaTermo(simp_express->segundo_termo);
+        analisaOperacao(simp_express->operacao);
     }
     if(simp_express->expressao != NULL){
-        analisaSimpExpress(simp_express->expressao);
-    }    
-    analisaOperacao(simp_express->operacao);
+        if(recursivo){
+            analisaTermo(simp_express->expressao->primeiro_termo);
+            analisaOperacao(simp_express->operacao);
+        }else{
+            analisaTermo(simp_express->primeiro_termo);
+            analisaTermo(simp_express->expressao->primeiro_termo);
+            analisaOperacao(simp_express->operacao);            
+        }
+        analisaSimpExpress(simp_express->expressao, true);
+    }
 }
 
 void analisaExpress(A_Express express){
-    analisaSimpExpress(express->simp_express);
+    analisaSimpExpress(express->simp_express, false);
 }
 
 void analisaAtrib(A_Atrib atrib){

@@ -72,12 +72,12 @@ A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo
     return no;
 }
 
-A_Simp_Express A_simp_Express_Menos(A_Termo primeiro_termo, A_Termo segundo_termo){
+A_Simp_Express A_simp_Express_Menos(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao){
     A_Simp_Express no = malloc(sizeof(*no));
     no->primeiro_termo = primeiro_termo;
     no->operacao = "-";
     no->segundo_termo = segundo_termo;
-    no->expressao = NULL;
+    no->expressao = expressao;
     return no;
 }
 

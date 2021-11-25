@@ -213,8 +213,9 @@ expressao: expressao_simples { $$ = A_express($1); }
 ;
 
 expressao_simples: termo T_MAIS termo { $$ = A_simp_Express_Mais($1, $3, NULL); }
-               | termo T_MENOS termo { $$ = A_simp_Express_Menos($1, $3); }
+               | termo T_MENOS termo { $$ = A_simp_Express_Menos($1, $3, NULL); }
                | termo T_MAIS expressao_simples { $$ = A_simp_Express_Mais($1, NULL, $3); }
+               | termo T_MENOS expressao_simples { $$ = A_simp_Express_Menos($1, NULL, $3); }
 ;
 
 termo: fator { $$ = A_termo($1); }
