@@ -33,6 +33,7 @@ A_CmdComp A_cmdComp(A_Cmd cmd);
 A_Cmd A_cmd(A_Atrib attr);
 A_Atrib A_atrib(String id, A_Express express);
 A_Express A_express(A_Simp_Express simp_express);
+A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao);
 
 A_LstDecVar concatLstDecVar(A_LstDecVar lst1, A_LstDecVar lst2);
 
@@ -106,6 +107,7 @@ struct A_Simp_Express_ {
     A_Termo primeiro_termo;
     String operacao;
     A_Termo segundo_termo;
+    A_Simp_Express expressao;
 };
 
 struct A_Termo_ {

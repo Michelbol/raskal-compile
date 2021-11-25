@@ -63,11 +63,12 @@ A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar) {
     return no;
 }
 
-A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo){
+A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao){
     A_Simp_Express no = malloc(sizeof(*no));
     no->primeiro_termo = primeiro_termo;
     no->operacao = "+";
     no->segundo_termo = segundo_termo;
+    no->expressao = expressao;
     return no;
 }
 
@@ -76,6 +77,7 @@ A_Simp_Express A_simp_Express_Menos(A_Termo primeiro_termo, A_Termo segundo_term
     no->primeiro_termo = primeiro_termo;
     no->operacao = "-";
     no->segundo_termo = segundo_termo;
+    no->expressao = NULL;
     return no;
 }
 
@@ -115,11 +117,12 @@ void printSecDecVar(A_LstDecVar sec){
 
 void printcmdComp(A_Cmd cmd) {
     printf("\nVai Atribuir pro id: %s\n", cmd->atrib->id);
-    printf("Expressão: %i %s %i\n",
-    cmd->atrib->express->simp_express->primeiro_termo->fator->num,
-    cmd->atrib->express->simp_express->operacao,
-    cmd->atrib->express->simp_express->segundo_termo->fator->num
-    );
+    // Segundo termo pode ser nulo agora e foi adicionado a possibilidade de ser uma expressão
+    // printf("Expressão: %i %s %i\n",
+    // cmd->atrib->express->simp_express->primeiro_termo->fator->num,
+    // cmd->atrib->express->simp_express->operacao,
+    // cmd->atrib->express->simp_express->segundo_termo->fator->num
+    // );
 }
 
 void imprimeArvore(A_Programa program){

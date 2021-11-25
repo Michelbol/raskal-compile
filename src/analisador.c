@@ -56,7 +56,12 @@ void analisaTermo(A_Termo termo){
 
 void analisaSimpExpress(A_Simp_Express simp_express){
     analisaTermo(simp_express->primeiro_termo);
-    analisaTermo(simp_express->segundo_termo);
+    if(simp_express->segundo_termo != NULL){
+        analisaTermo(simp_express->segundo_termo);
+    }
+    if(simp_express->expressao != NULL){
+        analisaSimpExpress(simp_express->expressao);
+    }    
     analisaOperacao(simp_express->operacao);
 }
 
