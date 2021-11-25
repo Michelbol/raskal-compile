@@ -36,6 +36,10 @@ void analisaOperacao(String operacao){
         addSomaMepa(lstMepa);
         return;
     }
+    if(strcmp(operacao, "-") == 0){
+        addSubtMepa(lstMepa);
+        return;
+    }
     errors = errors+1;
     printf("Operação %s desconhecida", operacao);
 }
