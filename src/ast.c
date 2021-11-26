@@ -97,9 +97,24 @@ A_LstTermo A_lstTermo(A_Termo termo, String operador, A_LstTermo lstTermo){
     return no;
 }
 
-A_Termo A_termo(A_Fator fator){
-    A_Termo no = malloc(sizeof(*no));
+A_LstFator A_lstFator(A_Fator fator, String operador, A_LstFator lstFator){
+    if(lstFator == NULL){
+        A_LstFator no = malloc(sizeof(*no));
+        no->fator = fator;
+        no->operador = operador;
+        no->prox = NULL;
+        return no;
+    }
+    A_LstFator no = malloc(sizeof(*no));
     no->fator = fator;
+    no->operador = operador;
+    no->prox = lstFator;
+    return no;
+}
+
+A_Termo A_termo(A_LstFator lstFator){
+    A_Termo no = malloc(sizeof(*no));
+    no->lstFator = lstFator;
     return no;
 }
 

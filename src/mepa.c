@@ -18,6 +18,10 @@ void addSomaMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("SOMA"));
 }
 
+void addMultMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("MULT"));
+}
+
 void addSubtMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("SUBT"));
 }

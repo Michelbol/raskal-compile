@@ -61,6 +61,7 @@ extern Table tabela_simbolos;
    A_DecProc decProc;
    A_LstCmd lstCmd;
    A_LstTermo lstTermos;
+   A_LstFator lstFator;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -137,6 +138,7 @@ extern Table tabela_simbolos;
 %type <simpExpress> expressao_simples
 %type <lstTermos> lista_termos
 %type <termo> termo
+%type <lstFator> lista_fator
 %type <fator> fator
 %type <bloco> bloco
 %type <str> tipo
@@ -228,7 +230,11 @@ lista_termos: termo T_MAIS lista_termos { $$ = A_lstTermo($1, "+", $3); }
             | termo { $$ = A_lstTermo($1, NULL, NULL); }
 ;
 
-termo: fator { $$ = A_termo($1); }
+termo: lista_fator { $$ = A_termo($1); }
+;
+
+lista_fator: fator T_MULTIPLICACAO lista_fator {$$ = A_lstFator($1, "*", $3); }
+            | fator { $$ = A_lstFator($1, NULL, NULL); }
 ;
 
 fator: T_NUMERO { $$ = A_fator($1); }

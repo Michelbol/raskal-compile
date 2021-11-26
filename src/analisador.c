@@ -31,7 +31,7 @@ void analisaDecSub(A_LstDecSub listSub){
     // implementar
 }
 
-void analisaOperacao(String operacao){
+void analisaOperacaoTermo(String operacao){
     if(operacao == NULL){
         return;
     }
@@ -47,27 +47,58 @@ void analisaOperacao(String operacao){
     printf("Operação %s desconhecida", operacao);
 }
 
+void analisaOperacaoFator(String operacao){
+    if(operacao == NULL){
+        return;
+    }
+    if(strcmp(operacao, "*") == 0){
+        addMultMepa(lstMepa);
+        return;
+    }
+    errors = errors+1;
+    printf("Operação %s desconhecida", operacao);
+}
+
 void analisaFator(A_Fator fator){
     if(fator->num > 0){
         addNumMepa(lstMepa, fator->num);
     }
 }
 
+void analisaLstFator(A_LstFator lstFator){
+    bool primeiroTermo = true;
+    while(lstFator != NULL){
+        if(primeiroTermo){
+            analisaFator(lstFator->fator);
+            primeiroTermo = false;
+        }
+        if(lstFator->prox != NULL){
+            analisaFator(lstFator->prox->fator);
+        }
+        if(lstFator->operador != NULL){
+            analisaOperacaoFator(lstFator->operador);
+        }
+        lstFator = lstFator->prox;
+    }
+}
+
 void analisaTermo(A_Termo termo){
-    analisaFator(termo->fator);
+    analisaLstFator(termo->lstFator);
 }
 
 void analisaLstTermo(A_LstTermo lstTermo){
     bool primeiroTermo = true;
     while(lstTermo != NULL){
+        if(primeiroTermo){
+            analisaTermo(lstTermo->termo);
+            primeiroTermo = false;
+        }
         if(lstTermo->prox != NULL){
-            if(primeiroTermo){
-                analisaTermo(lstTermo->termo);
-                primeiroTermo = false;
-            }
             analisaTermo(lstTermo->prox->termo);
         }
-        analisaOperacao(lstTermo->operador);
+        if(lstTermo->operador != NULL){
+            analisaOperacaoTermo(lstTermo->operador);
+        }
         lstTermo = lstTermo->prox;
     }
 }
