@@ -64,9 +64,18 @@ void analisaOperacaoFator(String operacao){
 }
 
 void analisaFator(A_Fator fator){
-    if(fator->num > 0){
-        addNumMepa(lstMepa, fator->num);
+    if(fator->id != NULL){
+        TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
+        if(variavel == NULL){
+            printf("\nVariavel %s não existe\n", fator->id);
+            errors = errors +1;
+            return;
+        }
+        LoadVarMepa(lstMepa, variavel->endereco, variavel->escopo);
+        return;
     }
+    //Deixar o número para ultima chance
+    addNumMepa(lstMepa, fator->num);    
 }
 
 void analisaLstFator(A_LstFator lstFator){

@@ -14,6 +14,13 @@ void addNumMepa(Commands mepa, int numero){
     addCmdMepa(mepa, createNewCmdMepa(concatStringInt("CRCT ", numero)));
 }
 
+void LoadVarMepa(Commands mepa, int endereco, int escopo){
+    String comando = concatStringInt("CRVL ", escopo);
+    comando = strcat(comando, ",");
+    comando = concatStringInt(comando, endereco);
+    addCmdMepa(mepa, createNewCmdMepa(comando));
+}
+
 void addSomaMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("SOMA"));
 }

@@ -121,6 +121,13 @@ A_Termo A_termo(A_LstFator lstFator){
 A_Fator A_fator(int num){
     A_Fator no = malloc(sizeof(*no));
     no->num = num;
+    no->id = NULL;
+    return no;
+}
+
+A_Fator A_fatorId(String id){
+    A_Fator no = malloc(sizeof(*no));
+    no->id = id;
     return no;
 }
 
