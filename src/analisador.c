@@ -90,8 +90,15 @@ void analisaCmd(A_Cmd cmd){
     analisaAtrib(cmd->atrib);
 }
 
+void analisaLstCmd(A_LstCmd lstCmd){
+    while(lstCmd != NULL){
+        analisaCmd(lstCmd->cmd);
+        lstCmd = lstCmd->prox;
+    }
+}
+
 void analisaCmdComp(A_CmdComp cmdComp){
-    analisaCmd(cmdComp->cmd);
+    analisaLstCmd(cmdComp->lstCmd);
 }
 
 void analisaBloco(A_Bloco bloco){

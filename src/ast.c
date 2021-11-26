@@ -31,9 +31,22 @@ A_DecVar A_decVar(String id, String tipo, Table tabela) {
     return decVar;
 }
 
-A_CmdComp A_cmdComp(A_Cmd cmd) {
+A_CmdComp A_cmdComp(A_LstCmd LstCmd) {
     A_CmdComp no = malloc(sizeof(*no));
+    no->lstCmd = LstCmd;
+    return no;
+}
+
+A_LstCmd A_lstCmd(A_Cmd cmd, A_LstCmd lstCmd){
+    if(lstCmd == NULL){
+        A_LstCmd no = malloc(sizeof(*no));
+        no->cmd = cmd;
+        no->prox = NULL;
+        return no;
+    }
+    A_LstCmd no = malloc(sizeof(*no));
     no->cmd = cmd;
+    no->prox = lstCmd;
     return no;
 }
 
@@ -60,6 +73,15 @@ A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar) {
     A_LstDecVar no = malloc(sizeof(*no));
     no->decVar = decVar;
     no->prox = lstDecVar;
+    return no;
+}
+
+A_Simp_Express A_simp_Express(A_Termo termo){
+    A_Simp_Express no = malloc(sizeof(*no));
+    no->primeiro_termo = termo;
+    no->operacao = NULL;
+    no->segundo_termo = NULL;
+    no->expressao = NULL;
     return no;
 }
 
@@ -153,7 +175,7 @@ void imprimeArvore(A_Programa program){
     }
     if(temCmdComp){
         printf("==============Inicio Comando Composto==============");
-        printcmdComp(program->bloco->cmdComp->cmd);
+        printcmdComp(program->bloco->cmdComp->lstCmd->cmd);
         printf("==============Fim Comando Composto=================\n");
     }
 }

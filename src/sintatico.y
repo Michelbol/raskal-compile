@@ -59,6 +59,7 @@ extern Table tabela_simbolos;
    A_Fator fator;
    A_LstIdent lstIdent;
    A_DecProc decProc;
+   A_LstCmd lstCmd;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -128,6 +129,7 @@ extern Table tabela_simbolos;
 %type <lstDecSub> secao_declara_subs declara_proc params_formais list_declara_param declara_param
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
+%type <lstCmd> lista_comandos
 %type <cmd> comandos
 %type <atrib> atribuicao
 %type <express> expressao
@@ -200,7 +202,11 @@ declara_param: T_VAR lista_ident T_DOIS_PONTOS tipo { $$ = NULL; }
 ;
 
 
-comando_composto: T_BEGIN comandos T_PONTO_E_VIRGULA T_END { $$ = A_cmdComp($2); }
+comando_composto: T_BEGIN lista_comandos T_END { $$ = A_cmdComp($2); }
+;
+
+lista_comandos: comandos T_PONTO_E_VIRGULA lista_comandos { $$ = A_lstCmd($1, $3); }
+            |  comandos T_PONTO_E_VIRGULA { $$ = A_lstCmd($1, NULL); }
 ;
 
 comandos: atribuicao { $$ = A_cmd($1); }

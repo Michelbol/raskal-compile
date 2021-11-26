@@ -11,6 +11,7 @@ typedef struct A_LstDecVar_ *A_LstDecVar;
 typedef struct A_LstDecParam_ *A_LstDecParam;
 typedef struct A_CmdComp_ *A_CmdComp;
 typedef struct A_Cmd_ *A_Cmd;
+typedef struct A_LstCmd_ *A_LstCmd;
 typedef struct A_Atrib_ *A_Atrib;
 typedef struct A_Express_ *A_Express;
 typedef struct A_Simp_Express_ *A_Simp_Express;
@@ -29,7 +30,7 @@ A_Bloco A_bloco(A_LstDecVar secDecVar, A_LstDecSub secDecSub, A_CmdComp cmdComp)
 A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent);
 A_DecVar A_decVar(String id, String tipo, Table tabela);
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar);
-A_CmdComp A_cmdComp(A_Cmd cmd);
+A_CmdComp A_cmdComp(A_LstCmd LstCmd);
 A_Cmd A_cmd(A_Atrib attr);
 A_Atrib A_atrib(String id, A_Express express);
 A_Express A_express(A_Simp_Express simp_express);
@@ -87,7 +88,12 @@ struct A_DecParam_ {
 };
 
 struct A_CmdComp_ {
+    A_LstCmd lstCmd;
+};
+
+struct A_LstCmd_ {
     A_Cmd cmd;
+    A_LstCmd prox;
 };
 
 struct A_Cmd_ {
