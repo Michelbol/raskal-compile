@@ -74,8 +74,12 @@ void analisaFator(A_Fator fator){
         LoadVarMepa(lstMepa, variavel->endereco, variavel->escopo);
         return;
     }
-    //Deixar o número para ultima chance
-    addNumMepa(lstMepa, fator->num);    
+    if(fator->num != NULL){
+        addNumMepa(lstMepa, fator->num); 
+    }
+    if(fator->logico != NULL){
+
+    }       
 }
 
 void analisaLstFator(A_LstFator lstFator){
@@ -159,6 +163,8 @@ int analisaPrograma(A_Programa prog, Table tabela, Commands mepa){
     tabelaSimbolos = tabela;
     lstMepa = mepa;
     addProgram(tabelaSimbolos, prog->id);
+    addTipo(tabelaSimbolos, "integer");
+    addTipo(tabelaSimbolos, "boolean");
     analisaBloco(prog->bloco);
     desalocaMemoriaMepa(lstMepa, countVar);
     return errors;

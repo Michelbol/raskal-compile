@@ -134,6 +134,7 @@ struct A_LstFator_ {
 struct A_Fator_ {
     int num;
     String id;
+    bool logico;
 };
 
 void imprimeArvore(A_Programa program);

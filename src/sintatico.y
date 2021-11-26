@@ -101,6 +101,8 @@ extern Table tabela_simbolos;
 %token T_MENOR_OU_IGUAL
 %token T_ATRIBUICAO
 %token T_DOIS_PONTOS
+%token T_FALSE
+%token T_TRUE
 
 
 %token <str> T_IDENT
@@ -142,6 +144,7 @@ extern Table tabela_simbolos;
 %type <fator> fator
 %type <bloco> bloco
 %type <str> tipo
+%type <str> logico
 
 %define parse.error verbose
 %define parse.lac full
@@ -240,7 +243,11 @@ lista_fator: fator T_MULTIPLICACAO lista_fator {$$ = A_lstFator($1, "*", $3); }
 
 fator: T_IDENT { $$ = A_fatorId($1); }
       | T_NUMERO { $$ = A_fator($1); }
+      | logico { $$ = A_fatorLogico($1); }
 ;
+
+logico: T_TRUE { $$ = true; }
+      | T_FALSE { $$ = false; }
 %%
 
 /* Aqui poderia ser construída a função main com a lógica do compilador, que

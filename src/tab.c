@@ -46,6 +46,10 @@ Table addProgram(Table tabela, String id){
     return addIdentificador(tabela, id, "program", "", 0, 0);
 }
 
+Table addTipo(Table tabela, String id){
+    return addIdentificador(tabela, id, "tipo", "", 0, 0);
+}
+
 Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
     return addIdentificador(tabela, id, "var", tipo, escopo, endereco);
 }

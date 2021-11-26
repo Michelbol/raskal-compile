@@ -130,6 +130,11 @@ A_Fator A_fatorId(String id){
     no->id = id;
     return no;
 }
+A_Fator A_fatorLogico(bool logico){
+    A_Fator no = malloc(sizeof(*no));
+    no->logico = logico;
+    return no;
+}
 
 A_LstDecVar concatLstDecVar(A_LstDecVar lst1, A_LstDecVar lst2) {
     A_LstDecVar lstConcat = lst1;
