@@ -234,6 +234,7 @@ termo: lista_fator { $$ = A_termo($1); }
 ;
 
 lista_fator: fator T_MULTIPLICACAO lista_fator {$$ = A_lstFator($1, "*", $3); }
+            | fator T_DIV lista_fator { $$ = A_lstFator($1, "div", $3); }
             | fator { $$ = A_lstFator($1, NULL, NULL); }
 ;
 

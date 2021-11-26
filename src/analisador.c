@@ -55,6 +55,10 @@ void analisaOperacaoFator(String operacao){
         addMultMepa(lstMepa);
         return;
     }
+    if(strcmp(operacao, "div") == 0){
+        addDivMepa(lstMepa);
+        return;
+    }
     errors = errors+1;
     printf("Operação %s desconhecida", operacao);
 }

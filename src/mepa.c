@@ -26,6 +26,10 @@ void addSubtMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("SUBT"));
 }
 
+void addDivMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("DIVI"));
+}
+
 void addAtribMepa(Commands mepa, int endereco, int escopo){
     String comando = concatStringInt("ARMZ ", escopo);
     comando = strcat(comando, ",");
