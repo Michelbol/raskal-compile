@@ -60,6 +60,7 @@ extern Table tabela_simbolos;
    A_LstIdent lstIdent;
    A_DecProc decProc;
    A_LstCmd lstCmd;
+   A_LstTermo lstTermos;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -134,6 +135,7 @@ extern Table tabela_simbolos;
 %type <atrib> atribuicao
 %type <express> expressao
 %type <simpExpress> expressao_simples
+%type <lstTermos> lista_termos
 %type <termo> termo
 %type <fator> fator
 %type <bloco> bloco
@@ -218,10 +220,12 @@ atribuicao: T_IDENT T_ATRIBUICAO expressao { $$ = A_atrib($1, $3); }
 expressao: expressao_simples { $$ = A_express($1); }
 ;
 
-expressao_simples: termo T_MAIS termo { $$ = A_simp_Express_Mais($1, $3, NULL); }
-               | termo T_MENOS termo { $$ = A_simp_Express_Menos($1, $3, NULL); }
-               | termo T_MAIS expressao_simples { $$ = A_simp_Express_Mais($1, NULL, $3); }
-               | termo T_MENOS expressao_simples { $$ = A_simp_Express_Menos($1, NULL, $3); }
+expressao_simples: lista_termos { $$ = A_simp_Express($1); }
+;
+
+lista_termos: termo T_MAIS lista_termos { $$ = A_lstTermo($1, "+", $3); }
+            | termo T_MENOS lista_termos { $$ = A_lstTermo($1, "-", $3); }
+            | termo { $$ = A_lstTermo($1, NULL, NULL); }
 ;
 
 termo: fator { $$ = A_termo($1); }

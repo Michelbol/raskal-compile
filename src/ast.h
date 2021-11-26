@@ -15,6 +15,7 @@ typedef struct A_LstCmd_ *A_LstCmd;
 typedef struct A_Atrib_ *A_Atrib;
 typedef struct A_Express_ *A_Express;
 typedef struct A_Simp_Express_ *A_Simp_Express;
+typedef struct A_LstTermo_ *A_LstTermo;
 typedef struct A_Termo_ *A_Termo;
 typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
@@ -110,10 +111,13 @@ struct A_Express_ {
 };
 
 struct A_Simp_Express_ {
-    A_Termo primeiro_termo;
-    String operacao;
-    A_Termo segundo_termo;
-    A_Simp_Express expressao;
+    A_LstTermo lstTermo;
+};
+
+struct A_LstTermo_ {
+    A_Termo termo;
+    String operador;
+    A_LstTermo prox;
 };
 
 struct A_Termo_ {

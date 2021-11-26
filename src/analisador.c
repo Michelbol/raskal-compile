@@ -32,6 +32,9 @@ void analisaDecSub(A_LstDecSub listSub){
 }
 
 void analisaOperacao(String operacao){
+    if(operacao == NULL){
+        return;
+    }
     if(strcmp(operacao, "+") == 0){
         addSomaMepa(lstMepa);
         return;
@@ -54,22 +57,23 @@ void analisaTermo(A_Termo termo){
     analisaFator(termo->fator);
 }
 
-void analisaSimpExpress(A_Simp_Express simp_express, bool recursivo){    
-    if(simp_express->segundo_termo != NULL){
-        analisaTermo(simp_express->segundo_termo);
-        analisaOperacao(simp_express->operacao);
-    }
-    if(simp_express->expressao != NULL){
-        if(recursivo){
-            analisaTermo(simp_express->expressao->primeiro_termo);
-            analisaOperacao(simp_express->operacao);
-        }else{
-            analisaTermo(simp_express->primeiro_termo);
-            analisaTermo(simp_express->expressao->primeiro_termo);
-            analisaOperacao(simp_express->operacao);            
+void analisaLstTermo(A_LstTermo lstTermo){
+    bool primeiroTermo = true;
+    while(lstTermo != NULL){
+        if(lstTermo->prox != NULL){
+            if(primeiroTermo){
+                analisaTermo(lstTermo->termo);
+                primeiroTermo = false;
+            }
+            analisaTermo(lstTermo->prox->termo);
         }
-        analisaSimpExpress(simp_express->expressao, true);
+        analisaOperacao(lstTermo->operador);
+        lstTermo = lstTermo->prox;
     }
+}
+
+void analisaSimpExpress(A_Simp_Express simp_express, bool recursivo){   
+    analisaLstTermo(simp_express->lstTermo);
 }
 
 void analisaExpress(A_Express express){

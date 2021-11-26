@@ -76,30 +76,24 @@ A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar) {
     return no;
 }
 
-A_Simp_Express A_simp_Express(A_Termo termo){
+A_Simp_Express A_simp_Express(A_LstTermo lstTermo){
     A_Simp_Express no = malloc(sizeof(*no));
-    no->primeiro_termo = termo;
-    no->operacao = NULL;
-    no->segundo_termo = NULL;
-    no->expressao = NULL;
+    no->lstTermo = lstTermo;
     return no;
 }
 
-A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao){
-    A_Simp_Express no = malloc(sizeof(*no));
-    no->primeiro_termo = primeiro_termo;
-    no->operacao = "+";
-    no->segundo_termo = segundo_termo;
-    no->expressao = expressao;
-    return no;
-}
-
-A_Simp_Express A_simp_Express_Menos(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao){
-    A_Simp_Express no = malloc(sizeof(*no));
-    no->primeiro_termo = primeiro_termo;
-    no->operacao = "-";
-    no->segundo_termo = segundo_termo;
-    no->expressao = expressao;
+A_LstTermo A_lstTermo(A_Termo termo, String operador, A_LstTermo lstTermo){
+    if(lstTermo == NULL){
+        A_LstTermo no = malloc(sizeof(*no));
+        no->termo = termo;
+        no->operador = operador;
+        no->prox = NULL;
+        return no;
+    }
+    A_LstTermo no = malloc(sizeof(*no));
+    no->termo = termo;
+    no->operador = operador;
+    no->prox = lstTermo;
     return no;
 }
 

@@ -76,6 +76,6 @@ numero [0-9]+
 
 
 {ident}     { IMPRIME("T_IDENT"); yylval.str = string(yytext); return T_IDENT; }
-{numero}    { IMPRIME("T_NUMERO"); yylval.num=atoi(yytext); return T_NUMERO; }
+{numero}    { IMPRIME("T_NUMERO"); yylval.num = atoi(yytext); return T_NUMERO; }
 
 .           { fprintf(stderr, "Erro: Token ilegal: '%s'\n", yytext); }
