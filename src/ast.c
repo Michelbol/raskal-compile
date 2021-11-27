@@ -193,6 +193,13 @@ A_Fator A_fator(int num){
     return no;
 }
 
+A_Fator A_fatorExpressao(A_Express expressao){
+    A_Fator no = malloc(sizeof(*no));
+    no->expressao = expressao;
+    no->type = Expressao;
+    return no;
+}
+
 A_Fator A_fatorId(String id){
     A_Fator no = malloc(sizeof(*no));
     no->id = id;

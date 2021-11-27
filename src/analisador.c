@@ -97,6 +97,9 @@ void analisaFator(A_Fator fator){
             analisaFator(fator->fator);
             addInvertSinalMepa(lstMepa);
             break;
+        case Expressao:
+            analisaExpress(fator->expressao);
+            break;
     }
 }
 
