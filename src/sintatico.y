@@ -247,9 +247,9 @@ expressao: expressao_simples { $$ = A_express($1); }
 expressao_simples: lista_termos { $$ = A_simp_Express($1); }
 ;
 
-lista_termos: termo T_MAIS lista_termos { $$ = A_lstTermo($1, "+", $3); }
-            | termo T_MENOS lista_termos { $$ = A_lstTermo($1, "-", $3); }
-            | termo { $$ = A_lstTermo($1, NULL, NULL); }
+lista_termos: termo T_MAIS lista_termos { $$ = A_lstTermoSoma($1, $3); }
+            | termo T_MENOS lista_termos { $$ = A_lstTermoSubtrair($1, $3); }
+            | termo { $$ = A_lstTermoNumero($1, NULL); }
 ;
 
 termo: lista_fator { $$ = A_termo($1); }

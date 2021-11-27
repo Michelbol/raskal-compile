@@ -126,7 +126,19 @@ A_Simp_Express A_simp_Express(A_LstTermo lstTermo){
     return no;
 }
 
-A_LstTermo A_lstTermo(A_Termo termo, String operador, A_LstTermo lstTermo){
+A_LstTermo A_lstTermoSoma(A_Termo termo, A_LstTermo lstTermo) {
+    return A_lstTermo(termo, Somar, lstTermo);
+}
+
+A_LstTermo A_lstTermoSubtrair(A_Termo termo, A_LstTermo lstTermo) {
+    return A_lstTermo(termo, Subtrair, lstTermo);
+}
+
+A_LstTermo A_lstTermoNumero(A_Termo termo, A_LstTermo lstTermo) {
+    return A_lstTermo(termo, Numero, lstTermo);
+}
+
+A_LstTermo A_lstTermo(A_Termo termo, TermoOperator operador, A_LstTermo lstTermo){
     if(lstTermo == NULL){
         A_LstTermo no = malloc(sizeof(*no));
         no->termo = termo;

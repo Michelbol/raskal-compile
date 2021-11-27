@@ -31,20 +31,22 @@ void analisaDecSub(A_LstDecSub listSub){
     // implementar
 }
 
-void analisaOperacaoTermo(String operacao){
-    if(operacao == NULL){
-        return;
-    }
-    if(strcmp(operacao, "+") == 0){
+void analisaOperacaoTermo(TermoOperator operacao){
+    switch (operacao)
+    {
+    case Somar:
         addSomaMepa(lstMepa);
-        return;
-    }
-    if(strcmp(operacao, "-") == 0){
+        break;
+    case Subtrair:
         addSubtMepa(lstMepa);
-        return;
+        break;
+    case Numero:
+        break;
+    default:
+        errors = errors+1;
+        printf("Operação %s desconhecida", operacao);
+        break;
     }
-    errors = errors+1;
-    printf("Operação %s desconhecida", operacao);
 }
 
 void analisaOperacaoFator(String operacao){
@@ -127,9 +129,7 @@ void analisaLstTermo(A_LstTermo lstTermo){
         if(lstTermo->prox != NULL){
             analisaTermo(lstTermo->prox->termo);
         }
-        if(lstTermo->operador != NULL){
-            analisaOperacaoTermo(lstTermo->operador);
-        }
+        analisaOperacaoTermo(lstTermo->operador);
         lstTermo = lstTermo->prox;
     }
 }
@@ -157,7 +157,7 @@ void analisaWrite(A_Write write){
     while(lst != NULL){
         analisaExpress(lst->expressao);
         lst = lst->prox;
-        addWriteMepa();
+        addWriteMepa(lstMepa);
     }
 }
 

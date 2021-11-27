@@ -25,6 +25,7 @@ typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
 typedef enum FatorType_ {Id, Num, Logico, Not, Menos} FatorType;
 typedef enum CmdType_ { Atrib, Write, Read } CmdType;
+typedef enum TermoOperator_ { Somar, Subtrair, Or, Numero} TermoOperator;
 
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
@@ -46,7 +47,10 @@ A_Fator A_fatorNotFator(A_Fator fator);
 A_Fator A_fatorMenosFator(A_Fator fator);
 A_LstFator A_lstFator(A_Fator fator, String operador, A_LstFator lstFator);
 A_Termo A_termo(A_LstFator lstFator);
-A_LstTermo A_lstTermo(A_Termo termo, String operador, A_LstTermo lstTermo);
+A_LstTermo A_lstTermoSubtrair(A_Termo termo, A_LstTermo lstTermo);
+A_LstTermo A_lstTermoSoma(A_Termo termo, A_LstTermo lstTermo);
+A_LstTermo A_lstTermoNumero(A_Termo termo, A_LstTermo lstTermo);
+A_LstTermo A_lstTermo(A_Termo termo, TermoOperator operador, A_LstTermo lstTermo);
 A_Simp_Express A_simp_Express(A_LstTermo lstTermo);
 A_LstExpress A_lstExpress(A_Express express, A_LstExpress lstExpress);
 A_Read A_read(A_LstIdent lstIdent);
@@ -154,7 +158,7 @@ struct A_Simp_Express_ {
 
 struct A_LstTermo_ {
     A_Termo termo;
-    String operador;
+    TermoOperator operador;
     A_LstTermo prox;
 };
 
