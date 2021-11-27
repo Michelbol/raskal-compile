@@ -249,6 +249,7 @@ expressao_simples: lista_termos { $$ = A_simp_Express($1); }
 
 lista_termos: termo T_MAIS lista_termos { $$ = A_lstTermoSoma($1, $3); }
             | termo T_MENOS lista_termos { $$ = A_lstTermoSubtrair($1, $3); }
+            | termo T_OR lista_termos { $$ = A_lstTermoOr($1,$3); }
             | termo { $$ = A_lstTermoNumero($1, NULL); }
 ;
 

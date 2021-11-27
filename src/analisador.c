@@ -42,6 +42,9 @@ void analisaOperacaoTermo(TermoOperator operacao){
         break;
     case Numero:
         break;
+    case Or:
+        addOrMepa(lstMepa);
+        break;
     default:
         errors = errors+1;
         printf("Operação %s desconhecida", operacao);

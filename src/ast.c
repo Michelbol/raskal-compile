@@ -126,6 +126,10 @@ A_Simp_Express A_simp_Express(A_LstTermo lstTermo){
     return no;
 }
 
+A_LstTermo A_lstTermoOr(A_Termo termo, A_LstTermo lstTermo) {
+    return A_lstTermo(termo, Or, lstTermo);
+}
+
 A_LstTermo A_lstTermoSoma(A_Termo termo, A_LstTermo lstTermo) {
     return A_lstTermo(termo, Somar, lstTermo);
 }

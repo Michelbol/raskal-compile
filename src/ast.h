@@ -56,6 +56,7 @@ A_Termo A_termo(A_LstFator lstFator);
 A_LstTermo A_lstTermoSubtrair(A_Termo termo, A_LstTermo lstTermo);
 A_LstTermo A_lstTermoSoma(A_Termo termo, A_LstTermo lstTermo);
 A_LstTermo A_lstTermoNumero(A_Termo termo, A_LstTermo lstTermo);
+A_LstTermo A_lstTermoOr(A_Termo termo, A_LstTermo lstTermo);
 A_LstTermo A_lstTermo(A_Termo termo, TermoOperator operador, A_LstTermo lstTermo);
 A_Simp_Express A_simp_Express(A_LstTermo lstTermo);
 A_LstExpress A_lstExpress(A_Express express, A_LstExpress lstExpress);
