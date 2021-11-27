@@ -66,6 +66,7 @@ extern Table tabela_simbolos;
    A_LstExpress lstExpress;
    A_Write write;
    A_Read read;
+   Relacao rel;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -152,6 +153,7 @@ extern Table tabela_simbolos;
 %type <bloco> bloco
 %type <str> tipo
 %type <logic> logico
+%type <rel> relacao
 
 %define parse.error verbose
 %define parse.lac full
@@ -242,6 +244,15 @@ lista_expressoes: expressao T_VIRGULA lista_expressoes { $$ = A_lstExpress($1, $
 ;
 
 expressao: expressao_simples { $$ = A_express($1); }
+         | expressao_simples relacao expressao_simples { $$ = A_expressRelacao($1, $2, $3); }
+;
+
+relacao: T_IGUAL { $$ = Igual; }
+      // |  T_DIFERENTE
+      // |  T_MENOR
+      // |  T_MENOR_OU_IGUAL
+      // |  T_MAIOR
+      // |  T_MAIOR_OU_IGUAL
 ;
 
 expressao_simples: lista_termos { $$ = A_simp_Express($1); }

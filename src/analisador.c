@@ -147,8 +147,38 @@ void analisaSimpExpress(A_Simp_Express simp_express){
     analisaLstTermo(simp_express->lstTermo);
 }
 
+void analisaExpressRelacao(Relacao relacao){
+    switch (relacao)
+    {
+    case Igual:
+        addIgualMepa(lstMepa);
+        break;
+    case Diferente:
+        /* code */
+        break;
+    case Menor:
+        /* code */
+        break;
+    case MenorIgual:
+        /* code */
+        break;
+    case Maior:
+        /* code */
+        break;
+    case MaiorIgual:
+        /* code */
+        break;
+    default:
+        break;
+    }
+}
+
 void analisaExpress(A_Express express){
     analisaSimpExpress(express->simp_express);
+    if(express->relacao != ExpressaoSimples){
+        analisaSimpExpress(express->simp_express2);
+        analisaExpressRelacao(express->relacao);
+    }
 }
 
 void analisaAtrib(A_Atrib atrib){

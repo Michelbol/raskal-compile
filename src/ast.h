@@ -27,6 +27,7 @@ typedef enum FatorType_ {Id, Num, Logico, Expressao , Not, Menos} FatorType;
 typedef enum CmdType_ { Atrib, Write, Read } CmdType;
 typedef enum TermoOperator_ { Somar, Subtrair, Or, Numero} TermoOperator;
 typedef enum FatorOperator_ { Multi, Div, And , Fator} FatorOperator;
+typedef enum Relacao_ { Igual, Diferente, Menor, MenorIgual, Maior, MaiorIgual, ExpressaoSimples} Relacao;
 
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
@@ -68,6 +69,7 @@ A_Cmd A_cmdAtrib(A_Atrib atrib);
 A_LstCmd A_lstCmd(A_Cmd cmd, A_LstCmd lstCmd);
 A_Atrib A_atrib(String id, A_Express express);
 A_Express A_express(A_Simp_Express simp_express);
+A_Express A_expressRelacao(A_Simp_Express simp_express, Relacao relacao, A_Simp_Express simp_express2);
 A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao);
 
 A_LstDecVar concatLstDecVar(A_LstDecVar lst1, A_LstDecVar lst2);
@@ -157,6 +159,8 @@ struct A_LstExpress_ {
 
 struct A_Express_ {
     A_Simp_Express simp_express;
+    Relacao relacao;
+    A_Simp_Express simp_express2;
 };
 
 struct A_Simp_Express_ {

@@ -49,6 +49,10 @@ void LoadVarMepa(Commands mepa, int endereco, int escopo){
     addCmdMepa(mepa, createNewCmdMepa(comando));
 }
 
+void addIgualMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("CMIG"));
+}
+
 void addSomaMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("SOMA"));
 }

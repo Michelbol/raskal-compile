@@ -110,6 +110,15 @@ A_LstExpress A_lstExpress(A_Express express, A_LstExpress lstExpress){
 A_Express A_express(A_Simp_Express simp_express) {
     A_Express no = malloc(sizeof(*no));
     no->simp_express = simp_express;
+    no->relacao = ExpressaoSimples;
+    return no;
+}
+
+A_Express A_expressRelacao(A_Simp_Express simp_express, Relacao relacao, A_Simp_Express simp_express2) {
+    A_Express no = malloc(sizeof(*no));
+    no->simp_express = simp_express;
+    no->simp_express2 = simp_express2;
+    no->relacao = relacao;
     return no;
 }
 
