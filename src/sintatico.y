@@ -248,11 +248,11 @@ expressao: expressao_simples { $$ = A_express($1); }
 ;
 
 relacao: T_IGUAL { $$ = Igual; }
-      // |  T_DIFERENTE
-      // |  T_MENOR
-      // |  T_MENOR_OU_IGUAL
-      // |  T_MAIOR
-      // |  T_MAIOR_OU_IGUAL
+      |  T_DIFERENTE { $$ = Diferente; }
+      |  T_MENOR { $$ = Menor; }
+      |  T_MENOR_OU_IGUAL { $$ = MenorIgual; }
+      |  T_MAIOR { $$ = Maior; }
+      |  T_MAIOR_OU_IGUAL { $$ = MaiorIgual; }
 ;
 
 expressao_simples: lista_termos { $$ = A_simp_Express($1); }

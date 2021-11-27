@@ -49,6 +49,26 @@ void LoadVarMepa(Commands mepa, int endereco, int escopo){
     addCmdMepa(mepa, createNewCmdMepa(comando));
 }
 
+void addDiferenteMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("CMDG"));
+}
+
+void addMenorMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("CMME"));
+}
+
+void addMenorIgualMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("CMEG"));
+}
+
+void addMaiorMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("CMMA"));
+}
+
+void addMaiorIgualMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("CMAG"));
+}
+
 void addIgualMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("CMIG"));
 }

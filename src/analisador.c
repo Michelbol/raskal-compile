@@ -154,19 +154,19 @@ void analisaExpressRelacao(Relacao relacao){
         addIgualMepa(lstMepa);
         break;
     case Diferente:
-        /* code */
+        addDiferenteMepa(lstMepa);
         break;
     case Menor:
-        /* code */
+        addMenorMepa(lstMepa);
         break;
     case MenorIgual:
-        /* code */
+        addMenorIgualMepa(lstMepa);
         break;
     case Maior:
-        /* code */
+        addMaiorMepa(lstMepa);
         break;
     case MaiorIgual:
-        /* code */
+        addMaiorIgualMepa(lstMepa);
         break;
     default:
         break;
