@@ -7,6 +7,8 @@ static int countVar = 0;
 
 static int errors = 0;
 
+static int desvio = 0;
+
 static Table tabelaSimbolos;
 
 static Commands lstMepa;
@@ -223,8 +225,20 @@ void analisaCmd(A_Cmd cmd){
     case Read:
         analisaRead(cmd->read);
         break;
-
+    case If:
+        analisaIf(cmd->cond);
+        break;
     }
+}
+
+void analisaIf(A_Condicional cond){
+    int fimDoIf = desvio;
+    // analisaCmd(cond->cmd);
+    addDesvioCond(lstMepa, desvio);
+    analisaExpress(cond->expressao);
+    //else em baixo
+    // se tiver else addNadaLabel(&desvio);
+    addNadaLabel(lstMepa, &fimDoIf);
 }
 
 void analisaLstCmd(A_LstCmd lstCmd){

@@ -112,6 +112,15 @@ Command createNewCmdMepa(String instrucao){
     return cmd;
 }
 
+void addDesvioCond(Commands mepa, int desvio){
+    addCmdMepa(mepa, createNewCmdMepa(concatStringInt("DSVF ", desvio)));
+}
+
+void addNadaLabel(Commands mepa, int *desvio){
+    addCmdMepa(mepa, createNewCmdMepa(concatIntString(*desvio, ": NADA")));
+    *desvio = *desvio+1;
+}
+
 void addCmdMepa(Commands mepa, Command cmd){
     mepa->ultimo->next = cmd;
     mepa->ultimo = cmd;

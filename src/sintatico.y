@@ -67,6 +67,7 @@ extern Table tabela_simbolos;
    A_Write write;
    A_Read read;
    Relacao rel;
+   A_Condicional condicional;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -139,7 +140,7 @@ extern Table tabela_simbolos;
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
 %type <lstCmd> lista_comandos
-%type <cmd> comandos
+%type <cmd> comando
 %type <atrib> atribuicao
 %type <express> expressao
 %type <read> leitura
@@ -154,6 +155,7 @@ extern Table tabela_simbolos;
 %type <str> tipo
 %type <logic> logico
 %type <rel> relacao
+%type <condicional> condicional
 
 %define parse.error verbose
 %define parse.lac full
@@ -221,16 +223,20 @@ declara_param: T_VAR lista_ident T_DOIS_PONTOS tipo { $$ = NULL; }
 comando_composto: T_BEGIN lista_comandos T_END { $$ = A_cmdComp($2); }
 ;
 
-lista_comandos: comandos T_PONTO_E_VIRGULA lista_comandos { $$ = A_lstCmd($1, $3); }
-            |  comandos T_PONTO_E_VIRGULA { $$ = A_lstCmd($1, NULL); }
+lista_comandos: comando T_PONTO_E_VIRGULA lista_comandos { $$ = A_lstCmd($1, $3); }
+            |  comando T_PONTO_E_VIRGULA { $$ = A_lstCmd($1, NULL); }
 ;
 
-comandos: atribuicao { $$ = A_cmdAtrib($1); }
+comando: atribuicao { $$ = A_cmdAtrib($1); }
+         | condicional { $$ = A_cmdCond($1); }
          | escrita { $$ = A_cmdWrite($1); }
          | leitura { $$ = A_cmdRead($1); }
 ;
 
 atribuicao: T_IDENT T_ATRIBUICAO expressao { $$ = A_atrib($1, $3); }
+;
+
+condicional: T_IF expressao T_THEN comando { $$ = A_condicional($2, $4); }
 ;
 
 leitura: T_READ T_ABRE_PARENTESES lista_ident T_FECHA_PARENTESES { $$ = A_read($3); }

@@ -58,6 +58,20 @@ A_Cmd A_cmdAtrib(A_Atrib atrib) {
     return no;
 }
 
+A_Condicional A_condicional(A_Express expressao, A_Cmd cmd) {
+    A_Condicional no = malloc(sizeof(*no));
+    no->expressao = expressao;
+    no->cmd = cmd;
+    return no;
+}
+
+A_Cmd A_cmdCond(A_Condicional cond) {
+    A_Cmd no = malloc(sizeof(*no));
+    no->cond = cond;
+    no->type = If;
+    return no;
+}
+
 A_Cmd A_cmdWrite(A_Write write) {
     A_Cmd no = malloc(sizeof(*no));
     no->atrib = NULL;

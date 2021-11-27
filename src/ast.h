@@ -14,6 +14,7 @@ typedef struct A_Cmd_ *A_Cmd;
 typedef struct A_LstCmd_ *A_LstCmd;
 typedef struct A_Atrib_ *A_Atrib;
 typedef struct A_Express_ *A_Express;
+typedef struct A_Condicional_ *A_Condicional;
 typedef struct A_Read_ *A_Read;
 typedef struct A_Write_ *A_Write;
 typedef struct A_LstExpress_ *A_LstExpress;
@@ -24,7 +25,7 @@ typedef struct A_LstFator_ *A_LstFator;
 typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
 typedef enum FatorType_ {Id, Num, Logico, Expressao , Not, Menos} FatorType;
-typedef enum CmdType_ { Atrib, Write, Read } CmdType;
+typedef enum CmdType_ { Atrib, Write, Read, If } CmdType;
 typedef enum TermoOperator_ { Somar, Subtrair, Or, Numero} TermoOperator;
 typedef enum FatorOperator_ { Multi, Div, And , Fator} FatorOperator;
 typedef enum Relacao_ { Igual, Diferente, Menor, MenorIgual, Maior, MaiorIgual, ExpressaoSimples} Relacao;
@@ -61,8 +62,10 @@ A_LstTermo A_lstTermoOr(A_Termo termo, A_LstTermo lstTermo);
 A_LstTermo A_lstTermo(A_Termo termo, TermoOperator operador, A_LstTermo lstTermo);
 A_Simp_Express A_simp_Express(A_LstTermo lstTermo);
 A_LstExpress A_lstExpress(A_Express express, A_LstExpress lstExpress);
+A_Condicional A_condicional(A_Express expressao, A_Cmd cmd);
 A_Read A_read(A_LstIdent lstIdent);
 A_Write A_write(A_LstExpress lstExpress);
+A_Cmd A_cmdCond(A_Condicional cond);
 A_Cmd A_cmdRead(A_Read read);
 A_Cmd A_cmdWrite(A_Write write);
 A_Cmd A_cmdAtrib(A_Atrib atrib);
@@ -136,12 +139,18 @@ struct A_Cmd_ {
     A_Atrib atrib;
     A_Write write;
     A_Read read;
+    A_Condicional cond;
     CmdType type;
 };
 
 struct A_Atrib_ {
     String id;
     A_Express express;
+};
+
+struct A_Condicional_ {
+    A_Express expressao;
+    A_Cmd cmd;
 };
 
 struct A_Read_ {

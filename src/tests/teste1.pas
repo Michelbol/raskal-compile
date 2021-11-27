@@ -11,6 +11,8 @@ begin
     y := (5+5) > (9+2); // false
     y := (5+5) > (5+5); // false
     y := (5+5) >= (5+5); // true
+    if (true) then
+        write(y);
     //read(y);
     //z := not true;
     //x := -3;

@@ -19,3 +19,10 @@ String concatStringInt(char *word, int numero){
     snprintf(c_comando, size, "%s%i", word, numero);
     return string(c_comando);
 }
+
+String concatIntString(int numero, char *word){
+    int size = strlen(word)+9; // max int is 9 size
+    char c_comando[size];
+    snprintf(c_comando, size, "%i%s", numero, word);
+    return string(c_comando);
+}
