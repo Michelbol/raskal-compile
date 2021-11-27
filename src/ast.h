@@ -20,6 +20,7 @@ typedef struct A_Termo_ *A_Termo;
 typedef struct A_LstFator_ *A_LstFator;
 typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
+typedef enum FatorType_ {Id, Num, Logico} FatorType;
 
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
@@ -135,6 +136,7 @@ struct A_Fator_ {
     int num;
     String id;
     bool logico;
+    FatorType type;
 };
 
 void imprimeArvore(A_Programa program);

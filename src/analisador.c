@@ -64,7 +64,7 @@ void analisaOperacaoFator(String operacao){
 }
 
 void analisaFator(A_Fator fator){
-    if(fator->id != NULL){
+    if(fator->type == Id){
         TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
         if(variavel == NULL){
             printf("\nVariavel %s não existe\n", fator->id);
@@ -74,11 +74,11 @@ void analisaFator(A_Fator fator){
         LoadVarMepa(lstMepa, variavel->endereco, variavel->escopo);
         return;
     }
-    if(fator->num != NULL){
+    if(fator->type == Num){
         addNumMepa(lstMepa, fator->num); 
     }
-    if(fator->logico != NULL){
-
+    if(fator->type == Logico){
+        addLogicoMepa(lstMepa, fator->logico);
     }       
 }
 
@@ -120,12 +120,12 @@ void analisaLstTermo(A_LstTermo lstTermo){
     }
 }
 
-void analisaSimpExpress(A_Simp_Express simp_express, bool recursivo){   
+void analisaSimpExpress(A_Simp_Express simp_express){   
     analisaLstTermo(simp_express->lstTermo);
 }
 
 void analisaExpress(A_Express express){
-    analisaSimpExpress(express->simp_express, false);
+    analisaSimpExpress(express->simp_express);
 }
 
 void analisaAtrib(A_Atrib atrib){

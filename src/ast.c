@@ -122,17 +122,20 @@ A_Fator A_fator(int num){
     A_Fator no = malloc(sizeof(*no));
     no->num = num;
     no->id = NULL;
+    no->type = Num;
     return no;
 }
 
 A_Fator A_fatorId(String id){
     A_Fator no = malloc(sizeof(*no));
     no->id = id;
+    no->type = Id;
     return no;
 }
 A_Fator A_fatorLogico(bool logico){
     A_Fator no = malloc(sizeof(*no));
     no->logico = logico;
+    no->type = Logico;
     return no;
 }
 
