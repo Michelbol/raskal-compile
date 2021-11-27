@@ -44,6 +44,7 @@ extern Table tabela_simbolos;
    não terminais da gramática. 
 */
 %union {
+   bool logic;
    String str;
    int num;
    A_Programa programa;
@@ -62,6 +63,8 @@ extern Table tabela_simbolos;
    A_LstCmd lstCmd;
    A_LstTermo lstTermos;
    A_LstFator lstFator;
+   A_LstExpress lstExpress;
+   A_Write write;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -101,12 +104,12 @@ extern Table tabela_simbolos;
 %token T_MENOR_OU_IGUAL
 %token T_ATRIBUICAO
 %token T_DOIS_PONTOS
-%token T_FALSE
-%token T_TRUE
 
 
 %token <str> T_IDENT
 %token <num> T_NUMERO
+%token <logic> T_TRUE
+%token <logic> T_FALSE
 /* str é o nome do campo semântico que será utilizado pelo token T_IDENT (identificador).
    Este campo foi definido na union acima e seu objetivo é armazenar uma
    string (char *), que no nosso caso será o valor semântido do identificador
@@ -137,6 +140,8 @@ extern Table tabela_simbolos;
 %type <cmd> comandos
 %type <atrib> atribuicao
 %type <express> expressao
+%type <write> escrita;
+%type <lstExpress> lista_expressoes
 %type <simpExpress> expressao_simples
 %type <lstTermos> lista_termos
 %type <termo> termo
@@ -144,7 +149,7 @@ extern Table tabela_simbolos;
 %type <fator> fator
 %type <bloco> bloco
 %type <str> tipo
-%type <str> logico
+%type <logic> logico
 
 %define parse.error verbose
 %define parse.lac full
@@ -216,10 +221,18 @@ lista_comandos: comandos T_PONTO_E_VIRGULA lista_comandos { $$ = A_lstCmd($1, $3
             |  comandos T_PONTO_E_VIRGULA { $$ = A_lstCmd($1, NULL); }
 ;
 
-comandos: atribuicao { $$ = A_cmd($1); }
+comandos: atribuicao { $$ = A_cmdAtrib($1); }
+         | escrita { $$ = A_cmdWrite($1); }
 ;
 
 atribuicao: T_IDENT T_ATRIBUICAO expressao { $$ = A_atrib($1, $3); }
+;
+
+escrita: T_WRITE T_ABRE_PARENTESES lista_expressoes T_FECHA_PARENTESES { $$ = A_write($3); }
+;
+
+lista_expressoes: expressao T_VIRGULA lista_expressoes { $$ = A_lstExpress($1, $3); }
+                 | expressao { $$ = A_lstExpress($1, NULL); }
 ;
 
 expressao: expressao_simples { $$ = A_express($1); }

@@ -14,6 +14,10 @@ void addNumMepa(Commands mepa, int numero){
     addCmdMepa(mepa, createNewCmdMepa(concatStringInt("CRCT ", numero)));
 }
 
+void addWriteMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("IMPR"));
+}
+
 void addLogicoMepa(Commands mepa, int numero){
     int value = numero ? 1 : 0;
     addCmdMepa(mepa, createNewCmdMepa(concatStringInt("CRCT ", value)));

@@ -50,16 +50,46 @@ A_LstCmd A_lstCmd(A_Cmd cmd, A_LstCmd lstCmd){
     return no;
 }
 
-A_Cmd A_cmd(A_Atrib atrib) {
+A_Cmd A_cmdAtrib(A_Atrib atrib) {
     A_Cmd no = malloc(sizeof(*no));
     no->atrib = atrib;
+    no->write = NULL;
+    no->type = Atrib;
     return no;
 }
+
+A_Cmd A_cmdWrite(A_Write write) {
+    A_Cmd no = malloc(sizeof(*no));
+    no->atrib = NULL;
+    no->write = write;
+    no->type = Write;
+    return no;
+}
+
 
 A_Atrib A_atrib(String id, A_Express express) {
     A_Atrib no = malloc(sizeof(*no));
     no->id = id;
     no->express = express;
+    return no;
+}
+
+A_Write A_write(A_LstExpress lstExpress){
+    A_Write no = malloc(sizeof(*no));
+    no->lstExpressoes = lstExpress;
+    return no;
+}
+
+A_LstExpress A_lstExpress(A_Express express, A_LstExpress lstExpress){
+    if(lstExpress == NULL){
+        A_LstExpress no = malloc(sizeof(*no));
+        no->expressao = express;
+        no->prox = NULL;
+        return no;
+    }
+    A_LstExpress no = malloc(sizeof(*no));
+    no->expressao = express;
+    no->prox = lstExpress;
     return no;
 }
 

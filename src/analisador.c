@@ -138,8 +138,22 @@ void analisaAtrib(A_Atrib atrib){
     addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);
 }
 
+void analisaWrite(A_Write write){
+    A_LstExpress lst =write->lstExpressoes;
+    while(lst != NULL){
+        analisaExpress(lst->expressao);
+        lst = lst->prox;
+        addWriteMepa();
+    }
+}
+
 void analisaCmd(A_Cmd cmd){
-    analisaAtrib(cmd->atrib);
+    if(cmd->type == Atrib){
+        analisaAtrib(cmd->atrib);
+    }
+    if(cmd->type == Write){
+        analisaWrite(cmd->write);
+    }
 }
 
 void analisaLstCmd(A_LstCmd lstCmd){

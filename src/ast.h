@@ -14,6 +14,8 @@ typedef struct A_Cmd_ *A_Cmd;
 typedef struct A_LstCmd_ *A_LstCmd;
 typedef struct A_Atrib_ *A_Atrib;
 typedef struct A_Express_ *A_Express;
+typedef struct A_Write_ *A_Write;
+typedef struct A_LstExpress_ *A_LstExpress;
 typedef struct A_Simp_Express_ *A_Simp_Express;
 typedef struct A_LstTermo_ *A_LstTermo;
 typedef struct A_Termo_ *A_Termo;
@@ -21,6 +23,7 @@ typedef struct A_LstFator_ *A_LstFator;
 typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
 typedef enum FatorType_ {Id, Num, Logico} FatorType;
+typedef enum CmdType_ { Atrib, Write } CmdType;
 
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
@@ -34,7 +37,19 @@ A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent);
 A_DecVar A_decVar(String id, String tipo, Table tabela);
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar);
 A_CmdComp A_cmdComp(A_LstCmd LstCmd);
-A_Cmd A_cmd(A_Atrib attr);
+A_Cmd A_cmd(A_Atrib atrib);
+A_Fator A_fatorLogico(bool logico);
+A_Fator A_fator(int num);
+A_Fator A_fatorId(String id);
+A_LstFator A_lstFator(A_Fator fator, String operador, A_LstFator lstFator);
+A_Termo A_termo(A_LstFator lstFator);
+A_LstTermo A_lstTermo(A_Termo termo, String operador, A_LstTermo lstTermo);
+A_Simp_Express A_simp_Express(A_LstTermo lstTermo);
+A_LstExpress A_lstExpress(A_Express express, A_LstExpress lstExpress);
+A_Write A_write(A_LstExpress lstExpress);
+A_Cmd A_cmdWrite(A_Write write);
+A_Cmd A_cmdAtrib(A_Atrib atrib);
+A_LstCmd A_lstCmd(A_Cmd cmd, A_LstCmd lstCmd);
 A_Atrib A_atrib(String id, A_Express express);
 A_Express A_express(A_Simp_Express simp_express);
 A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao);
@@ -101,11 +116,22 @@ struct A_LstCmd_ {
 
 struct A_Cmd_ {
     A_Atrib atrib;
+    A_Write write;
+    CmdType type;
 };
 
 struct A_Atrib_ {
     String id;
     A_Express express;
+};
+
+struct A_Write_ {
+    A_LstExpress lstExpressoes;
+};
+
+struct A_LstExpress_ {
+    A_Express expressao;
+    A_LstExpress prox;
 };
 
 struct A_Express_ {
