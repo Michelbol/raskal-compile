@@ -229,8 +229,8 @@ lista_comandos: comando T_PONTO_E_VIRGULA lista_comandos { $$ = A_lstCmd($1, $3)
 
 comando: atribuicao { $$ = A_cmdAtrib($1); }
          | condicional { $$ = A_cmdCond($1); }
-         | escrita { $$ = A_cmdWrite($1); }
          | leitura { $$ = A_cmdRead($1); }
+         | escrita { $$ = A_cmdWrite($1); }
 ;
 
 atribuicao: T_IDENT T_ATRIBUICAO expressao { $$ = A_atrib($1, $3); }
