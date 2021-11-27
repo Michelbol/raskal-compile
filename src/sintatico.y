@@ -65,6 +65,7 @@ extern Table tabela_simbolos;
    A_LstFator lstFator;
    A_LstExpress lstExpress;
    A_Write write;
+   A_Read read;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -140,7 +141,8 @@ extern Table tabela_simbolos;
 %type <cmd> comandos
 %type <atrib> atribuicao
 %type <express> expressao
-%type <write> escrita;
+%type <read> leitura
+%type <write> escrita
 %type <lstExpress> lista_expressoes
 %type <simpExpress> expressao_simples
 %type <lstTermos> lista_termos
@@ -223,9 +225,13 @@ lista_comandos: comandos T_PONTO_E_VIRGULA lista_comandos { $$ = A_lstCmd($1, $3
 
 comandos: atribuicao { $$ = A_cmdAtrib($1); }
          | escrita { $$ = A_cmdWrite($1); }
+         | leitura { $$ = A_cmdRead($1); }
 ;
 
 atribuicao: T_IDENT T_ATRIBUICAO expressao { $$ = A_atrib($1, $3); }
+;
+
+leitura: T_READ T_ABRE_PARENTESES lista_ident T_FECHA_PARENTESES { $$ = A_read($3); }
 ;
 
 escrita: T_WRITE T_ABRE_PARENTESES lista_expressoes T_FECHA_PARENTESES { $$ = A_write($3); }

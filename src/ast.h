@@ -14,6 +14,7 @@ typedef struct A_Cmd_ *A_Cmd;
 typedef struct A_LstCmd_ *A_LstCmd;
 typedef struct A_Atrib_ *A_Atrib;
 typedef struct A_Express_ *A_Express;
+typedef struct A_Read_ *A_Read;
 typedef struct A_Write_ *A_Write;
 typedef struct A_LstExpress_ *A_LstExpress;
 typedef struct A_Simp_Express_ *A_Simp_Express;
@@ -23,7 +24,7 @@ typedef struct A_LstFator_ *A_LstFator;
 typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
 typedef enum FatorType_ {Id, Num, Logico} FatorType;
-typedef enum CmdType_ { Atrib, Write } CmdType;
+typedef enum CmdType_ { Atrib, Write, Read } CmdType;
 
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
@@ -46,7 +47,9 @@ A_Termo A_termo(A_LstFator lstFator);
 A_LstTermo A_lstTermo(A_Termo termo, String operador, A_LstTermo lstTermo);
 A_Simp_Express A_simp_Express(A_LstTermo lstTermo);
 A_LstExpress A_lstExpress(A_Express express, A_LstExpress lstExpress);
+A_Read A_read(A_LstIdent lstIdent);
 A_Write A_write(A_LstExpress lstExpress);
+A_Cmd A_cmdRead(A_Read read);
 A_Cmd A_cmdWrite(A_Write write);
 A_Cmd A_cmdAtrib(A_Atrib atrib);
 A_LstCmd A_lstCmd(A_Cmd cmd, A_LstCmd lstCmd);
@@ -117,12 +120,17 @@ struct A_LstCmd_ {
 struct A_Cmd_ {
     A_Atrib atrib;
     A_Write write;
+    A_Read read;
     CmdType type;
 };
 
 struct A_Atrib_ {
     String id;
     A_Express express;
+};
+
+struct A_Read_ {
+    A_LstIdent lstIdent;
 };
 
 struct A_Write_ {

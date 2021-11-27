@@ -139,7 +139,7 @@ void analisaAtrib(A_Atrib atrib){
 }
 
 void analisaWrite(A_Write write){
-    A_LstExpress lst =write->lstExpressoes;
+    A_LstExpress lst = write->lstExpressoes;
     while(lst != NULL){
         analisaExpress(lst->expressao);
         lst = lst->prox;
@@ -147,12 +147,30 @@ void analisaWrite(A_Write write){
     }
 }
 
-void analisaCmd(A_Cmd cmd){
-    if(cmd->type == Atrib){
-        analisaAtrib(cmd->atrib);
+void analisaRead(A_Read read){
+    A_LstIdent lst = read->lstIdent;
+    while(lst != NULL){
+        TableLine line = buscarVariavel(tabelaSimbolos, lst->id);
+        if(line != NULL){
+            addReadMepa(lstMepa, line->endereco, line->escopo);
+        }
+        lst = lst->prox;
     }
-    if(cmd->type == Write){
+}
+
+void analisaCmd(A_Cmd cmd){
+    switch (cmd->type)
+    {
+    case Atrib:
+        analisaAtrib(cmd->atrib);
+        break;
+    case Write:
         analisaWrite(cmd->write);
+        break;
+    case Read:
+        analisaRead(cmd->read);
+        break;
+
     }
 }
 

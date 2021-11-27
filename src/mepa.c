@@ -14,6 +14,18 @@ void addNumMepa(Commands mepa, int numero){
     addCmdMepa(mepa, createNewCmdMepa(concatStringInt("CRCT ", numero)));
 }
 
+void recuperaVariavel(Commands mepa, int endereco, int escopo){
+    String comando = concatStringInt("ARMZ ", escopo);
+    comando = strcat(comando, ",");
+    comando = concatStringInt(comando, endereco);
+    addCmdMepa(mepa, createNewCmdMepa(comando));
+}
+
+void addReadMepa(Commands mepa, int endereco, int escopo){
+    addCmdMepa(mepa, createNewCmdMepa("LEIT"));
+    recuperaVariavel(mepa, endereco, escopo);
+}
+
 void addWriteMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("IMPR"));
 }
@@ -47,10 +59,7 @@ void addDivMepa(Commands mepa){
 }
 
 void addAtribMepa(Commands mepa, int endereco, int escopo){
-    String comando = concatStringInt("ARMZ ", escopo);
-    comando = strcat(comando, ",");
-    comando = concatStringInt(comando, endereco);
-    addCmdMepa(mepa, createNewCmdMepa(comando));
+    recuperaVariavel(mepa, endereco, escopo);
 }
 
 void desalocaMemoriaMepa(Commands mepa, int qtd){

@@ -66,11 +66,25 @@ A_Cmd A_cmdWrite(A_Write write) {
     return no;
 }
 
+A_Cmd A_cmdRead(A_Read read) {
+    A_Cmd no = malloc(sizeof(*no));
+    no->atrib = NULL;
+    no->read = read;
+    no->write = NULL;
+    no->type = Read;
+    return no;
+}
 
 A_Atrib A_atrib(String id, A_Express express) {
     A_Atrib no = malloc(sizeof(*no));
     no->id = id;
     no->express = express;
+    return no;
+}
+
+A_Read A_read(A_LstIdent lstIdent){
+    A_Read no = malloc(sizeof(*no));
+    no->lstIdent = lstIdent;
     return no;
 }
 
