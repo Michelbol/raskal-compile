@@ -255,9 +255,9 @@ lista_termos: termo T_MAIS lista_termos { $$ = A_lstTermoSoma($1, $3); }
 termo: lista_fator { $$ = A_termo($1); }
 ;
 
-lista_fator: fator T_MULTIPLICACAO lista_fator {$$ = A_lstFator($1, "*", $3); }
-            | fator T_DIV lista_fator { $$ = A_lstFator($1, "div", $3); }
-            | fator { $$ = A_lstFator($1, NULL, NULL); }
+lista_fator: fator T_MULTIPLICACAO lista_fator {$$ = A_lstFatorMulti($1, $3); }
+            | fator T_DIV lista_fator { $$ = A_lstFatorDiv($1, $3); }
+            | fator { $$ = A_lstFatorFator($1, NULL); }
 ;
 
 fator: T_IDENT { $$ = A_fatorId($1); }

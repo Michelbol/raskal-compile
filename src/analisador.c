@@ -49,20 +49,22 @@ void analisaOperacaoTermo(TermoOperator operacao){
     }
 }
 
-void analisaOperacaoFator(String operacao){
-    if(operacao == NULL){
-        return;
-    }
-    if(strcmp(operacao, "*") == 0){
+void analisaOperacaoFator(FatorOperator operacao){
+    switch (operacao)
+    {
+    case Multi:
         addMultMepa(lstMepa);
-        return;
-    }
-    if(strcmp(operacao, "div") == 0){
+        break;
+    case Div:
         addDivMepa(lstMepa);
-        return;
+        break;
+    case Fator:
+        break;
+    default:
+        errors = errors+1;
+        printf("Operação %s desconhecida", operacao);
+        break;
     }
-    errors = errors+1;
-    printf("Operação %s desconhecida", operacao);
 }
 
 void analisaFatorId(A_Fator fator){
@@ -108,9 +110,7 @@ void analisaLstFator(A_LstFator lstFator){
         if(lstFator->prox != NULL){
             analisaFator(lstFator->prox->fator);
         }
-        if(lstFator->operador != NULL){
-            analisaOperacaoFator(lstFator->operador);
-        }
+        analisaOperacaoFator(lstFator->operador);
         lstFator = lstFator->prox;
     }
 }

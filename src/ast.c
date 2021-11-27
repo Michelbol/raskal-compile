@@ -153,7 +153,18 @@ A_LstTermo A_lstTermo(A_Termo termo, TermoOperator operador, A_LstTermo lstTermo
     return no;
 }
 
-A_LstFator A_lstFator(A_Fator fator, String operador, A_LstFator lstFator){
+A_LstFator A_lstFatorMulti(A_Fator fator, A_LstFator lstFator){
+    return A_lstFator(fator, Multi, lstFator);
+}
+
+A_LstFator A_lstFatorDiv(A_Fator fator, A_LstFator lstFator){
+    return A_lstFator(fator, Div, lstFator);
+}
+A_LstFator A_lstFatorFator(A_Fator fator, A_LstFator lstFator){
+    return A_lstFator(fator, Fator, lstFator);
+}
+
+A_LstFator A_lstFator(A_Fator fator, FatorOperator operador, A_LstFator lstFator){
     if(lstFator == NULL){
         A_LstFator no = malloc(sizeof(*no));
         no->fator = fator;
