@@ -38,6 +38,9 @@ void addLogicoMepa(Commands mepa, int numero){
 void addNotLogicoMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("NEGA"));
 }
+void addInvertSinalMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("INVR"));
+}
 
 void LoadVarMepa(Commands mepa, int endereco, int escopo){
     String comando = concatStringInt("CRVL ", escopo);

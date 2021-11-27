@@ -89,6 +89,10 @@ void analisaFator(A_Fator fator){
             analisaFator(fator->fator);
             addNotLogicoMepa(lstMepa);
             break;
+        case Menos:
+            analisaFator(fator->fator);
+            addInvertSinalMepa(lstMepa);
+            break;
     }
 }
 

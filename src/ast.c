@@ -183,6 +183,14 @@ A_Fator A_fatorLogico(bool logico){
     no->type = Logico;
     return no;
 }
+
+A_Fator A_fatorMenosFator(A_Fator fator){
+    A_Fator no = malloc(sizeof(*no));
+    no->fator = fator;
+    no->type = Menos;
+    return no;
+}
+
 A_Fator A_fatorNotFator(A_Fator fator) {
     A_Fator no = malloc(sizeof(*no));
     no->fator = fator;
