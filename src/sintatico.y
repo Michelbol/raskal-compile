@@ -257,6 +257,7 @@ termo: lista_fator { $$ = A_termo($1); }
 
 lista_fator: fator T_MULTIPLICACAO lista_fator {$$ = A_lstFatorMulti($1, $3); }
             | fator T_DIV lista_fator { $$ = A_lstFatorDiv($1, $3); }
+            | fator T_AND lista_fator { $$ = A_lstFatorAnd($1, $3); }
             | fator { $$ = A_lstFatorFator($1, NULL); }
 ;
 

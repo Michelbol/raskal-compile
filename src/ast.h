@@ -47,6 +47,7 @@ A_Fator A_fatorId(String id);
 A_Fator A_fatorNotFator(A_Fator fator);
 A_Fator A_fatorMenosFator(A_Fator fator);
 A_Fator A_fatorExpressao(A_Express expressao);
+A_LstFator A_lstFatorAnd(A_Fator fator, A_LstFator lstFator);
 A_LstFator A_lstFatorMulti(A_Fator fator, A_LstFator lstFator);
 A_LstFator A_lstFatorDiv(A_Fator fator, A_LstFator lstFator);
 A_LstFator A_lstFatorFator(A_Fator fator, A_LstFator lstFator);

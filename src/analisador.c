@@ -60,6 +60,9 @@ void analisaOperacaoFator(FatorOperator operacao){
         break;
     case Fator:
         break;
+    case And:
+        addAndMepa(lstMepa);
+        break;
     default:
         errors = errors+1;
         printf("Operação %s desconhecida", operacao);

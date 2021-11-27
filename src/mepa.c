@@ -53,6 +53,10 @@ void addSomaMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("SOMA"));
 }
 
+void addAndMepa(Commands mepa){
+    addCmdMepa(mepa, createNewCmdMepa("CONJ"));
+}
+
 void addMultMepa(Commands mepa){
     addCmdMepa(mepa, createNewCmdMepa("MULT"));
 }

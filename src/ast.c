@@ -153,6 +153,10 @@ A_LstTermo A_lstTermo(A_Termo termo, TermoOperator operador, A_LstTermo lstTermo
     return no;
 }
 
+A_LstFator A_lstFatorAnd(A_Fator fator, A_LstFator lstFator){
+    return A_lstFator(fator, And, lstFator);
+}
+
 A_LstFator A_lstFatorMulti(A_Fator fator, A_LstFator lstFator){
     return A_lstFator(fator, Multi, lstFator);
 }
