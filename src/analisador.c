@@ -63,23 +63,33 @@ void analisaOperacaoFator(String operacao){
     printf("Operação %s desconhecida", operacao);
 }
 
-void analisaFator(A_Fator fator){
-    if(fator->type == Id){
-        TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
-        if(variavel == NULL){
-            printf("\nVariavel %s não existe\n", fator->id);
-            errors = errors +1;
-            return;
-        }
-        LoadVarMepa(lstMepa, variavel->endereco, variavel->escopo);
+void analisaFatorId(A_Fator fator){
+    TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
+    if(variavel == NULL){
+        printf("\nVariavel %s não existe\n", fator->id);
+        errors = errors +1;
         return;
     }
-    if(fator->type == Num){
-        addNumMepa(lstMepa, fator->num); 
+    LoadVarMepa(lstMepa, variavel->endereco, variavel->escopo);
+}
+
+void analisaFator(A_Fator fator){
+    switch (fator->type)
+    {
+        case Id:
+            analisaFatorId(fator);
+            break;
+        case Num:
+            addNumMepa(lstMepa, fator->num); 
+            break;
+        case Logico:
+            addLogicoMepa(lstMepa, fator->logico);
+            break;
+        case Not:
+            analisaFator(fator->fator);
+            addNotLogicoMepa(lstMepa);
+            break;
     }
-    if(fator->type == Logico){
-        addLogicoMepa(lstMepa, fator->logico);
-    }       
 }
 
 void analisaLstFator(A_LstFator lstFator){

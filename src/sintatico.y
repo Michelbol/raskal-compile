@@ -263,6 +263,7 @@ lista_fator: fator T_MULTIPLICACAO lista_fator {$$ = A_lstFator($1, "*", $3); }
 fator: T_IDENT { $$ = A_fatorId($1); }
       | T_NUMERO { $$ = A_fator($1); }
       | logico { $$ = A_fatorLogico($1); }
+      | T_NOT fator{ $$ = A_fatorNotFator($2); }
 ;
 
 logico: T_TRUE { $$ = true; }
