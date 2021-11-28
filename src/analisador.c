@@ -265,6 +265,13 @@ void analisaIf(A_Condicional cond){
         analisaCmdComp(cond->cmdCompElse);
         addNadaLabel(lstMepa, &desvio/*Escreve L2*/);
         break;
+    case ComandoComposto:
+        analisaCmdComp(cond->cmdCompThen);
+        addDesvioCond(lstMepa, (desvio+1)/*Desvia L2*/);
+        addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
+        analisaCmdComp(cond->cmdCompElse);
+        addNadaLabel(lstMepa, &desvio/*Escreve L2*/);
+        break;
     }
 }
 

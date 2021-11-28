@@ -85,6 +85,15 @@ A_Condicional A_condicionalElseCmdComp(A_Express expressao, A_Cmd cmd, A_CmdComp
     return no;
 }
 
+A_Condicional A_condicionalCmdComp(A_Express expressao, A_CmdComp cmdComp, A_CmdComp cmdCompElse) {
+    A_Condicional no = malloc(sizeof(*no));
+    no->expressao = expressao;
+    no->cmdCompThen = cmdComp;
+    no->cmdCompElse = cmdCompElse;
+    no->condType = ComandoComposto;
+    return no;
+}
+
 A_Cmd A_cmdCond(A_Condicional cond) {
     A_Cmd no = malloc(sizeof(*no));
     no->cond = cond;

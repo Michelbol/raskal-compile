@@ -14,15 +14,19 @@ begin
     y := 5;
     x := 6;
     c := 99;
+    b := 88;
     // if (false) then
     //     write(y)
     // else
     //     write(x);
-    if (false) then
-        write(c)
+    if (true) then
+        begin
+            write(c);
+            write(b);
+        end
     else
         begin
-        write(y);
-        write(x);
+            write(y);
+            write(x);
         end;
 end.
