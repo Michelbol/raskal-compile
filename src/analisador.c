@@ -233,9 +233,9 @@ void analisaCmd(A_Cmd cmd){
 
 void analisaIf(A_Condicional cond){
     int fimDoIf = desvio;
-    // analisaCmd(cond->cmd);
-    addDesvioCond(lstMepa, desvio);
     analisaExpress(cond->expressao);
+    addDesvioCond(lstMepa, desvio);
+    analisaCmd(cond->cmd);
     //else em baixo
     // se tiver else addNadaLabel(&desvio);
     addNadaLabel(lstMepa, &fimDoIf);

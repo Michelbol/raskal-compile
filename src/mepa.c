@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+static String labelPrefix = "L";
+
 int* addVarMepa(Commands mepa, int *countVar){
     addCmdMepa(mepa, createNewCmdMepa("AMEM 1"));
     *countVar = *countVar+1;
@@ -113,11 +115,15 @@ Command createNewCmdMepa(String instrucao){
 }
 
 void addDesvioCond(Commands mepa, int desvio){
-    addCmdMepa(mepa, createNewCmdMepa(concatStringInt("DSVF ", desvio)));
+    String label = concatStringInt("L", desvio);
+    char cmd[15] = "DSVF ";
+    strcat(cmd, label);
+    addCmdMepa(mepa, createNewCmdMepa(string(cmd)));
 }
 
 void addNadaLabel(Commands mepa, int *desvio){
-    addCmdMepa(mepa, createNewCmdMepa(concatIntString(*desvio, ": NADA")));
+    String label = concatStringInt(labelPrefix, *desvio);
+    addCmdMepa(mepa, createNewCmdMepa(strcat(label, ": NADA")));
     *desvio = *desvio+1;
 }
 
