@@ -68,6 +68,7 @@ extern Table tabela_simbolos;
    A_Read read;
    Relacao rel;
    A_Condicional condicional;
+   A_Repeticao repeticao;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -156,6 +157,7 @@ extern Table tabela_simbolos;
 %type <logic> logico
 %type <rel> relacao
 %type <condicional> condicional
+%type <repeticao> repeticao
 
 %define parse.error verbose
 %define parse.lac full
@@ -232,6 +234,7 @@ lista_comandos: comando T_PONTO_E_VIRGULA lista_comandos { $$ = A_lstCmd($1, $3)
 
 comando: atribuicao { $$ = A_cmdAtrib($1); }
          | condicional { $$ = A_cmdCond($1); }
+         | repeticao { $$ = A_cmdRepeticao($1); }
          | leitura { $$ = A_cmdRead($1); }
          | escrita { $$ = A_cmdWrite($1); }
 ;
@@ -244,6 +247,9 @@ condicional: T_IF expressao T_THEN comando { $$ = A_condicionalCmd($2, $4, NULL)
            | T_IF expressao T_THEN comando_composto { $$ = A_condicionalThenCmdComp($2, $4, NULL); }
            | T_IF expressao T_THEN comando T_ELSE comando_composto { $$ = A_condicionalElseCmdComp($2, $4, $6); }
            | T_IF expressao T_THEN comando_composto T_ELSE comando_composto { $$ = A_condicionalCmdComp($2, $4, $6); }
+;
+
+repeticao: T_WHILE expressao T_DO comando_composto { $$ = A_repeticao($2, $4); }
 ;
 
 leitura: T_READ T_ABRE_PARENTESES lista_ident T_FECHA_PARENTESES { $$ = A_read($3); }

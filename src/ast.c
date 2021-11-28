@@ -58,6 +58,13 @@ A_Cmd A_cmdAtrib(A_Atrib atrib) {
     return no;
 }
 
+A_Repeticao A_repeticao(A_Express expressao, A_CmdComp cmdComp) {
+    A_Repeticao no = malloc(sizeof(*no));
+    no->expressao = expressao;
+    no->cmdComp = cmdComp;
+    return no;
+}
+
 A_Condicional A_condicionalCmd(A_Express expressao, A_Cmd cmd, A_Cmd cmdElse) {
     A_Condicional no = malloc(sizeof(*no));
     no->expressao = expressao;
@@ -98,6 +105,13 @@ A_Cmd A_cmdCond(A_Condicional cond) {
     A_Cmd no = malloc(sizeof(*no));
     no->cond = cond;
     no->type = If;
+    return no;
+}
+
+A_Cmd A_cmdRepeticao(A_Repeticao repet) {
+    A_Cmd no = malloc(sizeof(*no));
+    no->repet = repet;
+    no->type = While;
     return no;
 }
 

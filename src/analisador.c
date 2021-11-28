@@ -213,6 +213,15 @@ void analisaRead(A_Read read){
     }
 }
 
+void analisaWhile(A_Repeticao repet){
+    addNadaLabel(lstMepa, &desvio/* Escreve L1*/);
+    analisaExpress(repet->expressao);
+    addDesvioCond(lstMepa, desvio/* Desvia L2*/);
+    analisaCmdComp(repet->cmdComp);
+    addDesvio(lstMepa, (desvio-1));
+    addNadaLabel(lstMepa, &desvio);
+}
+
 void analisaCmd(A_Cmd cmd){
     switch (cmd->type)
     {
@@ -227,6 +236,9 @@ void analisaCmd(A_Cmd cmd){
         break;
     case If:
         analisaIf(cmd->cond);
+        break;
+    case While:
+        analisaWhile(cmd->repet);
         break;
     }
 }
