@@ -43,6 +43,7 @@ A_Bloco A_bloco(A_LstDecVar secDecVar, A_LstDecSub secDecSub, A_CmdComp cmdComp)
 A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent);
 A_DecVar A_decVar(String id, String tipo, Table tabela);
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar);
+A_LstDecSub A_lstDecSub(A_DecProc decProc, A_LstDecSub lstDecSub);
 A_CmdComp A_cmdComp(A_LstCmd LstCmd);
 A_Cmd A_cmd(A_Atrib atrib);
 A_Fator A_fatorLogico(bool logico);

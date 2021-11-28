@@ -29,8 +29,15 @@ void analisaDecVars(A_LstDecVar listaVars){
     }
 }
 
+void analisaDecProc(A_DecProc decProc){
+    //implementar
+}
+
 void analisaDecSub(A_LstDecSub listSub){
-    // implementar
+    while(listSub != NULL){
+        analisaDecProc(listSub->decProc);
+        listSub = listSub->prox;
+    }
 }
 
 void analisaOperacaoTermo(TermoOperator operacao){

@@ -137,7 +137,8 @@ extern Table tabela_simbolos;
 
 %type <programa> programa
 %type <lstDecVar> secao_declara_vars lista_declara_vars declara_vars
-%type <lstDecSub> secao_declara_subs declara_proc params_formais list_declara_param declara_param
+%type <lstDecSub> secao_declara_subs params_formais list_declara_param declara_param
+%type <decProc> declara_proc
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
 %type <lstCmd> lista_comandos
@@ -204,9 +205,8 @@ lista_ident: lista_ident T_VIRGULA T_IDENT { $$ = A_lstIdent($3, $1); }
 tipo: T_IDENT { $$ = $1; } /* caso não fosse especificada, esta já seria a ação default */
 ;
 
-secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = NULL; }
-                  | declara_proc T_PONTO_E_VIRGULA { $$ = NULL; }
-                  /*| { $$ = NULL; }*/
+secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = A_lstDecSub($1, $3); }
+                  | declara_proc T_PONTO_E_VIRGULA { $$ = A_lstDecSub($1, NULL); }
 ;
 
 declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA bloco { $$ = NULL; }

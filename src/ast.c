@@ -17,6 +17,19 @@ A_Bloco A_bloco(A_LstDecVar secDecVar, A_LstDecSub secDecSub, A_CmdComp cmdComp)
     return bloco;
 }
 
+A_LstDecSub A_lstDecSub(A_DecProc decProc, A_LstDecSub lstDecSub) {
+    if(lstDecSub == NULL){
+        A_LstDecSub no = malloc(sizeof(*no));
+        no->decProc = decProc;
+        no->prox = NULL;
+        return no;
+    }
+    A_LstDecSub no = malloc(sizeof(*no));
+    no->decProc = decProc;
+    no->prox = lstDecSub;
+    return no;
+}
+
 A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent) {
     A_LstIdent no = malloc(sizeof(*no));
     no->id = id;
