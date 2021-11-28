@@ -62,7 +62,7 @@ A_LstTermo A_lstTermoOr(A_Termo termo, A_LstTermo lstTermo);
 A_LstTermo A_lstTermo(A_Termo termo, TermoOperator operador, A_LstTermo lstTermo);
 A_Simp_Express A_simp_Express(A_LstTermo lstTermo);
 A_LstExpress A_lstExpress(A_Express express, A_LstExpress lstExpress);
-A_Condicional A_condicional(A_Express expressao, A_Cmd cmd);
+A_Condicional A_condicional(A_Express expressao, A_Cmd cmd, A_Cmd cmdElse) ;
 A_Read A_read(A_LstIdent lstIdent);
 A_Write A_write(A_LstExpress lstExpress);
 A_Cmd A_cmdCond(A_Condicional cond);
@@ -150,7 +150,8 @@ struct A_Atrib_ {
 
 struct A_Condicional_ {
     A_Express expressao;
-    A_Cmd cmd;
+    A_Cmd cmdThen;
+    A_Cmd cmdElse;
 };
 
 struct A_Read_ {
