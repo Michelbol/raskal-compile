@@ -13,13 +13,16 @@ begin
     // y := (5+5) >= (5+5); // true
     y := 5;
     x := 6;
+    c := 99;
     // if (false) then
     //     write(y)
     // else
     //     write(x);
-    if (true) then
+    if (false) then
+        write(c)
+    else
         begin
-            write(y);
-            write(x);
+        write(y);
+        write(x);
         end;
 end.
