@@ -239,8 +239,8 @@ comando: atribuicao { $$ = A_cmdAtrib($1); }
 atribuicao: T_IDENT T_ATRIBUICAO expressao { $$ = A_atrib($1, $3); }
 ;
 
-condicional: T_IF expressao T_THEN comando { $$ = A_condicional($2, $4, NULL); }
-           | T_IF expressao T_THEN comando T_ELSE comando { $$ = A_condicional($2, $4, $6); }
+condicional: T_IF expressao T_THEN comando { $$ = A_condicionalCmd($2, $4, NULL); }
+           | T_IF expressao T_THEN comando T_ELSE comando { $$ = A_condicionalCmd($2, $4, $6); }
 ;
 
 leitura: T_READ T_ABRE_PARENTESES lista_ident T_FECHA_PARENTESES { $$ = A_read($3); }
