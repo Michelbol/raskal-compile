@@ -232,11 +232,11 @@ void analisaCmd(A_Cmd cmd){
 }
 
 void analisaIf(A_Condicional cond){
+    analisaExpress(cond->expressao);
+    addDesvioCond(lstMepa, desvio/*Desvia L1*/);
     switch (cond->condType)
     {
     case Comando:
-        analisaExpress(cond->expressao);
-        addDesvioCond(lstMepa, desvio/*Desvia L1*/);
         analisaCmd(cond->cmdThen);
         if(cond->cmdElse == NULL){
             addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
@@ -247,7 +247,16 @@ void analisaIf(A_Condicional cond){
         analisaCmd(cond->cmdElse);
         addNadaLabel(lstMepa, &desvio/*Escreve L2*/);
         break;
-    case LstComando:
+    case ThenComandoComposto:
+        analisaCmdComp(cond->cmdCompThen);
+        if(cond->cmdElse == NULL){
+            addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
+            return;
+        }
+        addDesvioCond(lstMepa, (desvio+1)/*Desvia L2*/);
+        addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
+        analisaCmd(cond->cmdElse);
+        addNadaLabel(lstMepa, &desvio/*Escreve L2*/);
         break;
     }
 }
