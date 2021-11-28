@@ -3,6 +3,14 @@ var a, b, c, n, i: integer;
     x, y: integer;
     z: boolean;
     f1, f2, f3: integer;
+    
+    procedure p();
+        var a, b: integer;
+    begin
+        a := 2 * x;
+        b := a + 1;
+        y := b + y;
+    end;
 begin
     //y := 2*3+2-2+2+2-4; // 6
     //y := 10 div 2; // 5

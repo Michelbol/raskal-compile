@@ -209,7 +209,7 @@ secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = NUL
                   /*| { $$ = NULL; }*/
 ;
 
-declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA { $$ = NULL; }
+declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA bloco { $$ = NULL; }
 ;
 
 params_formais: T_ABRE_PARENTESES list_declara_param T_FECHA_PARENTESES { $$ = NULL; }
