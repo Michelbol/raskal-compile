@@ -30,6 +30,14 @@ A_LstDecSub A_lstDecSub(A_DecProc decProc, A_LstDecSub lstDecSub) {
     return no;
 }
 
+A_DecProc A_decProc(String id, A_ParamFormal parmFormal, A_Bloco bloco) {
+    A_DecProc no = malloc(sizeof(*no));
+    no->id = id;
+    no->paramFormal = parmFormal;
+    no->bloco = bloco;
+    return no;
+}
+
 A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent) {
     A_LstIdent no = malloc(sizeof(*no));
     no->id = id;

@@ -69,6 +69,7 @@ extern Table tabela_simbolos;
    Relacao rel;
    A_Condicional condicional;
    A_Repeticao repeticao;
+   A_ParamFormal paramFormal;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -137,7 +138,8 @@ extern Table tabela_simbolos;
 
 %type <programa> programa
 %type <lstDecVar> secao_declara_vars lista_declara_vars declara_vars
-%type <lstDecSub> secao_declara_subs params_formais list_declara_param declara_param
+%type <lstDecSub> secao_declara_subs list_declara_param declara_param
+%type <paramFormal> params_formais
 %type <decProc> declara_proc
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
@@ -209,7 +211,7 @@ secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = A_l
                   | declara_proc T_PONTO_E_VIRGULA { $$ = A_lstDecSub($1, NULL); }
 ;
 
-declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA bloco { $$ = NULL; }
+declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA bloco { $$ = A_decProc($2, $3, $5); }
 ;
 
 params_formais: T_ABRE_PARENTESES list_declara_param T_FECHA_PARENTESES { $$ = NULL; }

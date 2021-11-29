@@ -9,6 +9,8 @@ static int errors = 0;
 
 static int desvio = 0;
 
+static int escopo = 0;
+
 static Table tabelaSimbolos;
 
 static Commands lstMepa;
@@ -29,8 +31,20 @@ void analisaDecVars(A_LstDecVar listaVars){
     }
 }
 
+void analisaParamFormal(A_ParamFormal paramFormal){
+
+}
+
 void analisaDecProc(A_DecProc decProc){
-    //implementar
+    //Adicionar nome da tabela de simbolos
+    decProc->id;
+    // primeiro cria os parametros
+    analisaParamFormal(decProc->paramFormal);
+    // depois informações gerenciais
+    // endereço de retorno
+    // k = 0;
+    decProc->bloco;
+    // depois variaveis locais
 }
 
 void analisaDecSub(A_LstDecSub listSub){
