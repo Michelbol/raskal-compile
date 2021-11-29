@@ -4,7 +4,7 @@
 #include "ast.h"
 #include <string.h>
 
-TableLine createLine(String identificador, String categoria, String tipo, int escopo, int endereco){
+TableLine createLine(String identificador, TableCategory categoria, String tipo, int escopo, int endereco){
     TableLine linha = malloc(sizeof(*linha));
     linha->identificador = identificador;
     linha->categoria = categoria;
@@ -22,7 +22,7 @@ Table createTable(){
     return tabela;
 }
 
-Table addIdentificador(Table tabela, String identificador, String categoria, String tipo, int escopo, int endereco){
+Table addIdentificador(Table tabela, String identificador, TableCategory categoria, String tipo, int escopo, int endereco){
     TableLine newLine = createLine(identificador, categoria, tipo, escopo, endereco);
     if(tabela == NULL){
         printf("ATENÇÃO: A tabela precisa ser criada");
@@ -43,29 +43,29 @@ Table addIdentificador(Table tabela, String identificador, String categoria, Str
 }
 
 Table addProgram(Table tabela, String id){
-    return addIdentificador(tabela, id, "program", "", 0, 0);
+    return addIdentificador(tabela, id, Program, "", 0, 0);
 }
 
 Table addTipo(Table tabela, String id){
-    return addIdentificador(tabela, id, "tipo", "", 0, 0);
+    return addIdentificador(tabela, id, Type, "", 0, 0);
 }
 
 Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
-    return addIdentificador(tabela, id, "var", tipo, escopo, endereco);
+    return addIdentificador(tabela, id, Var, tipo, escopo, endereco);
 }
 
 bool elementoJaExiste(Table tabela, String identificador){
-    return buscarElemento(tabela, identificador, NULL) != NULL;
+    return buscarElemento(tabela, identificador, Void) != NULL;
 }
 
-TableLine buscarElemento(Table tabela, String identificador, String categoria){
+TableLine buscarElemento(Table tabela, String identificador, TableCategory categoria){
     TableLine elem = tabela->primeiro;
     while(elem != NULL){
         if(strcmp(elem->identificador, identificador) == 0){
-            if(categoria == NULL){
+            if(categoria == Void){
                 return elem;
             }else{
-                if(strcmp(categoria, elem->categoria) == 0){
+                if(categoria == elem->categoria){
                     return elem;
                 }
             }
@@ -76,7 +76,7 @@ TableLine buscarElemento(Table tabela, String identificador, String categoria){
 }
 
 TableLine buscarVariavel(Table tabela, String identificador){
-    return buscarElemento(tabela, identificador, "var");
+    return buscarElemento(tabela, identificador, Var);
 }
 
 void imprimeTabela(Table tabela){
@@ -85,7 +85,7 @@ void imprimeTabela(Table tabela){
     TableLine linha = tabela->primeiro;
     while(linha != NULL){
         printf(
-            "\n| Identificador: %s - Categoria: %s - Tipo: %s - Escopo: %i - endereco: %i", 
+            "\n| Identificador: %s - Categoria: %i - Tipo: %s - Escopo: %i - endereco: %i", 
             linha->identificador,
             linha->categoria,
             linha->tipo,
