@@ -70,6 +70,8 @@ extern Table tabela_simbolos;
    A_Condicional condicional;
    A_Repeticao repeticao;
    A_ParamFormal paramFormal;
+   A_LstDecParam listDecParam;
+   A_DecParam decParam;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -138,8 +140,10 @@ extern Table tabela_simbolos;
 
 %type <programa> programa
 %type <lstDecVar> secao_declara_vars lista_declara_vars declara_vars
-%type <lstDecSub> secao_declara_subs list_declara_param declara_param
+%type <lstDecSub> secao_declara_subs
+%type <listDecParam> list_declara_param
 %type <paramFormal> params_formais
+%type <decParam> declara_param
 %type <decProc> declara_proc
 %type <lstIdent> lista_ident
 %type <cmdComp> comando_composto
@@ -214,16 +218,16 @@ secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = A_l
 declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA bloco { $$ = A_decProc($2, $3, $5); }
 ;
 
-params_formais: T_ABRE_PARENTESES list_declara_param T_FECHA_PARENTESES { $$ = NULL; }
-               | T_ABRE_PARENTESES T_FECHA_PARENTESES { $$ = NULL; }
+params_formais: T_ABRE_PARENTESES list_declara_param T_FECHA_PARENTESES { $$ = A_paramFormal($2); }
+               | T_ABRE_PARENTESES T_FECHA_PARENTESES { $$ = A_paramFormal(NULL); }
 ;
 
-list_declara_param: declara_param list_declara_param { $$ = NULL; }
-                  | declara_param { $$ = NULL; }
+list_declara_param: declara_param list_declara_param { $$ = A_lstDecParam($1, $2); }
+                  | declara_param { $$ = A_lstDecParam($1, NULL); }
 ;
 
-declara_param: T_VAR lista_ident T_DOIS_PONTOS tipo { $$ = NULL; }
-            |  lista_ident T_DOIS_PONTOS tipo { $$ = NULL; }
+declara_param: T_VAR lista_ident T_DOIS_PONTOS tipo { $$ = A_decParam($2, $4); }
+            |  lista_ident T_DOIS_PONTOS tipo { $$ = A_decParam($1, $3); }
 ;
 
 

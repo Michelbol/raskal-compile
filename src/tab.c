@@ -4,13 +4,14 @@
 #include "ast.h"
 #include <string.h>
 
-TableLine createLine(String identificador, TableCategory categoria, String tipo, int escopo, int endereco){
+TableLine createLine(String identificador, TableCategory categoria, String tipo, int escopo, int endereco, LstAtributes lstAtrib) {
     TableLine linha = malloc(sizeof(*linha));
     linha->identificador = identificador;
     linha->categoria = categoria;
     linha->tipo = tipo;
     linha->escopo = escopo;
     linha->endereco = endereco;
+    linha->lstAtributes = lstAtrib;
     return linha;
 }
 
@@ -22,8 +23,8 @@ Table createTable(){
     return tabela;
 }
 
-Table addIdentificador(Table tabela, String identificador, TableCategory categoria, String tipo, int escopo, int endereco){
-    TableLine newLine = createLine(identificador, categoria, tipo, escopo, endereco);
+Table addIdentificador(Table tabela, String identificador, TableCategory categoria, String tipo, int escopo, int endereco, LstAtributes LstAtributes) {
+    TableLine newLine = createLine(identificador, categoria, tipo, escopo, endereco, LstAtributes);
     if(tabela == NULL){
         printf("ATENÇÃO: A tabela precisa ser criada");
         return tabela;
@@ -43,15 +44,15 @@ Table addIdentificador(Table tabela, String identificador, TableCategory categor
 }
 
 Table addProgram(Table tabela, String id){
-    return addIdentificador(tabela, id, Program, "", 0, 0);
+    return addIdentificador(tabela, id, Program, "", 0, 0, NULL);
 }
 
 Table addTipo(Table tabela, String id){
-    return addIdentificador(tabela, id, Type, "", 0, 0);
+    return addIdentificador(tabela, id, Type, "", 0, 0, NULL);
 }
 
 Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
-    return addIdentificador(tabela, id, Var, tipo, escopo, endereco);
+    return addIdentificador(tabela, id, Var, tipo, escopo, endereco, NULL);
 }
 
 bool elementoJaExiste(Table tabela, String identificador){

@@ -83,6 +83,9 @@ A_Atrib A_atrib(String id, A_Express express);
 A_Express A_express(A_Simp_Express simp_express);
 A_Express A_expressRelacao(A_Simp_Express simp_express, Relacao relacao, A_Simp_Express simp_express2);
 A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao);
+A_LstDecParam A_lstDecParam(A_DecParam decParam, A_LstDecParam lstDecParam);
+A_ParamFormal A_paramFormal(A_LstDecParam lstDecParam);
+A_DecParam A_decParam(A_LstIdent lstIdent, String tipo);
 
 A_LstDecVar concatLstDecVar(A_LstDecVar lst1, A_LstDecVar lst2);
 
@@ -133,7 +136,7 @@ struct A_LstDecParam_ {
 };
 
 struct A_DecParam_ {
-    A_LstIdent lst_ident;
+    A_LstIdent lstIdent;
     String tipo;
 };
 
