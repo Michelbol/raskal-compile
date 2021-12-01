@@ -50,12 +50,6 @@ void analisaDecParam(A_DecParam decParam){
 
 LstAtributes analisaParamFormal(A_ParamFormal paramFormal){
     A_LstDecParam lst = paramFormal->listDecParam;
-    if(paramFormal == NULL){
-        printf("Parametro formal é nulo");
-    }
-    if(paramFormal->listDecParam == NULL){
-        printf("A lista é nula vei .-.");
-    }
     while (lst != NULL)
     {
         analisaDecParam(lst->decParam);
@@ -67,7 +61,6 @@ void analisaDecProc(A_DecProc decProc){
     //Adicionar nome da tabela de simbolos
     // primeiro cria os parametros
     addProc(tabelaSimbolos,decProc->id, 1, 0);
-
     analisaParamFormal(decProc->paramFormal);
     // depois informações gerenciais
     // endereço de retorno

@@ -4,7 +4,7 @@ var a, b, c, n, i: integer;
     z: boolean;
     f1, f2, f3: integer;
     
-    procedure p();
+    procedure p(i,b,c,d,s,e,r: integer);
         var a, b: integer;
     begin
         a := 2 * x;

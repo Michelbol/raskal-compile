@@ -31,14 +31,15 @@ Table appendAttribUltimoElemento(Table tabela, String id, AtribType tipo, AtribC
 
     LstAtributes lstAtributes = malloc(sizeof(*lstAtributes));
     lstAtributes->atributes = atrib;
-    tabela->ultimo->lstAtributes = lstAtributes;
 
     if(tabela->ultimo->lstAtributes->atributes == NULL){
+        tabela->ultimo->lstAtributes = lstAtributes;
         tabela->ultimo->lstAtributes->prox = NULL;
         return tabela;
     }
 
-    tabela->ultimo->lstAtributes->prox = lstAtributes;
+    lstAtributes->prox = tabela->ultimo->lstAtributes;
+    tabela->ultimo->lstAtributes = lstAtributes;
     return tabela;
 }
 
@@ -117,22 +118,19 @@ String transformaAtrib(TableLine line){
         return "";
     }
     LstAtributes lstAtributes = line->lstAtributes;
-    String result = "";
+    char result[100] = "{";
     while (lstAtributes != NULL)
     {
-        if(lstAtributes->atributes == NULL){
-            lstAtributes = lstAtributes->prox;
-            continue;
-        }
-        /*p: integer,*/
+        /*{p: integer,}*/
         strcat(result, lstAtributes->atributes->id);
         strcat(result,": ");
         strcat(result, resolveAtributesType(lstAtributes->atributes->tipo));
         lstAtributes = lstAtributes->prox;
         if(lstAtributes != NULL){
-            strcat(result, ", ");
+             strcat(result, ", ");
         }
     }
+    strcat(result, "}");
     return result;
 }
 
