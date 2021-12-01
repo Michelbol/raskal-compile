@@ -19,6 +19,8 @@ TableLine buscarElemento(Table tabela, String identificador, TableCategory categ
 TableLine buscarVariavel(Table tabela, String identificador);
 Table addVar(Table tabela, String id, String tipo, int escopo, int endereco);
 Table addProgram(Table tabela, String id);
+Table addProc(Table tabela, String id, int escopo, int endereco);
+Table appendAttribUltimoElemento(Table tabela, String id, AtribType tipo, AtribCategory categoria);
 void imprimeTabela(Table tabela);
 Table createTable();
 
@@ -39,7 +41,7 @@ struct Table_ {
 
 struct LstAtributes_ {
     Atributes atributes;
-    Atributes prox;
+    LstAtributes prox;
 };
 
 struct Atributes_ {

@@ -23,6 +23,25 @@ Table createTable(){
     return tabela;
 }
 
+Table appendAttribUltimoElemento(Table tabela, String id, AtribType tipo, AtribCategory categoria) {
+    Atributes atrib = malloc(sizeof(*atrib));
+    atrib->atribCategoria = categoria;
+    atrib->id = id;
+    atrib->tipo = tipo;
+
+    LstAtributes lstAtributes = malloc(sizeof(*lstAtributes));
+    lstAtributes->atributes = atrib;
+    tabela->ultimo->lstAtributes = lstAtributes;
+
+    if(tabela->ultimo->lstAtributes->atributes == NULL){
+        tabela->ultimo->lstAtributes->prox = NULL;
+        return tabela;
+    }
+
+    tabela->ultimo->lstAtributes->prox = lstAtributes;
+    return tabela;
+}
+
 Table addIdentificador(Table tabela, String identificador, TableCategory categoria, String tipo, int escopo, int endereco, LstAtributes LstAtributes) {
     TableLine newLine = createLine(identificador, categoria, tipo, escopo, endereco, LstAtributes);
     if(tabela == NULL){
@@ -41,6 +60,11 @@ Table addIdentificador(Table tabela, String identificador, TableCategory categor
     tabela->ultimo->next = newLine;
     tabela->ultimo = newLine;
     return tabela;
+}
+
+Table addProc(Table tabela, String id, int escopo, int endereco) {
+    LstAtributes lstAtributes = malloc(sizeof(*lstAtributes));
+    return addIdentificador(tabela, id, Proc, "", escopo, endereco, lstAtributes);
 }
 
 Table addProgram(Table tabela, String id){
@@ -80,18 +104,51 @@ TableLine buscarVariavel(Table tabela, String identificador){
     return buscarElemento(tabela, identificador, Var);
 }
 
+String resolveAtributesType(AtribType type) {
+    if(type == Int){
+        return "integer";
+    }else{
+        return "boolean";
+    }
+}
+
+String transformaAtrib(TableLine line){
+    if(line->lstAtributes == NULL ){
+        return "";
+    }
+    LstAtributes lstAtributes = line->lstAtributes;
+    String result = "";
+    while (lstAtributes != NULL)
+    {
+        if(lstAtributes->atributes == NULL){
+            lstAtributes = lstAtributes->prox;
+            continue;
+        }
+        /*p: integer,*/
+        strcat(result, lstAtributes->atributes->id);
+        strcat(result,": ");
+        strcat(result, resolveAtributesType(lstAtributes->atributes->tipo));
+        lstAtributes = lstAtributes->prox;
+        if(lstAtributes != NULL){
+            strcat(result, ", ");
+        }
+    }
+    return result;
+}
+
 void imprimeTabela(Table tabela){
     printf("==============Inicio Tabela de Simbolos==============");
         
     TableLine linha = tabela->primeiro;
     while(linha != NULL){
         printf(
-            "\n| Identificador: %s - Categoria: %i - Tipo: %s - Escopo: %i - endereco: %i", 
+            "\n| Identificador: %s - Categoria: %i - Tipo: %s - Escopo: %i - endereco: %i - Atrib: %s", 
             linha->identificador,
             linha->categoria,
             linha->tipo,
             linha->escopo,
-            linha->endereco
+            linha->endereco,
+            transformaAtrib(linha)
         );
         linha = linha->next;
     }

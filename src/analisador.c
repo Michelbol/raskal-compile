@@ -31,14 +31,43 @@ void analisaDecVars(A_LstDecVar listaVars){
     }
 }
 
-void analisaParamFormal(A_ParamFormal paramFormal){
+AtribType resolveTipo(A_DecParam decParam){
+    if(strcmp(decParam->tipo, "integer") == 0){
+        return Int;
+    }else/*(strcmp(decParam->tipo, "boolean") == 0)*/{
+        return Bool;
+    }
+}
 
+void analisaDecParam(A_DecParam decParam){
+    A_LstIdent lstIdent = decParam->lstIdent;
+    while (lstIdent != NULL)
+    {
+        appendAttribUltimoElemento(tabelaSimbolos, lstIdent->id, resolveTipo(decParam), A_Param);
+        lstIdent = lstIdent->prox;
+    }
+}
+
+LstAtributes analisaParamFormal(A_ParamFormal paramFormal){
+    A_LstDecParam lst = paramFormal->listDecParam;
+    if(paramFormal == NULL){
+        printf("Parametro formal é nulo");
+    }
+    if(paramFormal->listDecParam == NULL){
+        printf("A lista é nula vei .-.");
+    }
+    while (lst != NULL)
+    {
+        analisaDecParam(lst->decParam);
+        lst = lst->prox;
+    }
 }
 
 void analisaDecProc(A_DecProc decProc){
     //Adicionar nome da tabela de simbolos
-    decProc->id;
     // primeiro cria os parametros
+    addProc(tabelaSimbolos,decProc->id, 1, 0);
+
     analisaParamFormal(decProc->paramFormal);
     // depois informações gerenciais
     // endereço de retorno
