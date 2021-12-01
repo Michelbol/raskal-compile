@@ -4,12 +4,19 @@ var a, b, c, n, i: integer;
     z: boolean;
     f1, f2, f3: integer;
     
-    procedure p(i,b,c,d,s,e,r: integer);
+    procedure p(i,b,c,d,s,e,r, f3, f1, f2: integer);
         var a, b: integer;
     begin
         a := 2 * x;
         b := a + 1;
         y := b + y;
+        while (i <= n) do  
+        begin
+            f3 := f2 + f1;
+            f1 := f2;
+            f2 := f3;
+            i := i + 1;
+        end;
     end;
 begin
     //y := 2*3+2-2+2+2-4; // 6

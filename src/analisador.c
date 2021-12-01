@@ -338,7 +338,10 @@ void analisaCmdComp(A_CmdComp cmdComp){
 void analisaBloco(A_Bloco bloco){
     if(escopo == 0){
         analisaDecVars(bloco->secDecVar);
+        addDesvio(lstMepa, 0);
+        desvio = desvio+1;
         analisaDecSub(bloco->secDecSub);
+        addNadaLabelInicioMain(lstMepa);
         analisaCmdComp(bloco->cmdComp);
         return;
     }

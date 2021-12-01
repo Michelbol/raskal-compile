@@ -37,6 +37,7 @@ void addSubtMepa(Commands mepa);
 void addDivMepa(Commands mepa);
 void addAtribMepa(Commands mepa, int endereco, int escopo);
 void desalocaMemoriaMepa(Commands mepa, int qtd);
+void addDesvio(Commands mepa, int desvio);
 void addDesvioCond(Commands mepa, int desvio);
 void addNadaLabel(Commands mepa, int *desvio);
 void limpaArquivo(String name);
