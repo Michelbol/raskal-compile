@@ -14,12 +14,14 @@ typedef struct LstAtributes_ *LstAtributes;
 
 Table addIdentificador(Table tabela, String identificador, TableCategory categoria, String tipo, int escopo, int endereco, LstAtributes LstAtributes);
 TableLine createLine(String identificador, TableCategory categoria, String tipo, int escopo, int endereco, LstAtributes lstAtrib);
-bool elementoJaExiste(Table tabela, String identificador);
+bool elementoJaExiste(Table tabela, String identificador, int escopo);
 TableLine buscarElemento(Table tabela, String identificador, TableCategory categoria);
 TableLine buscarVariavel(Table tabela, String identificador);
+TableLine buscarElementoEscopo(Table tabela, String identificador, int escopo);
 Table addVar(Table tabela, String id, String tipo, int escopo, int endereco);
 Table addProgram(Table tabela, String id);
 Table addProc(Table tabela, String id, int escopo, int endereco);
+Table addParam(Table tabela, String id, String tipo);
 Table appendAttribUltimoElemento(Table tabela, String id, AtribType tipo, AtribCategory categoria);
 void imprimeTabela(Table tabela);
 Table createTable();

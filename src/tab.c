@@ -54,7 +54,7 @@ Table addIdentificador(Table tabela, String identificador, TableCategory categor
         tabela->ultimo = newLine;
         return tabela;
     }
-    if(elementoJaExiste(tabela, identificador)){
+    if(elementoJaExiste(tabela, identificador, escopo)){
         printf("\nElemento %s já existe\n", identificador);
         return NULL;
     }
@@ -76,12 +76,41 @@ Table addTipo(Table tabela, String id){
     return addIdentificador(tabela, id, Type, "", 0, 0, NULL);
 }
 
-Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
-    return addIdentificador(tabela, id, Var, tipo, escopo, endereco, NULL);
+AtribType resolveTipo(String tipo){
+    if(strcmp(tipo, "integer") == 0){
+        return Int;
+    }else/*(strcmp(tipo, "boolean") == 0)*/{
+        return Bool;
+    }
 }
 
-bool elementoJaExiste(Table tabela, String identificador){
-    return buscarElemento(tabela, identificador, Void) != NULL;
+Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
+    if(escopo == 0){
+        return addIdentificador(tabela, id, Var, tipo, escopo, endereco, NULL);
+    }else{                              /*Table tabela, String id, AtribType tipo, AtribCategory categoria*/
+        return appendAttribUltimoElemento(tabela, id, resolveTipo(tipo), A_Var);
+    }
+}
+
+Table addParam(Table tabela, String id, String tipo) {
+    return appendAttribUltimoElemento(tabela, id, resolveTipo(tipo), A_Param);
+}
+
+bool elementoJaExiste(Table tabela, String identificador, int escopo){
+    return buscarElementoEscopo(tabela, identificador, escopo) != NULL;
+}
+
+TableLine buscarElementoEscopo(Table tabela, String identificador, int escopo) {
+    TableLine elem = tabela->primeiro;
+    while(elem != NULL){
+        if(strcmp(elem->identificador, identificador) == 0){
+            if(escopo == elem->escopo){
+                return elem;
+            }
+        }
+        elem = elem->next;
+    }
+    return NULL;
 }
 
 TableLine buscarElemento(Table tabela, String identificador, TableCategory categoria){
@@ -113,15 +142,26 @@ String resolveAtributesType(AtribType type) {
     }
 }
 
+String resolveAtributesCategory(AtribCategory category){
+    if(category == A_Param){
+        return "param";
+    }else{
+        return "var";
+    }
+}
+
 String transformaAtrib(TableLine line){
     if(line->lstAtributes == NULL ){
         return "";
     }
     LstAtributes lstAtributes = line->lstAtributes;
-    char result[100] = "{";
+    char result[1000] = "{";
     while (lstAtributes != NULL)
     {
-        /*{p: integer,}*/
+        /*{Cat: parametro - p: integer,}*/
+        strcat(result, "Cat: ");
+        strcat(result, resolveAtributesCategory(lstAtributes->atributes->atribCategoria));
+        strcat(result, " - ");
         strcat(result, lstAtributes->atributes->id);
         strcat(result,": ");
         strcat(result, resolveAtributesType(lstAtributes->atributes->tipo));

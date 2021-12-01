@@ -21,7 +21,7 @@ void analisaDecVars(A_LstDecVar listaVars){
             tabelaSimbolos,
             listaVars->decVar->id, 
             listaVars->decVar->tipo, 
-            0, 
+            escopo, 
             *addVarMepa(lstMepa, &countVar)-1
         );
         if(tabela == NULL){
@@ -31,19 +31,11 @@ void analisaDecVars(A_LstDecVar listaVars){
     }
 }
 
-AtribType resolveTipo(A_DecParam decParam){
-    if(strcmp(decParam->tipo, "integer") == 0){
-        return Int;
-    }else/*(strcmp(decParam->tipo, "boolean") == 0)*/{
-        return Bool;
-    }
-}
-
 void analisaDecParam(A_DecParam decParam){
     A_LstIdent lstIdent = decParam->lstIdent;
     while (lstIdent != NULL)
     {
-        appendAttribUltimoElemento(tabelaSimbolos, lstIdent->id, resolveTipo(decParam), A_Param);
+        addParam(tabelaSimbolos, lstIdent->id, decParam->tipo);
         lstIdent = lstIdent->prox;
     }
 }
@@ -58,6 +50,7 @@ LstAtributes analisaParamFormal(A_ParamFormal paramFormal){
 }
 
 void analisaDecProc(A_DecProc decProc){
+    escopo = escopo+1;
     //Adicionar nome da tabela de simbolos
     // primeiro cria os parametros
     addProc(tabelaSimbolos,decProc->id, 1, 0);
@@ -65,8 +58,9 @@ void analisaDecProc(A_DecProc decProc){
     // depois informações gerenciais
     // endereço de retorno
     // k = 0;
-    decProc->bloco;
+    analisaBloco(decProc->bloco);
     // depois variaveis locais
+    escopo = escopo-1;
 }
 
 void analisaDecSub(A_LstDecSub listSub){
@@ -342,8 +336,13 @@ void analisaCmdComp(A_CmdComp cmdComp){
 }
 
 void analisaBloco(A_Bloco bloco){
+    if(escopo == 0){
+        analisaDecVars(bloco->secDecVar);
+        analisaDecSub(bloco->secDecSub);
+        analisaCmdComp(bloco->cmdComp);
+        return;
+    }
     analisaDecVars(bloco->secDecVar);
-    analisaDecSub(bloco->secDecSub);
     analisaCmdComp(bloco->cmdComp);
 }
 
