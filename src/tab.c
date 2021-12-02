@@ -23,11 +23,12 @@ Table createTable(){
     return tabela;
 }
 
-Table appendAttribUltimoElemento(Table tabela, String id, AtribType tipo, AtribCategory categoria) {
+Table appendAttribUltimoElemento(Table tabela, String id, AtribType tipo, AtribCategory categoria, int endereco) {
     Atributes atrib = malloc(sizeof(*atrib));
     atrib->atribCategoria = categoria;
     atrib->id = id;
     atrib->tipo = tipo;
+    atrib->endereco = endereco;
 
     LstAtributes lstAtributes = malloc(sizeof(*lstAtributes));
     lstAtributes->atributes = atrib;
@@ -88,12 +89,12 @@ Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
     if(escopo == 0){
         return addIdentificador(tabela, id, Var, tipo, escopo, endereco, NULL);
     }else{                              /*Table tabela, String id, AtribType tipo, AtribCategory categoria*/
-        return appendAttribUltimoElemento(tabela, id, resolveTipo(tipo), A_Var);
+        return appendAttribUltimoElemento(tabela, id, resolveTipo(tipo), A_Var, endereco);
     }
 }
 
 Table addParam(Table tabela, String id, String tipo) {
-    return appendAttribUltimoElemento(tabela, id, resolveTipo(tipo), A_Param);
+    return appendAttribUltimoElemento(tabela, id, resolveTipo(tipo), A_Param, 0);
 }
 
 bool elementoJaExiste(Table tabela, String identificador, int escopo){
@@ -134,6 +135,22 @@ TableLine buscarVariavel(Table tabela, String identificador){
     return buscarElemento(tabela, identificador, Var);
 }
 
+Atributes buscaUltimoElemento(Table tabela, String identificador, AtribCategory category) {
+    LstAtributes lstAtributes = tabela->ultimo->lstAtributes;
+    while (lstAtributes != NULL)
+    {
+        Atributes atrib = lstAtributes->atributes;
+        if(atrib->atribCategoria == category && strcmp(atrib->id, identificador) == 0){
+            return atrib;
+        }
+        lstAtributes = lstAtributes->prox;
+    }
+}
+
+Atributes buscarVariavelUltimoElem(Table tabela, String identificador) {
+    return buscaUltimoElemento(tabela, identificador, A_Var);
+}
+
 String resolveAtributesType(AtribType type) {
     if(type == Int){
         return "integer";
@@ -150,15 +167,16 @@ String resolveAtributesCategory(AtribCategory category){
     }
 }
 
-String transformaAtrib(TableLine line){
+String transformaAtrib(TableLine line) {
+    char result[1000] = "";
     if(line->lstAtributes == NULL ){
-        return "";
+        return result;
     }
     LstAtributes lstAtributes = line->lstAtributes;
-    char result[1000] = "{";
+    strcat(result, "{");
     while (lstAtributes != NULL)
     {
-        /*{Cat: parametro - p: integer,}*/
+        //{Cat: parametro - p: integer,}
         strcat(result, "Cat: ");
         strcat(result, resolveAtributesCategory(lstAtributes->atributes->atribCategoria));
         strcat(result, " - ");

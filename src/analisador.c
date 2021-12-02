@@ -5,6 +5,8 @@
 
 static int countVar = 0;
 
+static int countProc = 0;
+
 static int errors = 0;
 
 static int desvio = 0;
@@ -15,7 +17,8 @@ static Table tabelaSimbolos;
 
 static Commands lstMepa;
 
-void analisaDecVars(A_LstDecVar listaVars){
+int analisaDecVars(A_LstDecVar listaVars){
+    int qtdVar = 0;
     while(listaVars != NULL){
         Table tabela = addVar(
             tabelaSimbolos,
@@ -27,8 +30,10 @@ void analisaDecVars(A_LstDecVar listaVars){
         if(tabela == NULL){
             errors = errors+1;
         }
+        qtdVar = qtdVar+1;
         listaVars = listaVars->prox;
     }
+    return qtdVar;
 }
 
 void analisaDecParam(A_DecParam decParam){
@@ -53,14 +58,18 @@ void analisaDecProc(A_DecProc decProc){
     escopo = escopo+1;
     //Adicionar nome da tabela de simbolos
     // primeiro cria os parametros
-    addProc(tabelaSimbolos,decProc->id, 1, 0);
+    addProc(tabelaSimbolos,decProc->id, 1, countProc);
+    addEntraProc(lstMepa, escopo-1, countProc);
     analisaParamFormal(decProc->paramFormal);
     // depois informações gerenciais
     // endereço de retorno
     // k = 0;
-    analisaBloco(decProc->bloco);
-    // depois variaveis locais
+    int qtdVar = analisaBloco(decProc->bloco);
+    // // depois variaveis locais
+    // desalocaMemoriaMepa(lstMepa, qtdVar);
+    // addRetornaProc(lstMepa, escopo-1, countProc);
     escopo = escopo-1;
+    // countProc = countProc+1;
 }
 
 void analisaDecSub(A_LstDecSub listSub){
@@ -113,13 +122,29 @@ void analisaOperacaoFator(FatorOperator operacao){
 }
 
 void analisaFatorId(A_Fator fator){
-    TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
-    if(variavel == NULL){
-        printf("\nVariavel %s não existe\n", fator->id);
-        errors = errors +1;
+    if(escopo == 0){
+        TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
+        if(variavel == NULL){
+            printf("\nVariavel %s não existe\n", fator->id);
+            errors = errors +1;
+            return;
+        }
+        LoadVarMepa(lstMepa, variavel->endereco, variavel->escopo);
         return;
     }
-    LoadVarMepa(lstMepa, variavel->endereco, variavel->escopo);
+
+    Atributes atrib = buscarVariavelUltimoElem(tabelaSimbolos, fator->id);
+    if(atrib == NULL){
+        TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
+        if(variavel == NULL){
+            printf("\nVariavel do procedimento %s não existe\n", fator->id);
+            errors = errors +1;
+            return;
+        }
+        LoadVarMepa(lstMepa, atrib->endereco, variavel->escopo);
+        return;
+    }
+    // LoadParamMepa(lstMepa, atrib->endereco, variavel->escopo);
 }
 
 void analisaFator(A_Fator fator){
@@ -221,13 +246,17 @@ void analisaExpress(A_Express express){
 }
 
 void analisaAtrib(A_Atrib atrib){
-    TableLine variavel = buscarVariavel(tabelaSimbolos, atrib->id);
-    if(variavel == NULL){
-        printf("\nVariavel %s não existe\n", atrib->id);
-        errors = errors +1;
+    if(escopo == 0){
+        TableLine variavel = buscarVariavel(tabelaSimbolos, atrib->id);
+        if(variavel == NULL){
+            printf("\nVariavel %s não existe\n", atrib->id);
+            errors = errors +1;
+        }
+        analisaExpress(atrib->express);
+        addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);
     }
-    analisaExpress(atrib->express);
-    addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);
+    //Continuar daqui
+    printf("Escopo é maior que zero tiozin");
 }
 
 void analisaWrite(A_Write write){
@@ -335,18 +364,20 @@ void analisaCmdComp(A_CmdComp cmdComp){
     analisaLstCmd(cmdComp->lstCmd);
 }
 
-void analisaBloco(A_Bloco bloco){
+int analisaBloco(A_Bloco bloco){
+    int qtdVar = 0;
     if(escopo == 0){
-        analisaDecVars(bloco->secDecVar);
+        qtdVar = analisaDecVars(bloco->secDecVar);
         addDesvio(lstMepa, 0);
         desvio = desvio+1;
         analisaDecSub(bloco->secDecSub);
         addNadaLabelInicioMain(lstMepa);
         analisaCmdComp(bloco->cmdComp);
-        return;
+        return qtdVar;
     }
-    analisaDecVars(bloco->secDecVar);
+    qtdVar = analisaDecVars(bloco->secDecVar);
     analisaCmdComp(bloco->cmdComp);
+    return qtdVar;
 }
 
 int analisaPrograma(A_Programa prog, Table tabela, Commands mepa){

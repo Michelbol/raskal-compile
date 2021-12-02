@@ -99,6 +99,25 @@ void addDivMepa(Commands mepa) {
     addCmdMepa(mepa, createNewCmdMepa("DIVI"));
 }
 
+void addEntraProc(Commands mepa, int escopo, int countProc) {
+    String result = concatStringInt("R", countProc);
+    String cmd = concatStringInt(": ENPR ", escopo);
+    strcat(result, cmd);
+    addCmdMepa(mepa, createNewCmdMepa(result));
+}
+
+void addRetornaProc(Commands mepa, int escopo, int countProc) {
+    String label = concatStringInt("R", countProc);
+    char cmd[20] = "CHPR ";
+    strcat(cmd, label);
+    // CHPR R1
+    strcat(cmd, ", ");
+    // CHPR R1, 
+    String result = concatStringInt(string(cmd), escopo);
+    // CHPR R01, 1
+    addCmdMepa(mepa, createNewCmdMepa(result));
+}
+
 void addAtribMepa(Commands mepa, int endereco, int escopo) {
     recuperaVariavel(mepa, endereco, escopo);
 }
