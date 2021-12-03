@@ -277,6 +277,7 @@ void analisaAtrib(A_Atrib atrib){
         }
         analisaExpress(atrib->express);
         addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);
+        return;
     }
     Atributes localVar = buscaUltimoElemento(tabelaSimbolos, atrib->id);
     if(localVar == NULL){
