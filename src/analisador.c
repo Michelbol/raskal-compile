@@ -5,6 +5,8 @@
 
 static int countVar = 0;
 
+static int countLocalVar = 0;
+
 static int countProc = 0;
 
 static int errors = 0;
@@ -18,6 +20,13 @@ static Table tabelaSimbolos;
 static Commands lstMepa;
 
 int analisaDecVars(A_LstDecVar listaVars){
+    if(escopo == 0){
+        return resolveAnalisaDecVars(listaVars, &countVar);
+    }
+    return resolveAnalisaDecVars(listaVars, &countLocalVar);
+}
+
+int resolveAnalisaDecVars(A_LstDecVar listaVars, int *contador) {
     int qtdVar = 0;
     while(listaVars != NULL){
         Table tabela = addVar(
@@ -25,7 +34,7 @@ int analisaDecVars(A_LstDecVar listaVars){
             listaVars->decVar->id, 
             listaVars->decVar->tipo, 
             escopo, 
-            *addVarMepa(lstMepa, &countVar)-1
+            *addVarMepa(lstMepa, contador)-1
         );
         if(tabela == NULL){
             errors = errors+1;
@@ -38,10 +47,12 @@ int analisaDecVars(A_LstDecVar listaVars){
 
 void analisaDecParam(A_DecParam decParam){
     A_LstIdent lstIdent = decParam->lstIdent;
+    int endereco = -4;
     while (lstIdent != NULL)
     {
-        addParam(tabelaSimbolos, lstIdent->id, decParam->tipo);
+        addParam(tabelaSimbolos, lstIdent->id, decParam->tipo, endereco);
         lstIdent = lstIdent->prox;
+        endereco = endereco-1;
     }
 }
 
@@ -59,17 +70,18 @@ void analisaDecProc(A_DecProc decProc){
     //Adicionar nome da tabela de simbolos
     // primeiro cria os parametros
     addProc(tabelaSimbolos,decProc->id, 1, countProc);
-    addEntraProc(lstMepa, escopo-1, countProc);
+    addEntraProc(lstMepa, escopo, countProc);
     analisaParamFormal(decProc->paramFormal);
     // depois informações gerenciais
     // endereço de retorno
     // k = 0;
     int qtdVar = analisaBloco(decProc->bloco);
     // // depois variaveis locais
-    // desalocaMemoriaMepa(lstMepa, qtdVar);
-    // addRetornaProc(lstMepa, escopo-1, countProc);
+    desalocaMemoriaMepa(lstMepa, qtdVar);
+    addRetornaProc(lstMepa, escopo, countProc);
     escopo = escopo-1;
-    // countProc = countProc+1;
+    countProc = countProc+1;
+    countLocalVar = 0;
 }
 
 void analisaDecSub(A_LstDecSub listSub){
@@ -133,7 +145,7 @@ void analisaFatorId(A_Fator fator){
         return;
     }
 
-    Atributes atrib = buscarVariavelUltimoElem(tabelaSimbolos, fator->id);
+    Atributes atrib = buscaUltimoElemento(tabelaSimbolos, fator->id);
     if(atrib == NULL){
         TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
         if(variavel == NULL){
@@ -141,10 +153,10 @@ void analisaFatorId(A_Fator fator){
             errors = errors +1;
             return;
         }
-        LoadVarMepa(lstMepa, atrib->endereco, variavel->escopo);
+        LoadVarMepa(lstMepa, variavel->endereco, variavel->escopo);
         return;
     }
-    // LoadParamMepa(lstMepa, atrib->endereco, variavel->escopo);
+    LoadVarMepa(lstMepa, atrib->endereco, escopo);
 }
 
 void analisaFator(A_Fator fator){
@@ -255,8 +267,20 @@ void analisaAtrib(A_Atrib atrib){
         analisaExpress(atrib->express);
         addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);
     }
-    //Continuar daqui
-    printf("Escopo é maior que zero tiozin");
+    Atributes localVar = buscaUltimoElemento(tabelaSimbolos, atrib->id);
+    if(localVar == NULL){
+        printf("Local Var Nula Atrib->id: %s\n", atrib->id);
+        TableLine variavel = buscarVariavel(tabelaSimbolos, atrib->id);
+        if(variavel == NULL){
+            printf("\nVariavel %s não existe\n", atrib->id);
+            errors = errors +1;  
+        }
+        analisaExpress(atrib->express);
+        addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);
+        return;
+    }
+    analisaExpress(atrib->express);
+    addAtribMepa(lstMepa, localVar->endereco, escopo);
 }
 
 void analisaWrite(A_Write write){

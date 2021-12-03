@@ -108,13 +108,13 @@ void addEntraProc(Commands mepa, int escopo, int countProc) {
 
 void addRetornaProc(Commands mepa, int escopo, int countProc) {
     String label = concatStringInt("R", countProc);
-    char cmd[20] = "CHPR ";
+    char cmd[20] = "RTPR ";
     strcat(cmd, label);
-    // CHPR R1
+    // RTPR R1
     strcat(cmd, ", ");
-    // CHPR R1, 
+    // RTPR R1, 
     String result = concatStringInt(string(cmd), escopo);
-    // CHPR R01, 1
+    // RTPR R01, 1
     addCmdMepa(mepa, createNewCmdMepa(result));
 }
 

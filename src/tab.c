@@ -93,8 +93,8 @@ Table addVar(Table tabela, String id, String tipo, int escopo, int endereco){
     }
 }
 
-Table addParam(Table tabela, String id, String tipo) {
-    return appendAttribUltimoElemento(tabela, id, resolveTipo(tipo), A_Param, 0);
+Table addParam(Table tabela, String id, String tipo, int endereco) {
+    return appendAttribUltimoElemento(tabela, id, resolveTipo(tipo), A_Param, endereco);
 }
 
 bool elementoJaExiste(Table tabela, String identificador, int escopo){
@@ -135,20 +135,16 @@ TableLine buscarVariavel(Table tabela, String identificador){
     return buscarElemento(tabela, identificador, Var);
 }
 
-Atributes buscaUltimoElemento(Table tabela, String identificador, AtribCategory category) {
+Atributes buscaUltimoElemento(Table tabela, String identificador) {
     LstAtributes lstAtributes = tabela->ultimo->lstAtributes;
     while (lstAtributes != NULL)
     {
         Atributes atrib = lstAtributes->atributes;
-        if(atrib->atribCategoria == category && strcmp(atrib->id, identificador) == 0){
+        if(strcmp(atrib->id, identificador) == 0){
             return atrib;
         }
         lstAtributes = lstAtributes->prox;
     }
-}
-
-Atributes buscarVariavelUltimoElem(Table tabela, String identificador) {
-    return buscaUltimoElemento(tabela, identificador, A_Var);
 }
 
 String resolveAtributesType(AtribType type) {
