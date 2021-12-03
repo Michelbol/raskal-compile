@@ -42,6 +42,7 @@ void addDesvioCond(Commands mepa, int desvio);
 void addNadaLabel(Commands mepa, int *desvio);
 void addEntraProc(Commands mepa, int escopo, int countProc);
 void addRetornaProc(Commands mepa, int escopo, int countProc);
+void addChamadaProcMepa(Commands mepa, int escopo, int countProc);
 void limpaArquivo(String name);
 
 struct Command_ {

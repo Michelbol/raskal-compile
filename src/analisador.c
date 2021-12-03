@@ -263,7 +263,6 @@ void analisaAtrib(A_Atrib atrib){
     }
     Atributes localVar = buscaUltimoElemento(tabelaSimbolos, atrib->id);
     if(localVar == NULL){
-        printf("Local Var Nula Atrib->id: %s\n", atrib->id);
         TableLine variavel = buscarVariavel(tabelaSimbolos, atrib->id);
         if(variavel == NULL){
             printf("\nVariavel %s não existe\n", atrib->id);
@@ -306,6 +305,21 @@ void analisaWhile(A_Repeticao repet){
     addNadaLabel(lstMepa, &desvio);
 }
 
+void analisaChamProc(A_Chamada_Proc chamProc){
+    TableLine linha = buscarElemento(tabelaSimbolos,chamProc->id, Proc);
+    if(linha == NULL){
+        printf("Procedimento %s não foi encontrado", chamProc->id);
+        errors = errors+1;
+        return;
+    }
+    A_LstExpress lst = chamProc->lstExpressoes;
+    while(lst != NULL){
+        analisaExpress(lst->expressao);
+        lst = lst->prox;
+    }
+    addChamadaProcMepa(lstMepa, linha->escopo, linha->endereco);
+}
+
 void analisaCmd(A_Cmd cmd){
     switch (cmd->type)
     {
@@ -323,6 +337,9 @@ void analisaCmd(A_Cmd cmd){
         break;
     case While:
         analisaWhile(cmd->repet);
+        break;
+    case ChamProc:
+        analisaChamProc(cmd->chamProc);
         break;
     }
 }

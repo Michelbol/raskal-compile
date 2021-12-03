@@ -6,11 +6,14 @@ program meu_programa;
     procedure p(y: integer);
         var a, b: integer;
     begin
-        a := 2 * x;
-        b := a + 1;
-        y := b + y;
+        a := 2 * x; // x := 5;  a == 10
+        b := a + 1; // b == 11
+        y := b + y; // y := 10;  y == 11+10 = 21;
+        write(a,b,y);   // 10 11 21
     end;
 begin
+    x := 5;
+    p(10);
     // y := 2*3+2-2+2+2-4; // 6
     // y := 10 div 2; // 5
     // y := 10 div 1+1; // 11
@@ -37,7 +40,7 @@ begin
     //         write(y);
     //         write(x);
     //     end;
-    read(n);
+    // read(n);
     // f1 := 0; 
     // f2 := 1; 
     // i := 1;
@@ -48,5 +51,5 @@ begin
     //     f2 := f3;
     //     i := i + 1;
     // end;
-    write(n);
+    // write(n);
 end.

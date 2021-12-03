@@ -13,6 +13,7 @@ typedef struct A_CmdComp_ *A_CmdComp;
 typedef struct A_Cmd_ *A_Cmd;
 typedef struct A_LstCmd_ *A_LstCmd;
 typedef struct A_Atrib_ *A_Atrib;
+typedef struct A_Chamada_Proc_ *A_Chamada_Proc;
 typedef struct A_Express_ *A_Express;
 typedef struct A_Condicional_ *A_Condicional;
 typedef struct A_Repeticao_ *A_Repeticao;
@@ -26,7 +27,7 @@ typedef struct A_LstFator_ *A_LstFator;
 typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
 typedef enum FatorType_ {Id, Num, Logico, Expressao , Not, Menos} FatorType;
-typedef enum CmdType_ { Atrib, Write, Read, If, While } CmdType;
+typedef enum CmdType_ { Atrib, Write, Read, If, While, ChamProc } CmdType;
 typedef enum TermoOperator_ { Somar, Subtrair, Or, Numero} TermoOperator;
 typedef enum FatorOperator_ { Multi, Div, And , Fator} FatorOperator;
 typedef enum Relacao_ { Igual, Diferente, Menor, MenorIgual, Maior, MaiorIgual, ExpressaoSimples} Relacao;
@@ -78,8 +79,10 @@ A_Cmd A_cmdRepeticao(A_Repeticao repet);
 A_Cmd A_cmdRead(A_Read read);
 A_Cmd A_cmdWrite(A_Write write);
 A_Cmd A_cmdAtrib(A_Atrib atrib);
+A_Cmd A_cmdChamadaProc(A_Chamada_Proc chamadaProc);
 A_LstCmd A_lstCmd(A_Cmd cmd, A_LstCmd lstCmd);
 A_Atrib A_atrib(String id, A_Express express);
+A_Chamada_Proc A_chamada_Proc(String id, A_LstExpress lstExpressoes);
 A_Express A_express(A_Simp_Express simp_express);
 A_Express A_expressRelacao(A_Simp_Express simp_express, Relacao relacao, A_Simp_Express simp_express2);
 A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao);
@@ -155,12 +158,18 @@ struct A_Cmd_ {
     A_Read read;
     A_Condicional cond;
     A_Repeticao repet;
+    A_Chamada_Proc chamProc;
     CmdType type;
 };
 
 struct A_Atrib_ {
     String id;
     A_Express express;
+};
+
+struct A_Chamada_Proc_ {
+    String id;
+    A_LstExpress lstExpressoes;
 };
 
 struct A_Condicional_ {

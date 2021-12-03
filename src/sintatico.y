@@ -72,6 +72,7 @@ extern Table tabela_simbolos;
    A_ParamFormal paramFormal;
    A_LstDecParam listDecParam;
    A_DecParam decParam;
+   A_Chamada_Proc chamProced;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -165,6 +166,7 @@ extern Table tabela_simbolos;
 %type <rel> relacao
 %type <condicional> condicional
 %type <repeticao> repeticao
+%type <chamProced> chamada_procedimento
 
 %define parse.error verbose
 %define parse.lac full
@@ -239,6 +241,7 @@ lista_comandos: comando T_PONTO_E_VIRGULA lista_comandos { $$ = A_lstCmd($1, $3)
 ;
 
 comando: atribuicao { $$ = A_cmdAtrib($1); }
+         | chamada_procedimento { $$ = A_cmdChamadaProc($1); }
          | condicional { $$ = A_cmdCond($1); }
          | repeticao { $$ = A_cmdRepeticao($1); }
          | leitura { $$ = A_cmdRead($1); }
@@ -246,6 +249,10 @@ comando: atribuicao { $$ = A_cmdAtrib($1); }
 ;
 
 atribuicao: T_IDENT T_ATRIBUICAO expressao { $$ = A_atrib($1, $3); }
+;
+
+chamada_procedimento: T_IDENT T_ABRE_PARENTESES T_FECHA_PARENTESES { $$ = A_chamada_Proc($1, NULL); }
+                    | T_IDENT T_ABRE_PARENTESES lista_expressoes T_FECHA_PARENTESES { $$ = A_chamada_Proc($1, $3); }
 ;
 
 condicional: T_IF expressao T_THEN comando { $$ = A_condicionalCmd($2, $4, NULL); }

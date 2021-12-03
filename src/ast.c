@@ -178,10 +178,24 @@ A_Cmd A_cmdRead(A_Read read) {
     return no;
 }
 
+A_Cmd A_cmdChamadaProc(A_Chamada_Proc chamadaProc) {
+    A_Cmd no = malloc(sizeof(*no));
+    no->chamProc = chamadaProc;
+    no->type = ChamProc;
+    return no;
+}
+
 A_Atrib A_atrib(String id, A_Express express) {
     A_Atrib no = malloc(sizeof(*no));
     no->id = id;
     no->express = express;
+    return no;
+}
+
+A_Chamada_Proc A_chamada_Proc(String id, A_LstExpress lstExpressoes) {
+    A_Chamada_Proc no = malloc(sizeof(*no));
+    no->id = id;
+    no->lstExpressoes = lstExpressoes;
     return no;
 }
 
