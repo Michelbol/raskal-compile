@@ -45,22 +45,39 @@ int resolveAnalisaDecVars(A_LstDecVar listaVars, int *contador) {
     return qtdVar;
 }
 
-void analisaDecParam(A_DecParam decParam){
+void analisaDecParam(A_DecParam decParam, int *endereco){
     A_LstIdent lstIdent = decParam->lstIdent;
-    int endereco = -4;
     while (lstIdent != NULL)
     {
-        addParam(tabelaSimbolos, lstIdent->id, decParam->tipo, endereco);
+        addParam(tabelaSimbolos, lstIdent->id, decParam->tipo, *endereco);
         lstIdent = lstIdent->prox;
-        endereco = endereco-1;
+        *endereco = *endereco+1;
     }
 }
 
-LstAtributes analisaParamFormal(A_ParamFormal paramFormal){
+int countParam(A_ParamFormal paramFormal){
+    int qtd = 0;
     A_LstDecParam lst = paramFormal->listDecParam;
     while (lst != NULL)
     {
-        analisaDecParam(lst->decParam);
+        A_LstIdent lstIdent = lst->decParam->lstIdent;
+        while (lstIdent != NULL)
+        {
+            qtd = qtd+1;
+            lstIdent = lstIdent->prox;
+        }
+        lst = lst->prox;
+    }
+    return qtd;
+}
+
+LstAtributes analisaParamFormal(A_ParamFormal paramFormal){
+    int totalParam = countParam(paramFormal);
+    int endereco = -3 -totalParam;
+    A_LstDecParam lst = paramFormal->listDecParam;
+    while (lst != NULL)
+    {
+        analisaDecParam(lst->decParam, &endereco);
         lst = lst->prox;
     }
 }

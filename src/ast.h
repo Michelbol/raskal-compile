@@ -131,6 +131,7 @@ struct A_DecProc_{
 
 struct A_ParamFormal_ {
     A_LstDecParam listDecParam;
+    int qtdParam;
 };
 
 struct A_LstDecParam_ {
