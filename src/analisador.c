@@ -67,16 +67,10 @@ LstAtributes analisaParamFormal(A_ParamFormal paramFormal){
 
 void analisaDecProc(A_DecProc decProc){
     escopo = escopo+1;
-    //Adicionar nome da tabela de simbolos
-    // primeiro cria os parametros
     addProc(tabelaSimbolos,decProc->id, 1, countProc);
     addEntraProc(lstMepa, escopo, countProc);
     analisaParamFormal(decProc->paramFormal);
-    // depois informações gerenciais
-    // endereço de retorno
-    // k = 0;
     int qtdVar = analisaBloco(decProc->bloco);
-    // // depois variaveis locais
     desalocaMemoriaMepa(lstMepa, qtdVar);
     addRetornaProc(lstMepa, escopo, countProc);
     escopo = escopo-1;
