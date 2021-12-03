@@ -53,7 +53,7 @@ A_ParamFormal A_paramFormal(A_LstDecParam lstDecParam) {
 
 A_LstDecParam A_lstDecParam(A_DecParam decParam, A_LstDecParam lstDecParam) {
     A_LstDecParam no = malloc(sizeof(*no));
-    if(lstDecParam = NULL){
+    if(lstDecParam == NULL){
         no->decParam = decParam;
         no->prox = NULL;
         return;

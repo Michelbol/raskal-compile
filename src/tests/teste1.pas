@@ -1,55 +1,21 @@
-program meu_programa;
- var a, b, c, n, i: integer;
-    x, y: integer;
-    // z: boolean;
-    // f1, f2, f3: integer;
-    procedure p(y: integer);
-        var a, b: integer;
-    begin
-        a := 2 * x; // x := 5;  a == 10
-        b := a + 1; // b == 11
-        y := b + y; // y := 10;  y == 11+10 = 21;
-        write(a,b,y);   // 10 11 21
-    end;
+program procPassRef; 
+   var k: integer;
+
+procedure p(n: integer; var g: integer);
+  var h:integer;
 begin
-    x := 5;
-    p(10);
-    // y := 2*3+2-2+2+2-4; // 6
-    // y := 10 div 2; // 5
-    // y := 10 div 1+1; // 11
-    // y := 5+4 div 2;  // 7
-    // y := (5+5) <= (9+1); //true
-    // y := (5+5) > (9+2); // false
-    // y := (5+5) > (5+5); // false
-    // y := (5+5) >= (5+5); // true
-    // y := 5;
-    // x := 6;
-    // c := 99;
-    // b := 88;
-    // if (false) then
-    //     write(y)
-    // else
-    //     write(x);
-    // if (true) then
-    //     begin
-    //         write(c);
-    //         write(b);
-    //     end
-    // else
-    //     begin
-    //         write(y);
-    //         write(x);
-    //     end;
-    // read(n);
-    // f1 := 0; 
-    // f2 := 1; 
-    // i := 1;
-    // while (i <= n) do  
-    // begin
-    //     f3 := f2 + f1;
-    //     f1 := f2;
-    //     f2 := f3;
-    //     i := i + 1;
-    // end;
-    // write(n);
-end.
+  if (n < 2) then
+    g := g + 1
+  else
+    begin
+      p(n - 1, h);
+      g := h;
+      p(n - 2, g);
+    end;
+  write(n, g);
+end;
+
+begin
+  k := 0;
+  p(3, k);
+end. 

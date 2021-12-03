@@ -131,7 +131,7 @@ void analisaFatorId(A_Fator fator){
     if(escopo == 0){
         TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
         if(variavel == NULL){
-            printf("\nVariavel %s não existe\n", fator->id);
+            printf("\nVariavel fator %s não existe\n", fator->id);
             errors = errors +1;
             return;
         }
@@ -143,7 +143,7 @@ void analisaFatorId(A_Fator fator){
     if(atrib == NULL){
         TableLine variavel = buscarVariavel(tabelaSimbolos, fator->id);
         if(variavel == NULL){
-            printf("\nVariavel do procedimento %s não existe\n", fator->id);
+            printf("\nVariavel fator do procedimento %s não existe\n", fator->id);
             errors = errors +1;
             return;
         }
@@ -255,7 +255,7 @@ void analisaAtrib(A_Atrib atrib){
     if(escopo == 0){
         TableLine variavel = buscarVariavel(tabelaSimbolos, atrib->id);
         if(variavel == NULL){
-            printf("\nVariavel %s não existe\n", atrib->id);
+            printf("\nVariavel atrib %s não existe\n", atrib->id);
             errors = errors +1;
         }
         analisaExpress(atrib->express);
@@ -265,7 +265,7 @@ void analisaAtrib(A_Atrib atrib){
     if(localVar == NULL){
         TableLine variavel = buscarVariavel(tabelaSimbolos, atrib->id);
         if(variavel == NULL){
-            printf("\nVariavel %s não existe\n", atrib->id);
+            printf("\nVariavel atrib %s não existe\n", atrib->id);
             errors = errors +1;  
         }
         analisaExpress(atrib->express);

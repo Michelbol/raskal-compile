@@ -224,7 +224,7 @@ params_formais: T_ABRE_PARENTESES list_declara_param T_FECHA_PARENTESES { $$ = A
                | T_ABRE_PARENTESES T_FECHA_PARENTESES { $$ = A_paramFormal(NULL); }
 ;
 
-list_declara_param: declara_param list_declara_param { $$ = A_lstDecParam($1, $2); }
+list_declara_param: declara_param T_PONTO_E_VIRGULA list_declara_param { $$ = A_lstDecParam($1, $3); }
                   | declara_param { $$ = A_lstDecParam($1, NULL); }
 ;
 
