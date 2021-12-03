@@ -1,21 +1,18 @@
-program procPassRef; 
-   var k: integer;
+program exemplo;
+var x, y: integer;
 
-procedure p(n: integer; var g: integer);
-  var h:integer;
+procedure p(t:integer);
+  var z: integer;
+  begin
+    if (t>1) then
+      p(t-1)
+    else
+      y := 1;
+    z := y;
+    y := z*t;
+  end;
 begin
-  if (n < 2) then
-    g := g + 1
-  else
-    begin
-      p(n - 1, h);
-      g := h;
-      p(n - 2, g);
-    end;
-  write(n, g);
-end;
-
-begin
-  k := 0;
-  p(3, k);
-end. 
+  read(x);
+  p(x);
+  write(x,y);
+end.

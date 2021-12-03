@@ -71,8 +71,7 @@ int countParam(A_ParamFormal paramFormal){
     return qtd;
 }
 
-LstAtributes analisaParamFormal(A_ParamFormal paramFormal){
-    int totalParam = countParam(paramFormal);
+LstAtributes analisaParamFormal(A_ParamFormal paramFormal, int totalParam){
     int endereco = -3 -totalParam;
     A_LstDecParam lst = paramFormal->listDecParam;
     while (lst != NULL)
@@ -86,10 +85,11 @@ void analisaDecProc(A_DecProc decProc){
     escopo = escopo+1;
     addProc(tabelaSimbolos,decProc->id, 1, countProc);
     addEntraProc(lstMepa, escopo, countProc);
-    analisaParamFormal(decProc->paramFormal);
+    int totalParam = countParam(decProc->paramFormal);
+    analisaParamFormal(decProc->paramFormal, totalParam);
     int qtdVar = analisaBloco(decProc->bloco);
     desalocaMemoriaMepa(lstMepa, qtdVar);
-    addRetornaProc(lstMepa, escopo, countProc);
+    addRetornaProc(lstMepa, escopo, totalParam);
     escopo = escopo-1;
     countProc = countProc+1;
     countLocalVar = 0;
