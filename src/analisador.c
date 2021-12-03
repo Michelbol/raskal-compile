@@ -373,7 +373,7 @@ void analisaIf(A_Condicional cond){
             addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
             return;
         }
-        addDesvioCond(lstMepa, (desvio+1)/*Desvia L2*/);
+        addDesvio(lstMepa, (desvio+1)/*Desvia L2*/);
         addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
         analisaCmd(cond->cmdElse);
         addNadaLabel(lstMepa, &desvio/*Escreve L2*/);
@@ -384,21 +384,21 @@ void analisaIf(A_Condicional cond){
             addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
             return;
         }
-        addDesvioCond(lstMepa, (desvio+1)/*Desvia L2*/);
+        addDesvio(lstMepa, (desvio+1)/*Desvia L2*/);
         addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
         analisaCmd(cond->cmdElse);
         addNadaLabel(lstMepa, &desvio/*Escreve L2*/);
         break;
     case ElseComandoComposto:
         analisaCmd(cond->cmdThen);
-        addDesvioCond(lstMepa, (desvio+1)/*Desvia L2*/);
+        addDesvio(lstMepa, (desvio+1)/*Desvia L2*/);
         addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
         analisaCmdComp(cond->cmdCompElse);
         addNadaLabel(lstMepa, &desvio/*Escreve L2*/);
         break;
     case ComandoComposto:
         analisaCmdComp(cond->cmdCompThen);
-        addDesvioCond(lstMepa, (desvio+1)/*Desvia L2*/);
+        addDesvio(lstMepa, (desvio+1)/*Desvia L2*/);
         addNadaLabel(lstMepa, &desvio/*Escreve L1*/);
         analisaCmdComp(cond->cmdCompElse);
         addNadaLabel(lstMepa, &desvio/*Escreve L2*/);
