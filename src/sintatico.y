@@ -73,6 +73,7 @@ extern Table tabela_simbolos;
    A_LstDecParam listDecParam;
    A_DecParam decParam;
    A_Chamada_Proc chamProced;
+   A_DecFun decFun;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -167,6 +168,7 @@ extern Table tabela_simbolos;
 %type <condicional> condicional
 %type <repeticao> repeticao
 %type <chamProced> chamada_procedimento
+%type <decFun> declara_func
 
 %define parse.error verbose
 %define parse.lac full
@@ -213,11 +215,16 @@ lista_ident: lista_ident T_VIRGULA T_IDENT { $$ = A_lstIdent($3, $1); }
 tipo: T_IDENT { $$ = $1; } /* caso não fosse especificada, esta já seria a ação default */
 ;
 
-secao_declara_subs: declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = A_lstDecSub($1, $3); }
+secao_declara_subs:  declara_func T_PONTO_E_VIRGULA secao_declara_subs { $$ = NULL; }
+                  | declara_func T_PONTO_E_VIRGULA { $$ = NULL; }
+                  | declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = A_lstDecSub($1, $3); }
                   | declara_proc T_PONTO_E_VIRGULA { $$ = A_lstDecSub($1, NULL); }
 ;
 
 declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA bloco { $$ = A_decProc($2, $3, $5); }
+;
+
+declara_func: T_FUNCTION T_IDENT params_formais T_DOIS_PONTOS tipo T_PONTO_E_VIRGULA bloco { $$ = NULL; }
 ;
 
 params_formais: T_ABRE_PARENTESES list_declara_param T_FECHA_PARENTESES { $$ = A_paramFormal($2); }

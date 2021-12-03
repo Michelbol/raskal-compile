@@ -36,6 +36,7 @@ typedef enum CondType_ { Comando, ComandoComposto, ThenComandoComposto, ElseComa
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
 typedef struct A_DecProc_ *A_DecProc;
+typedef struct A_DecFun_ *A_DecFun;
 typedef struct A_ParamFormal_ *A_ParamFormal;
 
 
@@ -126,6 +127,13 @@ struct A_LstDecSub_ {
 struct A_DecProc_{
     String id;
     A_ParamFormal paramFormal;
+    A_Bloco bloco;
+};
+
+struct A_DecFun_ {
+    String id;
+    A_ParamFormal paramFormal;
+    String tipo;
     A_Bloco bloco;
 };
 
