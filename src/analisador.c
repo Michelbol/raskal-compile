@@ -88,7 +88,9 @@ void analisaDecProc(A_DecProc decProc){
     int totalParam = countParam(decProc->paramFormal);
     analisaParamFormal(decProc->paramFormal, totalParam);
     int qtdVar = analisaBloco(decProc->bloco);
-    desalocaMemoriaMepa(lstMepa, qtdVar);
+    if(qtdVar > 0){
+        desalocaMemoriaMepa(lstMepa, qtdVar);
+    }
     addRetornaProc(lstMepa, escopo, totalParam);
     escopo = escopo-1;
     countProc = countProc+1;
@@ -440,7 +442,7 @@ int analisaPrograma(A_Programa prog, Table tabela, Commands mepa){
     addTipo(tabelaSimbolos, "integer");
     addTipo(tabelaSimbolos, "boolean");
     analisaBloco(prog->bloco);
-    if(countVar != 0){
+    if(countVar > 0){
         desalocaMemoriaMepa(lstMepa, countVar);
     }
     return errors;

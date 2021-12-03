@@ -119,13 +119,13 @@ void addChamadaProcMepa(Commands mepa, int escopo, int countProc) {
 }
 
 void addRetornaProc(Commands mepa, int escopo, int countParam) {
-    String label = concatStringInt("", countParam);
+    String label = concatStringInt("", escopo);
     char cmd[20] = "RTPR ";
     strcat(cmd, label);
     // RTPR 1
     strcat(cmd, ", ");
     // RTPR 1, 
-    String result = concatStringInt(string(cmd), escopo);
+    String result = concatStringInt(string(cmd), countParam);
     // RTPR 1, 1
     addCmdMepa(mepa, createNewCmdMepa(result));
 }
