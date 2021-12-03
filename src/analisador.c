@@ -440,6 +440,8 @@ int analisaPrograma(A_Programa prog, Table tabela, Commands mepa){
     addTipo(tabelaSimbolos, "integer");
     addTipo(tabelaSimbolos, "boolean");
     analisaBloco(prog->bloco);
-    desalocaMemoriaMepa(lstMepa, countVar);
+    if(countVar != 0){
+        desalocaMemoriaMepa(lstMepa, countVar);
+    }
     return errors;
 }
