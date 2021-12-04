@@ -195,6 +195,22 @@ void analisaFatorId(A_Fator fator){
     LoadVarMepa(lstMepa, atrib->endereco, escopo);
 }
 
+void analisaChamFun(A_Chamada_Fun chamFun){
+    TableLine linha = buscarElemento(tabelaSimbolos,chamFun->id, Func);
+    if(linha == NULL){
+        printf("Função %s não foi encontrado", chamFun->id);
+        errors = errors+1;
+        return;
+    }
+    A_LstExpress lst = chamFun->lstExpressoes;
+    while(lst != NULL){
+        analisaExpress(lst->expressao);
+        lst = lst->prox;
+    }
+    addAmemMepa(lstMepa, 1);
+    addChamadaProcMepa(lstMepa, linha->escopo, linha->endereco);
+}
+
 void analisaFator(A_Fator fator){
     switch (fator->type)
     {
@@ -217,6 +233,9 @@ void analisaFator(A_Fator fator){
             break;
         case Expressao:
             analisaExpress(fator->expressao);
+            break;
+        case F_Fun:
+            analisaChamFun(fator->chamFun);
             break;
     }
 }

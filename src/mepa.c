@@ -7,13 +7,13 @@
 static String labelPrefix = "L";
 
 int* addVarMepa(Commands mepa, int *countVar) {
-    addAmemMepa(mepa);
+    addAmemMepa(mepa, 1);
     *countVar = *countVar+1;
     return countVar;
 }
 
-void addAmemMepa(Commands mepa) {
-    addCmdMepa(mepa, createNewCmdMepa("AMEM 1"));
+void addAmemMepa(Commands mepa, int qtdVar) {
+    addCmdMepa(mepa, createNewCmdMepa(concatStringInt("AMEM ", qtdVar)));
 }
 
 void addNumMepa(Commands mepa, int numero) {
