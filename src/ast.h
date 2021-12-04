@@ -32,6 +32,7 @@ typedef enum TermoOperator_ { Somar, Subtrair, Or, Numero} TermoOperator;
 typedef enum FatorOperator_ { Multi, Div, And , Fator} FatorOperator;
 typedef enum Relacao_ { Igual, Diferente, Menor, MenorIgual, Maior, MaiorIgual, ExpressaoSimples} Relacao;
 typedef enum CondType_ { Comando, ComandoComposto, ThenComandoComposto, ElseComandoComposto } CondType;
+typedef enum LstDecSubType_ { Fun, Proced } LstDecSubType;
 
 typedef struct A_LstIdent_ *A_LstIdent;
 typedef struct A_DecVar_ *A_DecVar;
@@ -46,6 +47,7 @@ A_LstIdent A_lstIdent(String id, A_LstIdent lstIdent);
 A_DecVar A_decVar(String id, String tipo, Table tabela);
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar);
 A_LstDecSub A_lstDecSub(A_DecProc decProc, A_LstDecSub lstDecSub);
+A_LstDecSub A_lstDecSubFun(A_DecFun decFun, A_LstDecSub lstDecSub);
 A_DecProc A_decProc(String id, A_ParamFormal parmFormal, A_Bloco bloco);
 A_DecFun A_decFun(String id, A_ParamFormal paramFormal, String tipo, A_Bloco bloco);
 A_CmdComp A_cmdComp(A_LstCmd LstCmd);
@@ -123,6 +125,8 @@ struct A_LstDecVar_ {
 
 struct A_LstDecSub_ {
     A_DecProc decProc;
+    A_DecFun decFun;
+    LstDecSubType tipo;
     A_LstDecSub prox;
 };
 

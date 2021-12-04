@@ -21,11 +21,28 @@ A_LstDecSub A_lstDecSub(A_DecProc decProc, A_LstDecSub lstDecSub) {
     if(lstDecSub == NULL){
         A_LstDecSub no = malloc(sizeof(*no));
         no->decProc = decProc;
+        no->tipo = Proced;
         no->prox = NULL;
         return no;
     }
     A_LstDecSub no = malloc(sizeof(*no));
     no->decProc = decProc;
+    no->tipo = Proced;
+    no->prox = lstDecSub;
+    return no;
+}
+
+A_LstDecSub A_lstDecSubFun(A_DecFun decFun, A_LstDecSub lstDecSub) {
+    if(lstDecSub == NULL){
+        A_LstDecSub no = malloc(sizeof(*no));
+        no->decFun = decFun;
+        no->tipo = Fun;
+        no->prox = NULL;
+        return no;
+    }
+    A_LstDecSub no = malloc(sizeof(*no));
+    no->decFun = decFun;
+    no->tipo = Fun;
     no->prox = lstDecSub;
     return no;
 }

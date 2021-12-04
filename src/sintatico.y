@@ -215,8 +215,8 @@ lista_ident: lista_ident T_VIRGULA T_IDENT { $$ = A_lstIdent($3, $1); }
 tipo: T_IDENT { $$ = $1; } /* caso não fosse especificada, esta já seria a ação default */
 ;
 
-secao_declara_subs:  declara_func T_PONTO_E_VIRGULA secao_declara_subs { $$ = NULL; }
-                  | declara_func T_PONTO_E_VIRGULA { $$ = NULL; }
+secao_declara_subs:  declara_func T_PONTO_E_VIRGULA secao_declara_subs { $$ = ($1, $3); }
+                  | declara_func T_PONTO_E_VIRGULA { $$ = A_lstDecSubFun($1, NULL); }
                   | declara_proc T_PONTO_E_VIRGULA secao_declara_subs { $$ = A_lstDecSub($1, $3); }
                   | declara_proc T_PONTO_E_VIRGULA { $$ = A_lstDecSub($1, NULL); }
 ;

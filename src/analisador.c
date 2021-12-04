@@ -9,6 +9,8 @@ static int countLocalVar = 0;
 
 static int countProc = 0;
 
+static int countFun = 0;
+
 static int errors = 0;
 
 static int desvio = 0;
@@ -97,9 +99,30 @@ void analisaDecProc(A_DecProc decProc){
     countLocalVar = 0;
 }
 
+void analisaDecFun(A_DecFun decFun){
+    escopo = escopo+1;
+    addFunc(tabelaSimbolos, decFun->id, 1, countFun);
+    addEntraProc(lstMepa, escopo, countFun);
+    int totalParam = countParam(decFun->paramFormal);
+    analisaParamFormal(decFun->paramFormal, totalParam);
+    int qtdVar = analisaBloco(decFun->bloco);
+    if(qtdVar > 0){
+        desalocaMemoriaMepa(lstMepa, qtdVar);
+    }
+    addRetornaProc(lstMepa, escopo, totalParam);
+    escopo = escopo-1;
+    countFun = countFun+1;
+    countLocalVar = 0;
+}
+
 void analisaDecSub(A_LstDecSub listSub){
     while(listSub != NULL){
-        analisaDecProc(listSub->decProc);
+        if(listSub->tipo == Proced){
+            analisaDecProc(listSub->decProc);
+        }
+        if(listSub->tipo == Fun){
+            analisaDecFun(listSub->decFun);
+        }
         listSub = listSub->prox;
     }
 }
@@ -276,6 +299,7 @@ void analisaAtrib(A_Atrib atrib){
         if(variavel == NULL){
             printf("\nVariavel atrib %s não existe\n", atrib->id);
             errors = errors +1;
+            return;
         }
         analisaExpress(atrib->express);
         addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);
@@ -283,10 +307,20 @@ void analisaAtrib(A_Atrib atrib){
     }
     Atributes localVar = buscaUltimoElemento(tabelaSimbolos, atrib->id);
     if(localVar == NULL){
+        if(isUltimoElementoFuncao(tabelaSimbolos)) {
+            TableLine funcao = getUltimoElementoFuncao(tabelaSimbolos, atrib->id);
+            if(funcao != NULL){
+                analisaExpress(atrib->express);
+                int qtdParam = countQtdParamFunction(funcao);
+                addAtribMepa(lstMepa, (funcao->endereco-4-qtdParam), funcao->escopo);  
+                return;
+            }              
+        }
         TableLine variavel = buscarVariavel(tabelaSimbolos, atrib->id);
         if(variavel == NULL){
             printf("\nVariavel atrib %s não existe\n", atrib->id);
             errors = errors +1;  
+            return;
         }
         analisaExpress(atrib->express);
         addAtribMepa(lstMepa, variavel->endereco, variavel->escopo);

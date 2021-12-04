@@ -69,6 +69,11 @@ Table addProc(Table tabela, String id, int escopo, int endereco) {
     return addIdentificador(tabela, id, Proc, "", escopo, endereco, lstAtributes);
 }
 
+Table addFunc(Table tabela, String id, int escopo, int endereco) {
+    LstAtributes lstAtributes = malloc(sizeof(*lstAtributes));
+    return addIdentificador(tabela, id, Func, "", escopo, endereco, lstAtributes);
+}
+
 Table addProgram(Table tabela, String id){
     return addIdentificador(tabela, id, Program, "", 0, 0, NULL);
 }
@@ -145,6 +150,34 @@ Atributes buscaUltimoElemento(Table tabela, String identificador) {
         }
         lstAtributes = lstAtributes->prox;
     }
+}
+
+TableLine getUltimoElementoFuncao(Table tabela, String id) {
+    TableLine lstAtributes = tabela->ultimo;
+    if(lstAtributes->categoria == Func){
+        if(strcmp(lstAtributes->identificador, id) == 0){
+            return lstAtributes;
+        }
+    }
+    return NULL;
+}
+
+int countQtdParamFunction(TableLine func) {
+    LstAtributes lstAtributes = func->lstAtributes;
+    int qtdParam = 0;
+    while (lstAtributes != NULL)
+    {
+        Atributes atrib = lstAtributes->atributes;
+        if(atrib->atribCategoria == A_Param){
+            qtdParam = qtdParam+1;
+        }
+        lstAtributes = lstAtributes->prox;
+    }
+    return qtdParam;
+}
+
+bool isUltimoElementoFuncao(Table tabela) {
+    return tabela->ultimo->categoria == Func;
 }
 
 String resolveAtributesType(AtribType type) {

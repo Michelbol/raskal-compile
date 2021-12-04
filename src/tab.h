@@ -4,7 +4,7 @@
 #include "util.h"
 
 typedef struct TableLine_ *TableLine;
-typedef enum TableCategory_ { Program, Type, Var, Proc, Void } TableCategory;
+typedef enum TableCategory_ { Program, Type, Var, Proc, Func, Void } TableCategory;
 typedef enum AtribCategory_ { A_Param, A_Var } AtribCategory;
 typedef enum AtribType_ { Int, Bool } AtribType;
 
@@ -19,9 +19,13 @@ TableLine buscarElemento(Table tabela, String identificador, TableCategory categ
 TableLine buscarVariavel(Table tabela, String identificador);
 TableLine buscarElementoEscopo(Table tabela, String identificador, int escopo);
 Atributes buscaUltimoElemento(Table tabela, String identificador);
+TableLine getUltimoElementoFuncao(Table tabela, String id);
+bool isUltimoElementoFuncao(Table tabela);
+int countQtdParamFunction(TableLine func);
 Table addVar(Table tabela, String id, String tipo, int escopo, int endereco);
 Table addProgram(Table tabela, String id);
 Table addProc(Table tabela, String id, int escopo, int endereco);
+Table addFunc(Table tabela, String id, int escopo, int endereco);
 Table addParam(Table tabela, String id, String tipo, int endereco);
 Table appendAttribUltimoElemento(Table tabela, String id, AtribType tipo, AtribCategory categoria, int endereco);
 String transformaAtrib(TableLine line);
