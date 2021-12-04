@@ -224,7 +224,7 @@ secao_declara_subs:  declara_func T_PONTO_E_VIRGULA secao_declara_subs { $$ = NU
 declara_proc: T_PROCEDURE T_IDENT params_formais T_PONTO_E_VIRGULA bloco { $$ = A_decProc($2, $3, $5); }
 ;
 
-declara_func: T_FUNCTION T_IDENT params_formais T_DOIS_PONTOS tipo T_PONTO_E_VIRGULA bloco { $$ = NULL; }
+declara_func: T_FUNCTION T_IDENT params_formais T_DOIS_PONTOS tipo T_PONTO_E_VIRGULA bloco { $$ = A_decFun($2, $3, $5, $7); }
 ;
 
 params_formais: T_ABRE_PARENTESES list_declara_param T_FECHA_PARENTESES { $$ = A_paramFormal($2); }

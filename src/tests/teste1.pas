@@ -1,21 +1,15 @@
-program procPassRef; 
-   var k: integer;
+program funcaoSimples;
+  var x, y, z: integer;
 
-procedure p(n: integer; var g: integer);
-  var h:integer;
+function f(): integer;
+  var z: integer;
 begin
-  if (n < 2) then
-    g := g + 1
-  else
-    begin
-      p(n - 1, h);
-      g := h;
-      //p(n - 2, g);
-    end;
-  write(n, g);
+  z := x + x;
+  f := 2 * z;
 end;
 
 begin
-  k := 0;
-  p(3, k);
-end. 
+  x := 5;
+  y := 3;
+  write(z);
+end.

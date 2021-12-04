@@ -38,6 +38,15 @@ A_DecProc A_decProc(String id, A_ParamFormal parmFormal, A_Bloco bloco) {
     return no;
 }
 
+A_DecFun A_decFun(String id, A_ParamFormal paramFormal, String tipo, A_Bloco bloco) {
+    A_DecFun no = malloc(sizeof(*no));
+    no->id = id;
+    no->paramFormal = paramFormal;
+    no->tipo = tipo;
+    no->bloco = bloco;
+    return no;
+}
+
 
 A_DecParam A_decParam(A_LstIdent lstIdent, String tipo) {
     A_DecParam no = malloc(sizeof(*no));

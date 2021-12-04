@@ -47,6 +47,7 @@ A_DecVar A_decVar(String id, String tipo, Table tabela);
 A_LstDecVar A_lstDecVar(A_DecVar decVar, A_LstDecVar lstDecVar);
 A_LstDecSub A_lstDecSub(A_DecProc decProc, A_LstDecSub lstDecSub);
 A_DecProc A_decProc(String id, A_ParamFormal parmFormal, A_Bloco bloco);
+A_DecFun A_decFun(String id, A_ParamFormal paramFormal, String tipo, A_Bloco bloco);
 A_CmdComp A_cmdComp(A_LstCmd LstCmd);
 A_Cmd A_cmd(A_Atrib atrib);
 A_Fator A_fatorLogico(bool logico);
