@@ -320,7 +320,11 @@ void analisaWhile(A_Repeticao repet){
     addNadaLabel(lstMepa, &desvio/* Escreve L1*/);
     analisaExpress(repet->expressao);
     addDesvioCond(lstMepa, desvio/* Desvia L2*/);
-    analisaCmdComp(repet->cmdComp);
+    if(repet->cmdComp != NULL){
+        analisaCmdComp(repet->cmdComp);
+    }else{
+        analisaCmd(repet->cmd);
+    }
     addDesvio(lstMepa, (desvio-1));
     addNadaLabel(lstMepa, &desvio);
 }

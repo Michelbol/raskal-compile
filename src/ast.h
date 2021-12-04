@@ -73,6 +73,7 @@ A_Condicional A_condicionalCmdComp(A_Express expressao, A_CmdComp cmdComp, A_Cmd
 A_Condicional A_condicionalThenCmdComp(A_Express expressao, A_CmdComp cmdComp, A_Cmd cmdElse);
 A_Condicional A_condicionalElseCmdComp(A_Express expressao, A_Cmd cmd, A_CmdComp cmdCompElse);
 A_Repeticao A_repeticao(A_Express expressao, A_CmdComp cmdComp);
+A_Repeticao A_repeticaoCmd(A_Express expressao, A_Cmd cmd);
 A_Read A_read(A_LstIdent lstIdent);
 A_Write A_write(A_LstExpress lstExpress);
 A_Cmd A_cmdCond(A_Condicional cond);
@@ -193,6 +194,7 @@ struct A_Condicional_ {
 struct A_Repeticao_ {
     A_Express expressao;
     A_CmdComp cmdComp;
+    A_Cmd cmd;
 };
 
 struct A_Read_ {

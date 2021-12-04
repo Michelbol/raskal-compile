@@ -112,6 +112,13 @@ A_Repeticao A_repeticao(A_Express expressao, A_CmdComp cmdComp) {
     return no;
 }
 
+A_Repeticao A_repeticaoCmd(A_Express expressao, A_Cmd cmd) {
+    A_Repeticao no = malloc(sizeof(*no));
+    no->expressao = expressao;
+    no->cmd = cmd;
+    return no;
+}
+
 A_Condicional A_condicionalCmd(A_Express expressao, A_Cmd cmd, A_Cmd cmdElse) {
     A_Condicional no = malloc(sizeof(*no));
     no->expressao = expressao;

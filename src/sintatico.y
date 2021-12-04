@@ -270,6 +270,7 @@ condicional: T_IF expressao T_THEN comando { $$ = A_condicionalCmd($2, $4, NULL)
 ;
 
 repeticao: T_WHILE expressao T_DO comando_composto { $$ = A_repeticao($2, $4); }
+         | T_WHILE expressao T_DO comando { $$ = A_repeticaoCmd($2, $4); }
 ;
 
 leitura: T_READ T_ABRE_PARENTESES lista_ident T_FECHA_PARENTESES { $$ = A_read($3); }
