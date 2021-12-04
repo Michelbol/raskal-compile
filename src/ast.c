@@ -233,6 +233,13 @@ A_Chamada_Proc A_chamada_Proc(String id, A_LstExpress lstExpressoes) {
     return no;
 }
 
+A_Chamada_Fun A_chamada_Fun(String id, A_LstExpress lstExpressoes) {
+    A_Chamada_Fun no = malloc(sizeof(*no));
+    no->id = id;
+    no->lstExpressoes = lstExpressoes;
+    return no;
+}
+
 A_Read A_read(A_LstIdent lstIdent){
     A_Read no = malloc(sizeof(*no));
     no->lstIdent = lstIdent;
@@ -372,6 +379,13 @@ A_Fator A_fatorId(String id){
     A_Fator no = malloc(sizeof(*no));
     no->id = id;
     no->type = Id;
+    return no;
+}
+
+A_Fator A_fatorFun(A_Chamada_Fun chamFun) {
+    A_Fator no = malloc(sizeof(*no));
+    no->chamFun = chamFun;
+    no->type = F_Fun;
     return no;
 }
 

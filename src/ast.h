@@ -14,6 +14,7 @@ typedef struct A_Cmd_ *A_Cmd;
 typedef struct A_LstCmd_ *A_LstCmd;
 typedef struct A_Atrib_ *A_Atrib;
 typedef struct A_Chamada_Proc_ *A_Chamada_Proc;
+typedef struct A_Chamada_Fun_ *A_Chamada_Fun;
 typedef struct A_Express_ *A_Express;
 typedef struct A_Condicional_ *A_Condicional;
 typedef struct A_Repeticao_ *A_Repeticao;
@@ -26,7 +27,7 @@ typedef struct A_Termo_ *A_Termo;
 typedef struct A_LstFator_ *A_LstFator;
 typedef struct A_Fator_ *A_Fator;
 typedef struct A_DecParam_ *A_DecParam;
-typedef enum FatorType_ {Id, Num, Logico, Expressao , Not, Menos} FatorType;
+typedef enum FatorType_ {Id, Num, Logico, Expressao , Not, Menos, F_Fun} FatorType;
 typedef enum CmdType_ { Atrib, Write, Read, If, While, ChamProc } CmdType;
 typedef enum TermoOperator_ { Somar, Subtrair, Or, Numero} TermoOperator;
 typedef enum FatorOperator_ { Multi, Div, And , Fator} FatorOperator;
@@ -58,6 +59,7 @@ A_Fator A_fatorId(String id);
 A_Fator A_fatorNotFator(A_Fator fator);
 A_Fator A_fatorMenosFator(A_Fator fator);
 A_Fator A_fatorExpressao(A_Express expressao);
+A_Fator A_fatorFun(A_Chamada_Fun chamFun);
 A_LstFator A_lstFatorAnd(A_Fator fator, A_LstFator lstFator);
 A_LstFator A_lstFatorMulti(A_Fator fator, A_LstFator lstFator);
 A_LstFator A_lstFatorDiv(A_Fator fator, A_LstFator lstFator);
@@ -88,6 +90,7 @@ A_Cmd A_cmdChamadaProc(A_Chamada_Proc chamadaProc);
 A_LstCmd A_lstCmd(A_Cmd cmd, A_LstCmd lstCmd);
 A_Atrib A_atrib(String id, A_Express express);
 A_Chamada_Proc A_chamada_Proc(String id, A_LstExpress lstExpressoes);
+A_Chamada_Fun A_chamada_Fun(String id, A_LstExpress lstExpressoes);
 A_Express A_express(A_Simp_Express simp_express);
 A_Express A_expressRelacao(A_Simp_Express simp_express, Relacao relacao, A_Simp_Express simp_express2);
 A_Simp_Express A_simp_Express_Mais(A_Termo primeiro_termo, A_Termo segundo_termo, A_Simp_Express expressao);
@@ -187,6 +190,11 @@ struct A_Chamada_Proc_ {
     A_LstExpress lstExpressoes;
 };
 
+struct A_Chamada_Fun_ {
+    String id;
+    A_LstExpress lstExpressoes;
+};
+
 struct A_Condicional_ {
     A_Express expressao;
     A_Cmd cmdThen;
@@ -247,6 +255,7 @@ struct A_Fator_ {
     bool logico;
     A_Fator fator;
     A_Express expressao;
+    A_Chamada_Fun chamFun;
     FatorType type;
 };
 

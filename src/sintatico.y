@@ -74,6 +74,7 @@ extern Table tabela_simbolos;
    A_DecParam decParam;
    A_Chamada_Proc chamProced;
    A_DecFun decFun;
+   A_Chamada_Fun chamFun;
 }
 
 /* Os nomes associados aos tokens definidos aqui serão armazenados um uma 
@@ -169,6 +170,7 @@ extern Table tabela_simbolos;
 %type <repeticao> repeticao
 %type <chamProced> chamada_procedimento
 %type <decFun> declara_func
+%type <chamFun> chamada_funcao
 
 %define parse.error verbose
 %define parse.lac full
@@ -316,6 +318,7 @@ lista_fator: fator T_MULTIPLICACAO lista_fator {$$ = A_lstFatorMulti($1, $3); }
 fator: T_IDENT { $$ = A_fatorId($1); }
       | T_NUMERO { $$ = A_fator($1); }
       | logico { $$ = A_fatorLogico($1); }
+      | chamada_funcao { $$ = A_fatorFun($1); }
       | T_ABRE_PARENTESES expressao T_FECHA_PARENTESES { $$ = A_fatorExpressao($2); }
       | T_NOT fator{ $$ = A_fatorNotFator($2); }
       | T_MENOS fator { $$ = A_fatorMenosFator($2); }
@@ -323,6 +326,11 @@ fator: T_IDENT { $$ = A_fatorId($1); }
 
 logico: T_TRUE { $$ = true; }
       | T_FALSE { $$ = false; }
+;
+
+chamada_funcao: T_IDENT T_ABRE_PARENTESES T_FECHA_PARENTESES { $$ = A_chamada_Fun($1, NULL); }
+               | T_IDENT T_ABRE_PARENTESES lista_expressoes T_FECHA_PARENTESES { $$ = A_chamada_Fun($1, $3); }
+;
 %%
 
 /* Aqui poderia ser construída a função main com a lógica do compilador, que

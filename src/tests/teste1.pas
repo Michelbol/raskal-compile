@@ -1,19 +1,16 @@
 program funcaoSimples;
   var x, y, z: integer;
 
-function f(a, b: integer): integer;
-  var m: integer;
+function f(): integer;
+  var z: integer;
 begin
-  m := a * b;
-  if a > b then
-    f := m div (a - b)
-  else
-    f := b - a;
-  x := a + b;
+  z := x + x;
+  f := 2 * z;
 end;
 
 begin
   x := 5;
   y := 3;
+  z := f();
   write(z);
 end.
