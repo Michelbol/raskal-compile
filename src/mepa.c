@@ -163,6 +163,13 @@ void addDesvio(Commands mepa, int desvio) {
     addCmdMepa(mepa, createNewCmdMepa(string(cmd)));
 }
 
+void addDesvioWhile(Commands mepa, int desvio){
+    String label = concatStringInt("W", desvio);
+    char cmd[15] = "DSVS ";
+    strcat(cmd, label);
+    addCmdMepa(mepa, createNewCmdMepa(string(cmd)));
+}
+
 void addNadaLabel(Commands mepa, int *desvio) {
     String label = concatStringInt(labelPrefix, *desvio);
     addCmdMepa(mepa, createNewCmdMepa(strcat(label, ": NADA")));
