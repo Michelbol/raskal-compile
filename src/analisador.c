@@ -202,12 +202,12 @@ void analisaChamFun(A_Chamada_Fun chamFun){
         errors = errors+1;
         return;
     }
+    addAmemMepa(lstMepa, 1);
     A_LstExpress lst = chamFun->lstExpressoes;
     while(lst != NULL){
         analisaExpress(lst->expressao);
         lst = lst->prox;
     }
-    addAmemMepa(lstMepa, 1);
     addChamadaProcMepa(lstMepa, linha->escopo, linha->endereco);
 }
 
