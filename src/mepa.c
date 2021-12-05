@@ -195,7 +195,7 @@ void limpaArquivo(String name){
 }
 
 void printMepa(Commands mepa){
-    printf("Comecei a impressão da MEPA\n");
+    //printf("Comecei a impressão da MEPA\n");
     FILE *file;
     limpaArquivo("mepa.out");
     file = fopen("mepa.out", "a");
@@ -210,5 +210,5 @@ void printMepa(Commands mepa){
         fprintf(file, "%s\n", instrucao->command);
         instrucao = instrucao->next;
     }
-    printf("Mepa Impressa com sucesso\n");
+    //printf("Mepa Impressa com sucesso\n");
 }

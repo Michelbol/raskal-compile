@@ -6,7 +6,6 @@
 #include "util.h"
 #include "sintatico.tab.h"
 
-#define DEBUG 1
 
 #ifdef DEBUG
   #define IMPRIME(nome) printf("<%s, '%s'> (linha: %d)\n", nome, yytext, nl);

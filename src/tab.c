@@ -19,7 +19,7 @@ Table createTable(){
     Table tabela = malloc(sizeof(*tabela));
     tabela->primeiro = NULL;
     tabela->ultimo = NULL;
-    printf("\nTabela de simbolos criada com sucesso\n");
+    // printf("\nTabela de simbolos criada com sucesso\n");
     return tabela;
 }
 
