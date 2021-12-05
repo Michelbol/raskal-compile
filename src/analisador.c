@@ -370,6 +370,7 @@ void analisaRead(A_Read read){
 }
 
 void analisaWhile(A_Repeticao repet){
+    int inicio = desvio;
     addNadaLabel(lstMepa, &desvio/* Escreve L1*/);
     analisaExpress(repet->expressao);
     addDesvioCond(lstMepa, desvio/* Desvia L2*/);
@@ -378,7 +379,7 @@ void analisaWhile(A_Repeticao repet){
     }else{
         analisaCmd(repet->cmd);
     }
-    addDesvio(lstMepa, (desvio-1));
+    addDesvio(lstMepa, (inicio));
     addNadaLabel(lstMepa, &desvio);
 }
 
