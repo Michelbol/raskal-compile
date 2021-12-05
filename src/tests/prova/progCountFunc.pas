@@ -1,4 +1,4 @@
-program progCount;
+program progCountFun;
 
 var qtdAlunos, nota1, nota2, nota3, media: integer;
 
